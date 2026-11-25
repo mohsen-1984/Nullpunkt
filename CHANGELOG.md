@@ -6,6 +6,11 @@ version may change the data format. Dates are those of the release tags. The sin
 
 ## [Unreleased]
 
+## [0.1.1] — 2026-11-25
+
+Chapter 0 (orientation) and the first review round: a new logo, gcc 15 as the reference compiler, and the
+catalog settled for the road to 1.0.
+
 ### Course
 
 - **Chapter 0 — Orientation**, five short lessons before lesson 1, in three languages, numbered 0.1–0.5 so lesson 1
@@ -21,6 +26,20 @@ version may change the data format. Dates are those of the release tags. The sin
   - **0.5 How to Learn C:** six habits, how the course helps, AI as a tutor, what Python knowledge helps or misleads,
     a weekly plan.
 - 8 new glossary terms; a new exercise type, **Choose** (`B.choice`), with feedback for every option.
+- **The reference compiler is now gcc 15**, the default of Ubuntu 26.04 LTS and so of most learners' WSL and Linux
+  (rule `C.CMP.01`). Every message in the lessons was recorded again with it.
+- **Lesson 2** follows gcc 15: a misspelled name (`prinf`) and a missing `#include <stdio.h>` are now compile errors,
+  not warnings. The linker is shown with a new example, `main` misspelled as `mian` (`undefined reference to
+  'main'`). A new *Standard & Platform* block says what gcc 13 and older do instead.
+- Mistake **`E-07`** (missing `#include <stdio.h>`) replaces **`W-01`**, which is retired: from gcc 14 on, and in
+  clang, it is an error. Retired ids are listed in the data and never used again.
+- Review of chapters 0 and 1: lessons 1 and 2 take 25 minutes, not 20; Persian text uses *compiler*, *compile* and
+  *interpreter* everywhere, as the glossary says (titles and can-do lists included); German *Sourcecode*; the support
+  for C17 in MSVC is stated with its limits.
+- **Catalog review** (rule `C.TOP.01`): `math.h` in lesson 21, `rand`/`time` in lesson 17, `static` and storage
+  duration from lesson 22 (lesson title *Scope, Lifetime & static*), `union` and bit-fields now in 1.0 (lesson 54,
+  *Talking to Hardware: volatile, union & Bit-Fields*), `stderr` and the exit status from lesson 40, security
+  mistakes (`S-`) from chapter 3 on; chapter 14 stays last; one review unit for each of chapters 1–14.
 - **Chapter 14 — Beyond the Console** planned (lessons 51–54): streams and devices (`stdin`, `stdout`, `stderr`,
   redirection, exit status), the terminal (ANSI colors, cursor, keys), graphics (why `graphics.h` and “text mode /
   graphics mode” are DOS-era Turbo C, not standard C; image files and modern libraries), and hardware registers with
@@ -28,10 +47,25 @@ version may change the data format. Dates are those of the release tags. The sin
 
 ### Site
 
+- **A new logo**: a code editor in 8-bit pixels — a C and the cursor after it, the point where every program starts.
+  It is drawn on a 16 × 16 grid, so it is sharp even as a 16-pixel favicon. Click, tap or hover the logo to read what
+  it means; its cursor blinks while you look. New favicon, link-preview picture and touch icon.
+- **The version is at the top** now, beside the name in the header (and in the course menu), linked to these notes;
+  the footer no longer shows it.
+- On lesson pages in German and Persian, the English title stands on its own line under the title, so a Persian
+  title no longer breaks around it; on the home page, each tagline keeps its own direction.
 - Lessons can hold sections with their own title, myths answered, terminal transcripts, tabs per operating system
   (opening on the reader's own system) and assembly beside its C.
 
 ### Tooling
+
+- CI runs on Ubuntu 26.04 with gcc 15 and moves `actions/checkout` and `actions/setup-node` to v7 (Node 24). A new
+  job records the compiler results with the reference gcc and commits them to the pull request, so authors with
+  another gcc can still contribute.
+- Checker: the logo is the same drawing everywhere (`S.AST.05`); Persian text never uses the forms a term's `alt`
+  lists, such as «کامپایلر» (`S.LNG.06`); retired ids are never used or referenced again (`S.ID.01`); a code record
+  can name a rule it breaks on purpose (`allow`, counted in the report).
+- `tools/headless-shell.js` also opens and closes the logo's card on a phone.
 
 - `tools/gen-expect.js` records readable x86-64 assembly (`gcc -S -O1`) for code marked `asm`.
 - Checker: orientation lessons (`C.ORI.01`) have their own light skeleton and no construct ladder; choice items need

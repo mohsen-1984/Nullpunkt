@@ -16,7 +16,7 @@
                 },
             },
             {
-                id: 'T.source-code', en: 'source code', use: { fa: 'source code', de: 'Source Code' },
+                id: 'T.source-code', en: 'source code', use: { fa: 'source code', de: 'Sourcecode' },
                 gloss: { fa: 'کد منبع', de: 'Quellcode' }, deArticle: 'der', series: ['C'],
                 def: {
                     fa: 'متن برنامه، همان‌طور که آدم آن را می‌نویسد و می‌خواند.',
@@ -27,9 +27,10 @@
             {
                 id: 'T.compiler', en: 'compiler', use: { fa: 'compiler', de: 'Compiler' },
                 gloss: { fa: 'کامپایلر', de: 'Übersetzer' }, deArticle: 'der', series: ['C'],
+                alt: { fa: ['کامپایل'], de: ['Übersetzer'] },
                 def: {
                     fa: 'برنامه‌ای که source code را می‌خواند، قاعده‌هایش را بررسی می‌کند و آن را به برنامه‌ای قابل اجرا ترجمه می‌کند.',
-                    de: 'Ein Programm, das Source Code liest, seine Regeln prüft und ihn in ein ausführbares Programm übersetzt.',
+                    de: 'Ein Programm, das Sourcecode liest, seine Regeln prüft und ihn in ein ausführbares Programm übersetzt.',
                     en: 'A program that reads source code, checks its rules and translates it into a program that can run.',
                 },
             },
@@ -153,6 +154,7 @@
             {
                 id: 'T.interpreter', en: 'interpreter', use: { fa: 'interpreter', de: 'Interpreter' },
                 gloss: { fa: 'مفسر', de: 'Übersetzer zur Laufzeit' }, deArticle: 'der', series: ['C'],
+                alt: { fa: ['مفسر'], de: ['Übersetzer zur Laufzeit'] },
                 def: {
                     fa: 'برنامه‌ای که برنامهٔ دیگری را هنگام اجرا، گام به گام پیش می‌برد، بی‌آنکه پیش از آن یک executable بسازد.',
                     de: 'Ein Programm, das ein anderes Programm beim Ausführen Schritt für Schritt abarbeitet, ohne vorher ein ausführbares Programm zu bauen.',

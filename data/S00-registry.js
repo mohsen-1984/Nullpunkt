@@ -65,7 +65,7 @@
 
         dimensions: {
             M: { title: { fa: 'تصور غلط', de: 'Fehlvorstellung', en: 'Misconception' }, intent: ['ok'] },
-            E: { title: { fa: 'خطای کامپایل', de: 'Compile-Fehler', en: 'Compile Error' }, intent: ['compile-error'] },
+            E: { title: { fa: 'compile error', de: 'Compile-Fehler', en: 'Compile Error' }, intent: ['compile-error'] },
             W: { title: { fa: 'هشدار', de: 'Warnung', en: 'Warning' }, intent: ['warning'] },
             R: { title: { fa: 'خطای زمان اجرا', de: 'Laufzeitfehler', en: 'Runtime Error' }, intent: ['runtime-error'] },
             U: { title: { fa: 'رفتار تعریف‌نشده', de: 'Undefiniertes Verhalten', en: 'Undefined Behavior' }, intent: ['ub'] },

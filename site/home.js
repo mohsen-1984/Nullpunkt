@@ -22,7 +22,7 @@
         const first = C.resume(ix), visitedAny = ix.lessonList.some(L => C.store('visited.' + L.id));
         const cta = first ? '<a class="np-cta primary" href="' + esc(C.lessonHref(first.id, lang)) + '">' + svg('play', 'ic-flip') +
             esc(visitedAny ? c.continueAt.replace('{n}', first.label) : c.start) + '</a>' : '';
-        const tags = SITE.languages.filter(l => l !== lang).map(l => '<span lang="' + l + '">' + esc(NullpunktUI[l].site.tagline) + '</span>').join(' · ');
+        const tags = SITE.languages.filter(l => l !== lang).map(l => '<bdi class="np-tag" lang="' + l + '" dir="' + (l === 'fa' ? 'rtl' : 'ltr') + '">' + esc(NullpunktUI[l].site.tagline) + '</bdi>').join(' · ');
         const demo = ix.code[DEMO], out = G && G.code[DEMO] ? G.code[DEMO].gcc.stdout : '';
         return '<section class="np-hero" id="top"><div>' +
             '<p class="np-eyebrow">' + esc(c.hero.eyebrow) + '</p>' +

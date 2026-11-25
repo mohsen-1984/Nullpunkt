@@ -22,9 +22,10 @@ const findings = [];
 const err = (rule, id, msg) => findings.push({ level: 'error', rule, id, msg });
 const warn = (rule, id, msg) => findings.push({ level: 'warning', rule, id, msg });
 const COVERED = new Set(('C.ORI.01 S.DAT.06 S.ID.02 S.ID.03 S.DAT.02 S.DAT.04 S.MRK.01 S.MRK.02 S.MRK.04 S.TYP.01 S.TYP.02 S.TYP.04 S.TYP.05 ' +
-    'S.TYP.06 S.TYP.15 S.CH.05 S.CH.06 S.STD.02 S.STY.01 S.STY.04 S.STY.08 S.PIT.01 S.PIT.03 S.PIT.04 S.PIT.06 S.BND.01 ' +
-    'S.BND.02 S.BND.03 S.PRM.01 S.PRM.02 S.PRM.03 S.AST.01 C.LES.01 C.SLF.01 C.PRD.01 C.FRB.01').split(' '));
+    'S.ID.01 S.LNG.06 S.TYP.06 S.TYP.15 S.CH.05 S.CH.06 S.STD.02 S.STY.01 S.STY.04 S.STY.08 S.PIT.01 S.PIT.03 S.PIT.04 S.PIT.06 S.BND.01 ' +
+    'S.BND.02 S.BND.03 S.PRM.01 S.PRM.02 S.PRM.03 S.AST.01 S.AST.05 C.LES.01 C.SLF.01 C.PRD.01 C.FRB.01').split(' '));
 const rule = r => r;
+const waivers = [];      // S.ID.04: records that name the rule they deliberately break; counted in the report
 
 ix.problems.forEach(p => err(rule(p.rule), p.id, p.msg));
 
@@ -271,14 +272,15 @@ Object.values(ix.lesson).forEach(L => {
     // ladder: every code of this lesson
     const chunkLines = Object.values(ix.chunk).filter(c => c.from <= L.n).reduce((a, c) => a.concat(c.match), []);
     const sources = [];
-    ix.codeList.filter(c => ix.lessonOfCode[c.id] === L.id).forEach(c => sources.push([c.id, c.source]));
+    ix.codeList.filter(c => ix.lessonOfCode[c.id] === L.id).forEach(c => sources.push([c.id, c.source, c.allow]));
     (u.bands || []).forEach(b => b.items.forEach(it => {
         ['solution', 'starter'].forEach(k => { if (typeof it[k] === 'string') sources.push([it.id + '.' + k, it[k]]); });
         if (b.type === 'B.parsons') sources.push([it.id, Data.parsonsSource(it, it.solution)]);
         (it.tests || []).forEach(t => { if (t.variant) sources.push([t.id + '.variant', t.variant]); });
     }));
-    sources.forEach(([where, src]) => {
+    sources.forEach(([where, src, allow]) => {
         const tokens = Scan.scan(src, { chunks: chunkLines });
+        if ((allow || []).indexOf('S.CH.06') >= 0) { waivers.push(where + ' S.CH.06'); return; }     // explicit waiver (S.ID.04)
         const used = Scan.constructsUsed(tokens, constructs);
         used.forEach((line, cid) => {
             const k = ix.construct[cid];
@@ -316,11 +318,63 @@ Object.values(ix.prompt).forEach(p => usedIcons.add(p.icon));
 Object.values(ix.lesson).forEach(L => { if (L.unit) L.unit.blocks.forEach(b => { if (b.icon) usedIcons.add(b.icon); }); });
 usedIcons.forEach(n => { if (!icons[n]) err(rule('S.AST.01'), n, 'icon not in vendor/lucide — run tools/build-icons.js'); });
 
+// ---------- Persian running text uses the term's form, not its local gloss (S.LNG.02, S.LNG.06) ----------
+(function () {
+    // [Persian form, term]: each term's `alt.fa` list (S00-schema: alt — other equivalents, forbidden in running text) — Persian forms (often transliterations) that running text must
+    // not use, because the term's running form is the English one. The gloss itself is shown once, by the page.
+    const bad = [];
+    Object.values(ix.term).forEach(t => ((t.alt && t.alt.fa) || []).forEach(w => bad.push([w, t.id])));
+    function walk(v, where) {
+        if (v == null || typeof v !== 'object') return;
+        if (Array.isArray(v)) return v.forEach((x, i) => walk(x, where));
+        if (typeof v.fa === 'string' && typeof v.en === 'string') {
+            bad.forEach(([w, tid]) => { if (v.fa.indexOf(w) >= 0) err('S.LNG.06', where, 'Persian text uses «' + w + '»; write the running form of ' + tid); });
+            return;
+        }
+        Object.keys(v).forEach(k => { if (k !== 'gloss' && k !== 'alt') walk(v[k], v.id || where); });
+    }
+    Object.keys(N.files).forEach(fid => walk(N.files[fid], fid));
+    walk(N.registry, 'registry');
+})();
+
+// ---------- retired Ids (S.ID.01): never live again, never referenced ----------
+(function () {
+    const live = new Set(Object.keys(ix.mistake).concat(Object.keys(ix.code), Object.keys(ix.term), Object.keys(ix.item)));
+    const dataText = fs.readdirSync(path.join(root, 'data')).filter(f => f.endsWith('.js'))
+        .map(f => fs.readFileSync(path.join(root, 'data', f), 'utf8').replace(/retired: \[[\s\S]*?\n\s*\],/, '')).join('\n');
+    Object.values(ix.retired).forEach(r => {
+        if (live.has(r.id)) err('S.ID.01', r.id, 'a retired Id is in use again');
+        if (!r.by || !r.why) err('S.ID.01', r.id, 'a retired Id needs its successor (by) and the reason (why)');
+        else if (r.by !== '—' && !live.has(r.by)) err('S.ID.01', r.id, 'successor ' + r.by + ' does not exist');
+        if (new RegExp("['`(\\[]" + r.id.replace(/\./g, '\\.') + "['`)\\]]").test(dataText)) err('S.ID.01', r.id, 'a retired Id is still referenced');
+    });
+})();
+
+// ---------- the mark (S.AST.05): one drawing everywhere ----------
+(function () {
+    const paths = t => [...t.matchAll(/ d=(?:"|')([^"']+)/g)].map(m => m[1]).join('');
+    const ref = paths(fs.readFileSync(path.join(root, 'assets/favicon.svg'), 'utf8'));
+    const chromeJs = fs.readFileSync(path.join(root, 'site/chrome.js'), 'utf8');
+    const part = n => { const m = chromeJs.match(new RegExp(n + " = ((?:'[^']*'(?:\\s*\\+\\s*)?)+)")); return m ? m[1].replace(/'\s*\+\s*'/g, '').replace(/'/g, '') : ''; };
+    const inChrome = part('MARK_TILE') + part('MARK_INK') + part('MARK_CURSOR');
+    const norm = d => d.replace(/M12 10h3v1h-3zM12 11h3v1h-3z$/, 'M12 10h3v2h-3z');     // the cursor: two rows or one rect
+    const want = norm(ref);
+    if (!/viewBox="0 0 16 16"/.test(fs.readFileSync(path.join(root, 'assets/favicon.svg'), 'utf8'))) err('S.AST.05', 'assets/favicon.svg', 'the mark is drawn on a 16 × 16 grid');
+    if (norm(inChrome) !== want) err('S.AST.05', 'site/chrome.js', 'MARK differs from assets/favicon.svg');
+    ['index.html', 'lesson.html'].forEach(pg => {
+        const m = fs.readFileSync(path.join(root, pg), 'utf8').match(/<link rel="icon" href="data:image\/svg\+xml,([^"]+)"/);
+        if (!m || norm(paths(decodeURIComponent(m[1]))) !== want) err('S.AST.05', pg, 'the inline favicon differs from assets/favicon.svg');
+    });
+    const og = fs.readFileSync(path.join(root, 'tools/og-image.html'), 'utf8');
+    const ogMark = (og.match(/<svg class="mark"[\s\S]*?<\/svg>/) || [''])[0];
+    if (norm(paths(ogMark)) !== want) err('S.AST.05', 'tools/og-image.html', 'the mark differs from assets/favicon.svg');
+})();
+
 // ---------- report ----------
 if (process.argv.includes('--list')) { console.log([...COVERED].sort().join('\n')); process.exit(0); }
 const errors = findings.filter(f => f.level === 'error'), warnings = findings.filter(f => f.level === 'warning');
 findings.forEach(f => console.log((f.level === 'error' ? 'ERROR' : 'WARN ') + '  ' + f.rule.padEnd(9) + ' ' + f.id + ' — ' + f.msg));
 const written = Object.values(ix.lesson).filter(L => L.unit).length;
 console.log(errors.length + ' errors, ' + warnings.length + ' warnings · ' + written + ' lesson(s), ' + ix.codeList.length + ' code records, ' +
-    ix.itemList.length + ' exercise items · ' + COVERED.size + ' rules checked');
+    ix.itemList.length + ' exercise items · ' + COVERED.size + ' rules checked' + (waivers.length ? ' · ' + waivers.length + ' waiver(s): ' + waivers.join(', ') : ''));
 process.exit(errors.length || warnings.length ? 1 : 0);

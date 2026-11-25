@@ -591,7 +591,7 @@
             return;
         }
         const cat = L.catalog, ch = ix.chapter[L.chapter];
-        const title = cat.title[lang] + (lang !== 'en' ? ' — ' + cat.title.en : '');
+        const title = cat.title[lang];
         document.title = U.lesson + ' ' + L.label + ': ' + cat.title[lang] + ' — Nullpunkt';
         const status = ch.catalog.langStatus[lang];
         // the leading path: home › chapter › lesson
@@ -601,7 +601,9 @@
             '<li><a href="' + esc(C.homeHref(lang, 'chapter-' + ch.id)) + '">' + esc(U.chapter) + ' ' + ch.n + ': ' + esc(ch.catalog.title[lang]) + '</a></li>' +
             '<li aria-current="page">' + esc(U.lesson) + ' ' + L.label + '</li>';
         root.appendChild(crumbs);
-        root.appendChild(el('h1', '', esc(U.lesson) + ' ' + L.label + ': ' + esc(title)));
+        // the English title on its own line, in its own direction, so a Persian title never breaks around it
+        root.appendChild(el('h1', '', esc(U.lesson) + ' ' + L.label + ': ' + esc(title) +
+            (lang !== 'en' ? '<span class="np-title-en" lang="en" dir="ltr">' + esc(cat.title.en) + '</span>' : '')));
         root.appendChild(el('p', 'np-lesson-meta', icon('clock') + '<span>' + cat.minutes + ' ' + esc(U.minutes) + '</span>' +
             (status !== 'reviewed' ? '<span class="np-badge">' + esc(U.inDevelopment) + '</span>' : '')));
         store.set('visited.' + L.id, true);

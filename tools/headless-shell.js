@@ -86,6 +86,18 @@ const getJson = u => new Promise((res, rej) => http.get(u, r => { let s = ''; r.
             return d.classList.contains('is-open') ? 'Esc did not close it' : 'ok';
         })()`);
         if (dr !== 'ok') { failed++; console.log('FAIL ' + name + ' ' + lang + ' drawer: ' + dr); }
+        // the logo's card at a phone width: a tap opens it inside the screen, Esc closes it (S00-assets: the mark)
+        const mk = await ev(`(async () => {
+            const b = document.getElementById('ncMark'), t = document.getElementById('ncMarkTip');
+            b.click(); await new Promise(r => setTimeout(r, 250));
+            const r = t.getBoundingClientRect();
+            if (getComputedStyle(t).display === 'none' || !t.textContent) return 'the card did not open';
+            if (r.left < 0 || r.right > innerWidth) return 'the card leaves the screen';
+            document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+            await new Promise(r => setTimeout(r, 100));
+            return getComputedStyle(t).display === 'none' ? 'ok' : 'Esc did not close it';
+        })()`);
+        if (mk !== 'ok') { failed++; console.log('FAIL ' + name + ' ' + lang + ' logo card: ' + mk); }
         // search: "/" opens it, a query finds lessons, the first result opens its page at its section
         await size(1280);
         await sleep(150);
@@ -100,7 +112,7 @@ const getJson = u => new Promise((res, rej) => http.get(u, r => { let s = ''; r.
         })()`);
         if (!/^ok:/.test(sr || '')) { failed++; console.log('FAIL ' + name + ' ' + lang + ' search: ' + sr); }
         if (errors.length) { failed++; console.log('FAIL ' + name + ' ' + lang + ' page errors: ' + errors.join(' | ')); }
-        else console.log('ok   ' + name + ' ' + lang + ' — ' + WIDTHS.length * 2 + ' stops, drawer, search → ' + String(sr).slice(3));
+        else console.log('ok   ' + name + ' ' + lang + ' — ' + WIDTHS.length * 2 + ' stops, drawer, logo card, search → ' + String(sr).slice(3));
     }
 
     if (shots) {

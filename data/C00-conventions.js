@@ -56,7 +56,9 @@
             k('K.break', 14, { kw: 'break' }),
             k('K.while', 15, { kw: 'while' }), k('K.for', 16, { kw: 'for' }),
             k('K.do', 17, { kw: 'do' }), k('K.continue', 17, { kw: 'continue' }),
+            k('K.fn-rand', 17, { id: 'rand' }), k('K.fn-srand', 17, { id: 'srand' }), k('K.fn-time', 17, { id: 'time' }),
             k('K.void', 20, { kw: 'void' }), k('K.return', 20, { kw: 'return' }),
+            k('K.h-math', 21, { header: 'math.h' }), k('K.fn-sqrt', 21, { id: 'sqrt' }), k('K.fn-pow', 21, { id: 'pow' }),
             k('K.static', 22, { kw: 'static' }),
             k('K.sizeof', 24, { kw: 'sizeof' }), k('K.size-t', 24, { id: 'size_t' }), k('K.fmt-zu', 24, { fmt: 'zu' }),
             k('K.op-index', 24, { op: '[' }),
@@ -81,8 +83,9 @@
             k('K.op-shl', 48, { op: '<<' }), k('K.op-shr', 48, { op: '>>' }), k('K.unsigned', 48, { kw: 'unsigned' }),
             k('K.signed', 48, { kw: 'signed' }), k('K.h-stdint', 48, { header: 'stdint.h' }),
             k('K.fn-qsort', 50, { id: 'qsort' }),
+            k('K.volatile', 54, { kw: 'volatile' }), k('K.union', 54, { kw: 'union' }),
             // not taught in 1.0 (C.SCP.01): any use is a leak
-            k('K.union', 99, { kw: 'union' }), k('K.goto', 99, { kw: 'goto' }), k('K.volatile', 99, { kw: 'volatile' }),
+            k('K.goto', 99, { kw: 'goto' }),
             k('K.register', 99, { kw: 'register' }), k('K.inline', 99, { kw: 'inline' }), k('K.restrict', 99, { kw: 'restrict' }),
             k('K.h-stdarg', 99, { header: 'stdarg.h' }), k('K.h-setjmp', 99, { header: 'setjmp.h' }),
         ],
@@ -91,7 +94,9 @@
         chunks: [
             { id: 'CH.main-frame', from: 1, explainedIn: ['C.L20', 'C.L42'],
               match: ['#include <stdio.h>', 'int main(void) {', 'return 0;'] },
-            { id: 'CH.math-h', from: 6, explainedIn: ['C.L42'], match: ['#include <math.h>'] },
+            // a random number before its parts are taught (C.TOP.01): the headers, and seeding from the clock
+            { id: 'CH.rand-seed', from: 17, explainedIn: ['C.L36', 'C.L42'],
+              match: ['#include <stdlib.h>', '#include <time.h>', 'srand((unsigned) time(NULL));'] },
         ],
 
         // C.FRB.01 — never, in any lesson

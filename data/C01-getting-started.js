@@ -143,7 +143,7 @@ int main(void) {
     return 0;
 }
 ` },
-            { id: 'C.L02.K06', intent: 'warning', mistake: 'W-01', source: R`int main(void) {
+            { id: 'C.L02.K06', intent: 'compile-error', mistake: 'E-07', source: R`int main(void) {
     printf("Hello\n");
     return 0;
 }
@@ -171,7 +171,7 @@ int main(void) {
     return 0;
 }
 ` },
-            { id: 'C.L02.K10', intent: 'warning', mistake: 'W-01', source: R`int main(void) {
+            { id: 'C.L02.K10', intent: 'compile-error', mistake: 'E-07', source: R`int main(void) {
     printf("Where is stdio.h?\n");
     printf("Not here.\n");
     return 0;
@@ -192,9 +192,18 @@ int main(void) {
     printf("Step three\n");
     return 0;
 ` },
-            { id: 'C.L02.K13', intent: 'warning', mistake: 'W-01', source: R`int main(void) {
+            { id: 'C.L02.K13', intent: 'compile-error', mistake: 'E-07', source: R`int main(void) {
     printf("Keep calm\n");
     printf("and read the message\n");
+    return 0;
+}
+` },
+            { id: 'C.L02.K14', intent: 'compile-error', mistake: 'E-03',
+              // the frame with `main` misspelled on purpose: the frame chunk does not match, so the ladder check is waived
+              allow: ['S.CH.06'], source: R`#include <stdio.h>
+
+int mian(void) {
+    printf("Ready\n");
     return 0;
 }
 ` },
@@ -418,7 +427,7 @@ int main(void) {
                     } },
                     { type: 'list', ordered: true, items: [
                         { fa: 'یک [[term:T.compiler]] source code را می‌خواند، بررسی می‌کند که قاعده‌های C رعایت شده باشد، و آن را به یک [[term:T.program]] قابل اجرا ترجمه می‌کند. اگر جایی قاعده‌ای رعایت نشده باشد، برنامه‌ای ساخته نمی‌شود و به‌جایش پیام خطا می‌گیری.',
-                          de: 'Ein [[term:T.compiler]] liest den Source Code, prüft, ob die Regeln von C eingehalten sind, und übersetzt ihn in ein ausführbares [[term:T.program]]. Ist irgendwo eine Regel verletzt, entsteht kein Programm, und du bekommst stattdessen eine Fehlermeldung.',
+                          de: 'Ein [[term:T.compiler]] liest den Sourcecode, prüft, ob die Regeln von C eingehalten sind, und übersetzt ihn in ein ausführbares [[term:T.program]]. Ist irgendwo eine Regel verletzt, entsteht kein Programm, und du bekommst stattdessen eine Fehlermeldung.',
                           en: 'A [[term:T.compiler]] reads the source code, checks that the rules of C are kept, and translates it into a [[term:T.program]] that can run. If a rule is broken anywhere, no program is built and you get an error message instead.' },
                         { fa: 'برنامه اجرا می‌شود: statementها یکی‌یکی، از بالا به پایین، به همان ترتیبی که نوشته‌ای.',
                           de: 'Das Programm läuft: die Statements eins nach dem anderen, von oben nach unten, in der Reihenfolge, in der du sie geschrieben hast.',
@@ -505,7 +514,7 @@ int main(void) {
 
                 { block: 'ai', content: [
                     { type: 'p', text: {
-                        fa: 'اگر برنامه‌ات کامپایل نشد و پیام خطا را نفهمیدی، این پرامپت کمکت می‌کند خودت آن را بخوانی. اگر هنوز پرامپت مادر را نفرستاده‌ای، اول آن را بفرست.',
+                        fa: 'اگر برنامه‌ات compile نشد و پیام خطا را نفهمیدی، این پرامپت کمکت می‌کند خودت آن را بخوانی. اگر هنوز پرامپت مادر را نفرستاده‌ای، اول آن را بفرست.',
                         de: 'Wenn dein Programm nicht kompiliert und du die Fehlermeldung nicht verstehst, hilft dir dieser Prompt, sie selbst zu lesen. Falls du den Grund-Prompt noch nicht geschickt hast, schick ihn zuerst.',
                         en: 'If your program does not compile and you do not understand the error message, this prompt helps you read it yourself. If you have not sent the master prompt yet, send it first.',
                     } },
@@ -550,7 +559,7 @@ int main(void) {
                     title: { fa: 'درستش کن', de: 'Repariere es', en: 'Fix it' },
                     items: [
                         { id: 'C.L01.X03.01', broken: 'C.L01.K10', activates: ['E-01'],
-                          prompt: { fa: 'این برنامه کامپایل نمی‌شود. پیام خطا را بخوان و درستش کن.', de: 'Dieses Programm kompiliert nicht. Lies die Fehlermeldung und repariere es.', en: 'This program does not compile. Read the error message and fix it.' },
+                          prompt: { fa: 'این برنامه compile نمی‌شود. پیام خطا را بخوان و درستش کن.', de: 'Dieses Programm kompiliert nicht. Lies die Fehlermeldung und repariere es.', en: 'This program does not compile. Read the error message and fix it.' },
                           solution: String.raw`#include <stdio.h>
 
 int main(void) {
@@ -563,7 +572,7 @@ int main(void) {
                                   { id: 'C.L01.X03.01.T02', purpose: 'mistake', mistake: 'E-01' }],
                           why: { fa: 'خط 4 `;` پایانی نداشت (`E-01`).', de: 'In Zeile 4 fehlte das abschließende `;` (`E-01`).', en: 'Line 4 was missing its final `;` (`E-01`).' } },
                         { id: 'C.L01.X03.02', broken: 'C.L01.K11', activates: ['E-02'],
-                          prompt: { fa: 'این یکی هم کامپایل نمی‌شود. پیام خطا را بخوان و درستش کن.', de: 'Auch dieses Programm kompiliert nicht. Lies die Fehlermeldung und repariere es.', en: 'This one does not compile either. Read the error message and fix it.' },
+                          prompt: { fa: 'این یکی هم compile نمی‌شود. پیام خطا را بخوان و درستش کن.', de: 'Auch dieses Programm kompiliert nicht. Lies die Fehlermeldung und repariere es.', en: 'This one does not compile either. Read the error message and fix it.' },
                           solution: String.raw`#include <stdio.h>
 
 int main(void) {
@@ -617,7 +626,7 @@ int main(void) {
                     items: [
                         { id: 'C.L01.X05.01',
                           prompt: { fa: 'با زبان خودت، در دو یا سه جمله بگو از لحظه‌ای که دکمهٔ اجرا را می‌زنی تا لحظه‌ای که خروجی را می‌بینی چه اتفاقی می‌افتد.', de: 'Erklär in deinen eigenen Worten, in zwei oder drei Sätzen, was zwischen dem Drücken auf Ausführen und dem Erscheinen der Ausgabe passiert.', en: 'In your own words, in two or three sentences, say what happens between pressing run and seeing the output.' },
-                          model: { fa: 'compiler source code را می‌خواند و بررسی می‌کند. اگر خطایی نباشد، آن را به برنامه‌ای قابل اجرا ترجمه می‌کند. بعد برنامه اجرا می‌شود و statementها از بالا به پایین یکی‌یکی انجام می‌شوند؛ هر `printf` متنش را چاپ می‌کند.', de: 'Der Compiler liest und prüft den Source Code. Wenn es keinen Fehler gibt, übersetzt er ihn in ein ausführbares Programm. Dann läuft das Programm, und die Statements werden von oben nach unten nacheinander ausgeführt; jedes `printf` gibt seinen Text aus.', en: 'The compiler reads and checks the source code. If there is no error, it translates it into a program that can run. Then the program runs and the statements are carried out one by one from top to bottom; each `printf` prints its text.' },
+                          model: { fa: 'compiler source code را می‌خواند و بررسی می‌کند. اگر خطایی نباشد، آن را به برنامه‌ای قابل اجرا ترجمه می‌کند. بعد برنامه اجرا می‌شود و statementها از بالا به پایین یکی‌یکی انجام می‌شوند؛ هر `printf` متنش را چاپ می‌کند.', de: 'Der Compiler liest und prüft den Sourcecode. Wenn es keinen Fehler gibt, übersetzt er ihn in ein ausführbares Programm. Dann läuft das Programm, und die Statements werden von oben nach unten nacheinander ausgeführt; jedes `printf` gibt seinen Text aus.', en: 'The compiler reads and checks the source code. If there is no error, it translates it into a program that can run. Then the program runs and the statements are carried out one by one from top to bottom; each `printf` prints its text.' },
                           why: { fa: 'دو قدم: ترجمه (compile)، بعد اجرا (run).', de: 'Zwei Schritte: übersetzen (compile), dann ausführen (run).', en: 'Two steps: translate (compile), then run.' } },
                     ],
                 },
@@ -680,7 +689,7 @@ int main(void) {
                 { block: 'prior', content: [
                     { type: 'p', text: {
                         fa: 'از [[lesson:C.L01]] به یاد بیاور: compiler پیش از اجرا کل source code را بررسی می‌کند. اگر یک `;` جا بیفتد، پیام `expected \';\'` می‌گیری و برنامه‌ای ساخته نمی‌شود.',
-                        de: 'Erinnere dich an [[lesson:C.L01]]: Der Compiler prüft vor dem Ausführen den ganzen Source Code. Fehlt ein `;`, bekommst du die Meldung `expected \';\'`, und es entsteht kein Programm.',
+                        de: 'Erinnere dich an [[lesson:C.L01]]: Der Compiler prüft vor dem Ausführen den ganzen Sourcecode. Fehlt ein `;`, bekommst du die Meldung `expected \';\'`, und es entsteht kein Programm.',
                         en: 'Remember from [[lesson:C.L01]]: the compiler checks the whole source code before anything runs. If a `;` is missing, you get the message `expected \';\'` and no program is built.',
                     } },
                 ] },
@@ -752,9 +761,9 @@ int main(void) {
                         en: 'A [[term:T.warning]] is different: the program is built, but the compiler saw something suspicious. Do not ignore warnings; most of the time they point to a real problem.',
                     } },
                     { type: 'note', kind: 'platform', text: {
-                        fa: 'compiler این صفحه (XCC) سخت‌گیرتر و کم‌حرف‌تر از gcc است: بعضی چیزهایی را که gcc فقط warning می‌داند، خطا می‌داند، و نام‌های ناشناخته را پیش از linker می‌گیرد. شکل پیام‌ها هم فرق دارد. ولی خطا در هر دو همان است.',
-                        de: 'Der Compiler dieser Seite (XCC) ist strenger und wortkarger als gcc: Manches, wofür gcc nur warnt, ist für ihn ein Fehler, und unbekannte Namen findet er schon vor dem Linker. Auch die Form der Meldungen ist anders. Der Fehler ist in beiden aber derselbe.',
-                        en: 'The compiler on this page (XCC) is stricter and shorter than gcc: some things gcc only warns about are errors for it, and it catches unknown names before the linker. Its messages look different too. But the mistake is the same in both.',
+                        fa: 'compiler این صفحه (XCC) کم‌حرف‌تر از gcc است و پیام‌هایش شکل دیگری دارند؛ بعضی چیزهایی را هم که gcc فقط warning می‌داند، خطا می‌داند. ولی خطا در هر دو همان است.',
+                        de: 'Der Compiler dieser Seite (XCC) ist wortkarger als gcc, und seine Meldungen sehen anders aus; manches, wofür gcc nur warnt, ist für ihn ein Fehler. Der Fehler ist in beiden aber derselbe.',
+                        en: 'The compiler on this page (XCC) is shorter than gcc and its messages look different; some things gcc only warns about are errors for it. But the mistake is the same in both.',
                     } },
                 ] },
 
@@ -770,7 +779,7 @@ int main(void) {
                 ] },
 
                 { block: 'mistakes', content: [
-                    { type: 'mistakes', refs: ['E-03', 'E-04', 'W-01'] },
+                    { type: 'mistakes', refs: ['E-03', 'E-04', 'E-07'] },
                 ] },
 
                 { block: 'errors', content: [
@@ -802,25 +811,25 @@ int main(void) {
                         },
                     } },
                     { type: 'p', text: {
-                        fa: 'این یکی از compiler رد می‌شود، ولی linker آن را نمی‌پذیرد.',
-                        de: 'Dieses Programm kommt am Compiler vorbei, aber der Linker lehnt es ab.',
-                        en: 'This one gets past the compiler, but the linker rejects it.',
+                        fa: 'در این یکی فقط یک حرف جا افتاده.',
+                        de: 'In diesem Programm fehlt nur ein Buchstabe.',
+                        en: 'Only one letter is missing in this one.',
                     } },
                     { type: 'diagnostic', ref: 'C.L02.K09', explain: {
                         where: {
-                            fa: 'gcc اول یک warning برای خط 4 می‌دهد. بعد linker، که شمارهٔ خط نمی‌شناسد، فقط نام را می‌گوید: `prinf`.',
-                            de: 'gcc gibt zuerst eine Warnung zu Zeile 4 aus. Danach nennt der Linker, der keine Zeilennummern kennt, nur den Namen: `prinf`.',
-                            en: 'gcc first gives a warning for line 4. Then the linker, which knows no line numbers, only names the name: `prinf`.',
+                            fa: 'خط 4، همان‌جا که `prinf` آمده.',
+                            de: 'Zeile 4, dort, wo `prinf` steht.',
+                            en: 'Line 4, where `prinf` appears.',
                         },
                         what: {
-                            fa: '`implicit declaration of function \'prinf\'; did you mean \'printf\'?` یعنی «این نام را نمی‌شناسم؛ منظورت `printf` بود؟». `undefined reference` برای `prinf` یعنی «هیچ‌جا تابعی با این نام پیدا نکردم».',
-                            de: '`implicit declaration of function \'prinf\'; did you mean \'printf\'?` heißt „diesen Namen kenne ich nicht; meintest du `printf`?“. `undefined reference` zu `prinf` heißt „nirgends gibt es eine Funktion mit diesem Namen“.',
-                            en: '`implicit declaration of function \'prinf\'; did you mean \'printf\'?` means "I do not know this name; did you mean `printf`?". `undefined reference` to `prinf` means "there is no function with this name anywhere".',
+                            fa: '`implicit declaration of function \'prinf\'; did you mean \'printf\'?` یعنی «این نام را نمی‌شناسم؛ منظورت `printf` بود؟».',
+                            de: '`implicit declaration of function \'prinf\'; did you mean \'printf\'?` heißt „diesen Namen kenne ich nicht; meintest du `printf`?“.',
+                            en: '`implicit declaration of function \'prinf\'; did you mean \'printf\'?` means "I do not know this name; did you mean `printf`?".',
                         },
                         why: {
-                            fa: 'یک حرف جا افتاده و نام دیگر همان نام نیست. C نام‌ها را حدس نمی‌زند.',
-                            de: 'Ein Buchstabe fehlt, und schon ist es ein anderer Name. C rät keine Namen.',
-                            en: 'One letter is missing, and it is a different name. C does not guess names.',
+                            fa: 'یک حرف جا افتاده و نام دیگر همان نام نیست. C نام‌ها را حدس نمی‌زند: هر نامی را که به کار می‌بری، compiler باید از پیش بشناسد.',
+                            de: 'Ein Buchstabe fehlt, und schon ist es ein anderer Name. C rät keine Namen: Jeden Namen, den du benutzt, muss der Compiler vorher kennen.',
+                            en: 'One letter is missing, and it is a different name. C does not guess names: the compiler must already know every name you use.',
                         },
                         fix: {
                             fa: '`prinf` را به `printf` تبدیل کن. پیشنهاد `did you mean` اغلب درست است.',
@@ -829,9 +838,36 @@ int main(void) {
                         },
                     } },
                     { type: 'p', text: {
-                        fa: 'و این یکی با gcc اجرا هم می‌شود، ولی warning می‌دهد. compiler این صفحه آن را نمی‌پذیرد.',
-                        de: 'Und dieses Programm läuft mit gcc sogar, aber mit Warnung. Der Compiler dieser Seite nimmt es nicht an.',
-                        en: 'And this one even runs with gcc, but with a warning. The compiler on this page does not accept it.',
+                        fa: 'این یکی از compiler رد می‌شود، ولی linker آن را نمی‌پذیرد.',
+                        de: 'Dieses Programm kommt am Compiler vorbei, aber der Linker lehnt es ab.',
+                        en: 'This one gets past the compiler, but the linker rejects it.',
+                    } },
+                    { type: 'diagnostic', ref: 'C.L02.K14', explain: {
+                        where: {
+                            fa: 'پیام شمارهٔ خط ندارد، چون از linker است، نه از compiler. linker فقط نام را می‌گوید: `main`.',
+                            de: 'Die Meldung hat keine Zeilennummer, denn sie kommt vom Linker, nicht vom Compiler. Der Linker nennt nur den Namen: `main`.',
+                            en: 'The message has no line number, because it comes from the linker, not the compiler. The linker only names the name: `main`.',
+                        },
+                        what: {
+                            fa: '`undefined reference to \'main\'` یعنی «هیچ‌جا تابعی به نام `main` پیدا نکردم». compiler این صفحه همین را به زبان خودش می‌گوید: `Unresolved: env.__main_argc_argv`، یعنی `main` را پیدا نکرد.',
+                            de: '`undefined reference to \'main\'` heißt „nirgends gibt es eine Funktion namens `main`“. Der Compiler dieser Seite sagt dasselbe auf seine Art: `Unresolved: env.__main_argc_argv`, also: kein `main` gefunden.',
+                            en: '`undefined reference to \'main\'` means "there is no function called `main` anywhere". The compiler on this page says the same in its own way: `Unresolved: env.__main_argc_argv`, that is, no `main` found.',
+                        },
+                        why: {
+                            fa: 'برای compiler، `mian` یک تابع درست و معمولی است و خطایی نمی‌بیند. ولی هر برنامه از `main` شروع می‌شود، و linker که برنامه را سر هم می‌کند، آن را پیدا نمی‌کند.',
+                            de: 'Für den Compiler ist `mian` eine ganz normale, korrekte Funktion; er sieht keinen Fehler. Aber jedes Programm beginnt bei `main`, und der Linker, der das Programm zusammensetzt, findet es nicht.',
+                            en: 'To the compiler, `mian` is an ordinary, correct function, so it sees no mistake. But every program starts at `main`, and the linker, which puts the program together, cannot find it.',
+                        },
+                        fix: {
+                            fa: '`mian` را به `main` تبدیل کن.',
+                            de: 'Ändere `mian` in `main`.',
+                            en: 'Change `mian` to `main`.',
+                        },
+                    } },
+                    { type: 'p', text: {
+                        fa: 'و در این یکی، ایراد در خطی است که اصلاً نیست.',
+                        de: 'Und in diesem Programm liegt der Fehler in einer Zeile, die gar nicht da ist.',
+                        en: 'And in this one, the problem is a line that is not there at all.',
                     } },
                     { type: 'diagnostic', ref: 'C.L02.K10', explain: {
                         where: {
@@ -845,15 +881,23 @@ int main(void) {
                             en: 'gcc says it does not know `printf` and gives the fix itself in the `note`: `include \'<stdio.h>\'`.',
                         },
                         why: {
-                            fa: '`printf` در کتابخانه است و `#include <stdio.h>` آن را به compiler معرفی می‌کند. gcc با حدس زدن ادامه می‌دهد؛ XCC حدس نمی‌زند.',
-                            de: '`printf` steht in der Bibliothek, und `#include <stdio.h>` macht es dem Compiler bekannt. gcc macht mit einer Vermutung weiter; XCC vermutet nicht.',
-                            en: '`printf` lives in the library, and `#include <stdio.h>` introduces it to the compiler. gcc carries on with a guess; XCC does not guess.',
+                            fa: '`printf` در کتابخانه است و `#include <stdio.h>` آن را به compiler معرفی می‌کند. بدون آن، compiler نام `printf` را نمی‌شناسد، درست مثل `prinf`.',
+                            de: '`printf` steht in der Bibliothek, und `#include <stdio.h>` macht es dem Compiler bekannt. Ohne diese Zeile kennt der Compiler den Namen `printf` nicht, genau wie `prinf`.',
+                            en: '`printf` lives in the library, and `#include <stdio.h>` introduces it to the compiler. Without that line the compiler does not know the name `printf`, just like `prinf`.',
                         },
                         fix: {
                             fa: '`#include <stdio.h>` و یک خط خالی را بالای فایل اضافه کن.',
                             de: 'Füg `#include <stdio.h>` und eine Leerzeile oben in die Datei ein.',
                             en: 'Add `#include <stdio.h>` and an empty line at the top of the file.',
                         },
+                    } },
+                ] },
+
+                { block: 'standard', content: [
+                    { type: 'note', kind: 'platform', text: {
+                        fa: 'نسخه‌های قدیمی gcc (13 و پیش از آن) برای نام ناشناخته فقط warning می‌دادند و برنامه را می‌ساختند؛ با `prinf` بعد linker با `undefined reference` می‌ایستاد. از gcc 14 (2024)، و در clang روی Mac، این خطاست. اگر کامپیوتر دانشگاه gcc قدیمی دارد، این warning را مثل خطا بخوان.',
+                        de: 'Ältere gcc-Versionen (13 und früher) warnten bei einem unbekannten Namen nur und bauten das Programm trotzdem; bei `prinf` hielt dann der Linker mit `undefined reference` an. Seit gcc 14 (2024) und in clang auf dem Mac ist das ein Fehler. Hat der Rechner an deiner Uni ein altes gcc, lies diese Warnung wie einen Fehler.',
+                        en: 'Older gcc versions (13 and before) only warned about an unknown name and built the program anyway; with `prinf`, the linker then stopped with `undefined reference`. Since gcc 14 (2024), and in clang on a Mac, it is an error. If your university\'s computer has an old gcc, read that warning as an error.',
                     } },
                 ] },
 
@@ -881,7 +925,7 @@ int main(void) {
 
                 { block: 'ai', content: [
                     { type: 'p', text: {
-                        fa: 'با این پرامپت، دستیار برنامه‌ای با یک اشتباه می‌سازد و تو پیام compiler را پیش از دیدنش حدس می‌زنی. اگر برنامهٔ خودت کامپایل نشد، از پرامپت «خواندن خطا» استفاده کن.',
+                        fa: 'با این پرامپت، دستیار برنامه‌ای با یک اشتباه می‌سازد و تو پیام compiler را پیش از دیدنش حدس می‌زنی. اگر برنامهٔ خودت compile نشد، از پرامپت «خواندن خطا» استفاده کن.',
                         de: 'Mit diesem Prompt baut der Assistent ein Programm mit einem Fehler, und du sagst die Compiler-Meldung voraus, bevor du sie siehst. Wenn dein eigenes Programm nicht kompiliert, nimm den Prompt „Fehler lesen“.',
                         en: 'With this prompt, the assistant builds a program with one mistake and you predict the compiler message before you see it. If your own program does not compile, use the "Read my error" prompt.',
                     } },
@@ -939,7 +983,7 @@ int main(void) {
                           tests: [{ id: 'C.L02.X02.02.T01', purpose: 'normal' },
                                   { id: 'C.L02.X02.02.T02', purpose: 'mistake', mistake: 'E-04' }],
                           why: { fa: '`}` پایانی `main` جا افتاده بود (`E-04`).', de: 'Die schließende `}` von `main` fehlte (`E-04`).', en: 'The closing `}` of `main` was missing (`E-04`).' } },
-                        { id: 'C.L02.X02.03', broken: 'C.L02.K13', activates: ['W-01'],
+                        { id: 'C.L02.X02.03', broken: 'C.L02.K13', activates: ['E-07'],
                           prompt: { fa: 'خطا در خطی است که وجود ندارد. پیدایش کن.', de: 'Der Fehler steckt in einer Zeile, die es nicht gibt. Finde sie.', en: 'The mistake is in a line that is not there. Find it.' },
                           solution: String.raw`#include <stdio.h>
 
@@ -950,15 +994,15 @@ int main(void) {
 }
 `,
                           tests: [{ id: 'C.L02.X02.03.T01', purpose: 'normal' },
-                                  { id: 'C.L02.X02.03.T02', purpose: 'mistake', mistake: 'W-01' }],
-                          why: { fa: '`#include <stdio.h>` در بالای فایل نبود (`W-01`).', de: '`#include <stdio.h>` fehlte oben in der Datei (`W-01`).', en: '`#include <stdio.h>` was missing at the top of the file (`W-01`).' } },
+                                  { id: 'C.L02.X02.03.T02', purpose: 'mistake', mistake: 'E-07' }],
+                          why: { fa: '`#include <stdio.h>` در بالای فایل نبود (`E-07`).', de: '`#include <stdio.h>` fehlte oben in der Datei (`E-07`).', en: '`#include <stdio.h>` was missing at the top of the file (`E-07`).' } },
                     ],
                 },
                 {
                     id: 'C.L02.X03', type: 'B.write',
                     title: { fa: 'از صفر بنویس', de: 'Schreib es von null', en: 'Write it from zero' },
                     items: [
-                        { id: 'C.L02.X03.01', activates: ['W-01', 'E-04'],
+                        { id: 'C.L02.X03.01', activates: ['E-07', 'E-04'],
                           prompt: { fa: 'این بار ویرایشگر خالی است. کل برنامه را خودت بنویس، با قاب کامل، طوری که دقیقاً این دو خط را چاپ کند:\n`I can read`\n`error messages.`', de: 'Diesmal ist der Editor leer. Schreib das ganze Programm selbst, mit vollständigem Rahmen, sodass es genau diese zwei Zeilen ausgibt:\n`I can read`\n`error messages.`', en: 'This time the editor is empty. Write the whole program yourself, with the complete frame, so it prints exactly these two lines:\n`I can read`\n`error messages.`' },
                           starter: '',
                           solution: String.raw`#include <stdio.h>
@@ -970,7 +1014,7 @@ int main(void) {
 }
 `,
                           tests: [{ id: 'C.L02.X03.01.T01', purpose: 'normal' },
-                                  { id: 'C.L02.X03.01.T02', purpose: 'mistake', mistake: 'W-01', variant: String.raw`int main(void) {
+                                  { id: 'C.L02.X03.01.T02', purpose: 'mistake', mistake: 'E-07', variant: String.raw`int main(void) {
     printf("I can read\n");
     printf("error messages.\n");
     return 0;
@@ -1044,7 +1088,7 @@ int main(void) {
 
                 { block: 'prior', content: [
                     { type: 'p', text: {
-                        fa: 'از [[lesson:C.L01]]: `printf` نویسه‌های بین دو `"` را عیناً چاپ می‌کند و `\\n` سر خط می‌رود. از [[lesson:C.L02]]: اگر کامپایل نشد، اولین پیام را بخوان.',
+                        fa: 'از [[lesson:C.L01]]: `printf` نویسه‌های بین دو `"` را عیناً چاپ می‌کند و `\\n` سر خط می‌رود. از [[lesson:C.L02]]: اگر compile نشد، اولین پیام را بخوان.',
                         de: 'Aus [[lesson:C.L01]]: `printf` gibt die Zeichen zwischen den `"` genau so aus, und `\\n` beginnt eine neue Zeile. Aus [[lesson:C.L02]]: Wenn es nicht kompiliert, lies die erste Meldung.',
                         en: 'From [[lesson:C.L01]]: `printf` prints the characters between the `"` exactly as they are, and `\\n` starts a new line. From [[lesson:C.L02]]: if it does not compile, read the first message.',
                     } },
@@ -1228,7 +1272,7 @@ int main(void) {
                     title: { fa: 'درستش کن', de: 'Repariere es', en: 'Fix it' },
                     items: [
                         { id: 'C.L03.X02.01', broken: 'C.L03.K17', activates: ['E-05'],
-                          prompt: { fa: 'کامپایل نمی‌شود. پیام را بخوان؛ چیزی که کم است شاید همان نباشد که پیام نام می‌برد.', de: 'Es kompiliert nicht. Lies die Meldung; was fehlt, ist vielleicht nicht das, was die Meldung nennt.', en: 'It does not compile. Read the message; what is missing may not be what the message names.' },
+                          prompt: { fa: 'compile نمی‌شود. پیام را بخوان؛ چیزی که کم است شاید همان نباشد که پیام نام می‌برد.', de: 'Es kompiliert nicht. Lies die Meldung; was fehlt, ist vielleicht nicht das, was die Meldung nennt.', en: 'It does not compile. Read the message; what is missing may not be what the message names.' },
                           solution: String.raw`#include <stdio.h>
 
 int main(void) {
@@ -1252,7 +1296,7 @@ int main(void) {
                                   { id: 'C.L03.X02.02.T02', purpose: 'mistake', mistake: 'E-06' }],
                           why: { fa: 'هر `"` درون متن به `\\"` نیاز دارد (`E-06`).', de: 'Jedes `"` im Text braucht ein `\\"` (`E-06`).', en: 'Every `"` inside the text needs to be `\\"` (`E-06`).' } },
                         { id: 'C.L03.X02.03', broken: 'C.L03.K19', activates: ['U-01'],
-                          prompt: { fa: 'این برنامه کامپایل می‌شود، ولی خروجی‌اش `6 x 7 = 42` نیست. چرا؟ درستش کن.', de: 'Dieses Programm kompiliert, aber es gibt nicht `6 x 7 = 42` aus. Warum? Repariere es.', en: 'This program compiles, but it does not print `6 x 7 = 42`. Why? Fix it.' },
+                          prompt: { fa: 'این برنامه compile می‌شود، ولی خروجی‌اش `6 x 7 = 42` نیست. چرا؟ درستش کن.', de: 'Dieses Programm kompiliert, aber es gibt nicht `6 x 7 = 42` aus. Warum? Repariere es.', en: 'This program compiles, but it does not print `6 x 7 = 42`. Why? Fix it.' },
                           solution: String.raw`#include <stdio.h>
 
 int main(void) {

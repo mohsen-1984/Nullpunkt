@@ -226,8 +226,8 @@
      {
       "line": 5,
       "col": 5,
-      "severity": "warning",
-      "message": "passing argument 1 of 'printf' makes pointer from integer without a cast [-Wint-conversion]"
+      "severity": "error",
+      "message": "passing argument 1 of 'printf' makes pointer from integer without a cast [-Werror=int-conversion]"
      },
      {
       "line": 7,
@@ -242,7 +242,7 @@
       "message": "expected ';' before '}' token"
      }
     ],
-    "log": "main.c: In function 'main':\nmain.c:4:12: warning: missing terminating \" character\nmain.c:4:12: error: missing terminating \" character\nmain.c:5:22: error: expected ')' before ';' token\nmain.c:4:11: note: to match this '('\nmain.c:5:5: warning: passing argument 1 of 'printf' makes pointer from integer without a cast [-Wint-conversion]\nIn file included from main.c:1:\n/usr/include/stdio.h:363:43: note: expected 'const char * restrict' but argument is of type 'int'\nmain.c:7:1: warning: format not a string literal and no format arguments [-Wformat-security]\nmain.c:6:14: error: expected ';' before '}' token"
+    "log": "main.c: In function 'main':\nmain.c:4:12: warning: missing terminating \" character\nmain.c:4:12: error: missing terminating \" character\nmain.c:5:22: error: expected ')' before ';' token\nmain.c:4:11: note: to match this '('\nmain.c:5:5: error: passing argument 1 of 'printf' makes pointer from integer without a cast [-Werror=int-conversion]\nIn file included from main.c:1:\n/usr/include/stdio.h:363:43: note: expected 'const char * restrict' but argument is of type 'int'\nmain.c:7:1: warning: format not a string literal and no format arguments [-Wformat-security]\nmain.c:6:14: error: expected ';' before '}' token\ncc1: some warnings being treated as errors"
    },
    "xcc": {
     "compiled": false,
@@ -394,18 +394,11 @@
      {
       "line": 5,
       "col": 5,
-      "severity": "warning",
-      "message": "implicit declaration of function 'Printf'; did you mean 'printf'? [-Wimplicit-function-declaration]"
-     },
-     {
-      "line": null,
-      "col": null,
       "severity": "error",
-      "message": "undefined reference to `Printf'",
-      "stage": "link"
+      "message": "implicit declaration of function 'Printf'; did you mean 'printf'? [-Werror=implicit-function-declaration]"
      }
     ],
-    "log": "main.c: In function 'main':\nmain.c:5:5: warning: implicit declaration of function 'Printf'; did you mean 'printf'? [-Wimplicit-function-declaration]\n/usr/bin/ld: main.o: in function `main':\nmain.c:(.text+0x27): undefined reference to `Printf'\ncollect2: error: ld returned 1 exit status"
+    "log": "main.c: In function 'main':\nmain.c:5:5: error: implicit declaration of function 'Printf'; did you mean 'printf'? [-Werror=implicit-function-declaration]\ncc1: some warnings being treated as errors"
    },
    "xcc": {
     "compiled": false,
@@ -521,13 +514,13 @@
   "C.L02.K06": {
    "hash": "3274ed9ea246fee2",
    "gcc": {
-    "compiled": true,
+    "compiled": false,
     "diagnostics": [
      {
       "line": 2,
       "col": 5,
-      "severity": "warning",
-      "message": "implicit declaration of function 'printf' [-Wimplicit-function-declaration]"
+      "severity": "error",
+      "message": "implicit declaration of function 'printf' [-Werror=implicit-function-declaration]"
      },
      {
       "line": 2,
@@ -548,7 +541,7 @@
       "message": "include '<stdio.h>' or provide a declaration of 'printf'"
      }
     ],
-    "log": "main.c: In function 'main':\nmain.c:2:5: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]\nmain.c:2:5: note: include '<stdio.h>' or provide a declaration of 'printf'\nmain.c:2:5: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]\nmain.c:2:5: note: include '<stdio.h>' or provide a declaration of 'printf'"
+    "log": "main.c: In function 'main':\nmain.c:2:5: error: implicit declaration of function 'printf' [-Werror=implicit-function-declaration]\nmain.c:2:5: note: include '<stdio.h>' or provide a declaration of 'printf'\nmain.c:2:5: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]\nmain.c:2:5: note: include '<stdio.h>' or provide a declaration of 'printf'\ncc1: some warnings being treated as errors"
    },
    "xcc": {
     "compiled": false,
@@ -620,8 +613,8 @@
      {
       "line": 5,
       "col": 5,
-      "severity": "warning",
-      "message": "passing argument 1 of 'printf' makes pointer from integer without a cast [-Wint-conversion]"
+      "severity": "error",
+      "message": "passing argument 1 of 'printf' makes pointer from integer without a cast [-Werror=int-conversion]"
      },
      {
       "line": 8,
@@ -636,7 +629,7 @@
       "message": "expected ';' before '}' token"
      }
     ],
-    "log": "main.c: In function 'main':\nmain.c:4:12: warning: missing terminating \" character\nmain.c:4:12: error: missing terminating \" character\nmain.c:5:24: error: expected ')' before ';' token\nmain.c:4:11: note: to match this '('\nmain.c:5:5: warning: passing argument 1 of 'printf' makes pointer from integer without a cast [-Wint-conversion]\nIn file included from main.c:1:\n/usr/include/stdio.h:363:43: note: expected 'const char * restrict' but argument is of type 'int'\nmain.c:8:1: warning: format not a string literal and no format arguments [-Wformat-security]\nmain.c:7:14: error: expected ';' before '}' token"
+    "log": "main.c: In function 'main':\nmain.c:4:12: warning: missing terminating \" character\nmain.c:4:12: error: missing terminating \" character\nmain.c:5:24: error: expected ')' before ';' token\nmain.c:4:11: note: to match this '('\nmain.c:5:5: error: passing argument 1 of 'printf' makes pointer from integer without a cast [-Werror=int-conversion]\nIn file included from main.c:1:\n/usr/include/stdio.h:363:43: note: expected 'const char * restrict' but argument is of type 'int'\nmain.c:8:1: warning: format not a string literal and no format arguments [-Wformat-security]\nmain.c:7:14: error: expected ';' before '}' token\ncc1: some warnings being treated as errors"
    },
    "xcc": {
     "compiled": false,
@@ -659,18 +652,11 @@
      {
       "line": 4,
       "col": 5,
-      "severity": "warning",
-      "message": "implicit declaration of function 'prinf'; did you mean 'printf'? [-Wimplicit-function-declaration]"
-     },
-     {
-      "line": null,
-      "col": null,
       "severity": "error",
-      "message": "undefined reference to `prinf'",
-      "stage": "link"
+      "message": "implicit declaration of function 'prinf'; did you mean 'printf'? [-Werror=implicit-function-declaration]"
      }
     ],
-    "log": "main.c: In function 'main':\nmain.c:4:5: warning: implicit declaration of function 'prinf'; did you mean 'printf'? [-Wimplicit-function-declaration]\n/usr/bin/ld: main.o: in function `main':\nmain.c:(.text+0x18): undefined reference to `prinf'\ncollect2: error: ld returned 1 exit status"
+    "log": "main.c: In function 'main':\nmain.c:4:5: error: implicit declaration of function 'prinf'; did you mean 'printf'? [-Werror=implicit-function-declaration]\ncc1: some warnings being treated as errors"
    },
    "xcc": {
     "compiled": false,
@@ -694,13 +680,13 @@
   "C.L02.K10": {
    "hash": "85b7394d71098a1b",
    "gcc": {
-    "compiled": true,
+    "compiled": false,
     "diagnostics": [
      {
       "line": 2,
       "col": 5,
-      "severity": "warning",
-      "message": "implicit declaration of function 'printf' [-Wimplicit-function-declaration]"
+      "severity": "error",
+      "message": "implicit declaration of function 'printf' [-Werror=implicit-function-declaration]"
      },
      {
       "line": 2,
@@ -721,7 +707,7 @@
       "message": "include '<stdio.h>' or provide a declaration of 'printf'"
      }
     ],
-    "log": "main.c: In function 'main':\nmain.c:2:5: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]\nmain.c:2:5: note: include '<stdio.h>' or provide a declaration of 'printf'\nmain.c:2:5: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]\nmain.c:2:5: note: include '<stdio.h>' or provide a declaration of 'printf'"
+    "log": "main.c: In function 'main':\nmain.c:2:5: error: implicit declaration of function 'printf' [-Werror=implicit-function-declaration]\nmain.c:2:5: note: include '<stdio.h>' or provide a declaration of 'printf'\nmain.c:2:5: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]\nmain.c:2:5: note: include '<stdio.h>' or provide a declaration of 'printf'\ncc1: some warnings being treated as errors"
    },
    "xcc": {
     "compiled": false,
@@ -756,18 +742,11 @@
      {
       "line": 4,
       "col": 5,
-      "severity": "warning",
-      "message": "implicit declaration of function 'print'; did you mean 'printf'? [-Wimplicit-function-declaration]"
-     },
-     {
-      "line": null,
-      "col": null,
       "severity": "error",
-      "message": "undefined reference to `print'",
-      "stage": "link"
+      "message": "implicit declaration of function 'print'; did you mean 'printf'? [-Werror=implicit-function-declaration]"
      }
     ],
-    "log": "main.c: In function 'main':\nmain.c:4:5: warning: implicit declaration of function 'print'; did you mean 'printf'? [-Wimplicit-function-declaration]\n/usr/bin/ld: main.o: in function `main':\nmain.c:(.text+0x18): undefined reference to `print'\ncollect2: error: ld returned 1 exit status"
+    "log": "main.c: In function 'main':\nmain.c:4:5: error: implicit declaration of function 'print'; did you mean 'printf'? [-Werror=implicit-function-declaration]\ncc1: some warnings being treated as errors"
    },
    "xcc": {
     "compiled": false,
@@ -818,13 +797,13 @@
   "C.L02.K13": {
    "hash": "945ba6a7eb4b1815",
    "gcc": {
-    "compiled": true,
+    "compiled": false,
     "diagnostics": [
      {
       "line": 2,
       "col": 5,
-      "severity": "warning",
-      "message": "implicit declaration of function 'printf' [-Wimplicit-function-declaration]"
+      "severity": "error",
+      "message": "implicit declaration of function 'printf' [-Werror=implicit-function-declaration]"
      },
      {
       "line": 2,
@@ -845,7 +824,7 @@
       "message": "include '<stdio.h>' or provide a declaration of 'printf'"
      }
     ],
-    "log": "main.c: In function 'main':\nmain.c:2:5: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]\nmain.c:2:5: note: include '<stdio.h>' or provide a declaration of 'printf'\nmain.c:2:5: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]\nmain.c:2:5: note: include '<stdio.h>' or provide a declaration of 'printf'"
+    "log": "main.c: In function 'main':\nmain.c:2:5: error: implicit declaration of function 'printf' [-Werror=implicit-function-declaration]\nmain.c:2:5: note: include '<stdio.h>' or provide a declaration of 'printf'\nmain.c:2:5: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]\nmain.c:2:5: note: include '<stdio.h>' or provide a declaration of 'printf'\ncc1: some warnings being treated as errors"
    },
    "xcc": {
     "compiled": false,
@@ -870,6 +849,27 @@
      }
     ],
     "log": "main.c(2): `printf' undeclared\n    printf(\"Keep calm\\n\");\n    ^~~~~~\nmain.c(2): cannot call except function\n    printf(\"Keep calm\\n\");\n    ^~~~~~\nmain.c(3): cannot call except function\n    printf(\"and read the message\\n\");\n    ^~~~~~"
+   }
+  },
+  "C.L02.K14": {
+   "hash": "328813605632d9c6",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": null,
+      "col": null,
+      "severity": "error",
+      "message": "undefined reference to `main'",
+      "stage": "link"
+     }
+    ],
+    "log": "/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o: in function `_start':\n(.text+0x1b): undefined reference to `main'\ncollect2: error: ld returned 1 exit status"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [],
+    "log": "Unresolved: env.__main_argc_argv"
    }
   },
   "C.L03.K01": {

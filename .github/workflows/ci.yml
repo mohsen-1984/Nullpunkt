@@ -9,13 +9,44 @@ permissions:
   contents: read
 
 jobs:
+  # Generated results (data/generated/expect.js) come from the reference gcc, which an author's own machine may not
+  # have. On a pull request from this repository, this job records them again with the reference gcc and, if they
+  # changed, commits them to the pull request's branch. Pushes made with GITHUB_TOKEN start no new run, so push
+  # once more (or re-run) to get a green check on the new head.
+  regen:
+    name: Record compiler results (reference gcc)
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Record with gcc and XCC, commit if anything changed
+        run: |
+          gcc --version | head -1
+          if node tools/gen-expect.js --check; then echo "up to date"; exit 0; fi
+          node tools/gen-expect.js
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/generated/expect.js
+          git commit -m "Record compiler results with $(gcc -dumpfullversion | sed 's/^/gcc /')"
+          git push
+
   content:
     name: Lessons (checker, generated results, pages)
-    # pinned: generated compiler messages depend on the gcc version (gcc 13.3 on Ubuntu 24.04)
-    runs-on: ubuntu-24.04
+    # pinned: generated compiler messages depend on the gcc version — gcc 15, the default of Ubuntu 26.04 LTS and so of
+    # most learners' WSL and Linux (C.FLG.01); the regen job above records them
+    needs: regen
+    if: always() && needs.regen.result != 'failure'
+    runs-on: ubuntu-26.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - name: Generated results are up to date (gcc and XCC)
@@ -33,10 +64,10 @@ jobs:
 
   lab:
     name: Runner lab (Node + Chrome)
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - name: Expected outputs match gcc
@@ -50,10 +81,10 @@ jobs:
 
   vendor:
     name: vendor/wcc is reproducible
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - name: Install llvm-ar
