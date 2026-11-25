@@ -1,0 +1,116 @@
+/* The registry: release, languages, files to load, and the catalog — the learning path (docs/rules/C00-conventions.md).
+   Titles and positions of chapters and lessons are defined only here (S00-schema: catalog). */
+(function (g) {
+    var N = g.Nullpunkt = g.Nullpunkt || { files: {} };
+    N.registry = {
+        release: { version: "0.1.0", date: "2026-11-25" },
+        languages: ["fa", "de", "en"],
+        languageNames: { fa: "فارسی", de: "Deutsch", en: "English" },
+        files: ["S00R", "S00G", "S00P", "C00", "C00M", "C01"],
+        catalog: [{
+            id: "C", standard: "C17",
+            title: { fa: "زبان C", de: "Die Sprache C", en: "The C Language" },
+            chapters: [
+            { id: "C01", title: {"fa": "شروع", "de": "Erste Schritte", "en": "Getting Started"}, review: "C01.REV", langStatus: { fa: "draft", de: "draft", en: "draft" },
+                lessons: [
+                    { id: "C.L01", status: "written", file: "C01",
+                        title: {"fa": "برنامه چیست و کامپایلر چه می‌کند", "de": "Was ein Programm ist", "en": "What a Program Is"},
+                        minutes: 20, prereq: [], introduces: ["K.fn-printf", "K.esc-n", "K.comment-line"],
+                        topics: [{ id: "io", stage: 1 }, { id: "build", stage: 1 }],
+                        cando: [
+                            { fa: "بتوانی در یک جمله بگویی کامپایلر چه می‌کند.", de: "Du kannst in einem Satz sagen, was ein Compiler macht.", en: "You can say in one sentence what a compiler does." },
+                            { fa: "بتوانی برنامه‌ای بنویسی و اجرا کنی که یک خط متن چاپ کند.", de: "Du kannst ein Programm schreiben und ausführen, das eine Textzeile ausgibt.", en: "You can write and run a program that prints a line of text." },
+                            { fa: "بتوانی با `\\n` چند خط چاپ کنی و بدانی خط تازه از کجا می‌آید.", de: "Du kannst mit `\\n` mehrere Zeilen ausgeben und weißt, woher ein Zeilenumbruch kommt.", en: "You can print several lines with `\\n` and know where a new line comes from." },
+                            { fa: "بتوانی پیام خطای یک `;` جاافتاده را بخوانی و درستش کنی.", de: "Du kannst die Fehlermeldung zu einem fehlenden `;` lesen und den Fehler beheben.", en: "You can read the error message for a missing `;` and fix it." },
+                            { fa: "بتوانی با `//` در کدت یادداشتی بگذاری که کامپایلر نادیده می‌گیرد.", de: "Du kannst mit `//` eine Notiz in deinen Code schreiben, die der Compiler ignoriert.", en: "You can leave a note in your code with `//` that the compiler ignores." },
+                        ] },
+                    { id: "C.L02", status: "planned", title: {"fa": "خواندن پیام خطا", "de": "Fehlermeldungen lesen", "en": "Reading Error Messages"} },
+                    { id: "C.L03", status: "planned", title: {"fa": "خروجی با printf", "de": "Ausgabe mit printf", "en": "Output with printf"} },
+                ] },
+            { id: "C02", title: {"fa": "مقدار و متغیر", "de": "Werte und Variablen", "en": "Values & Variables"}, review: "C02.REV", langStatus: { fa: "draft", de: "draft", en: "draft" },
+                lessons: [
+                    { id: "C.L04", status: "planned", title: {"fa": "متغیر، شناسه و اعلان", "de": "Variablen, Identifier und Deklarationen", "en": "Variables, Identifiers, Declarations"} },
+                    { id: "C.L05", status: "planned", title: {"fa": "عدد صحیح و اعشاری", "de": "Ganze Zahlen und Kommazahlen", "en": "Whole and Decimal Numbers"} },
+                    { id: "C.L06", status: "planned", title: {"fa": "عبارت و عملگر حسابی", "de": "Ausdrücke und Arithmetik", "en": "Expressions & Arithmetic"} },
+                    { id: "C.L07", status: "planned", title: {"fa": "نویسه و کد ASCII", "de": "Zeichen und ASCII", "en": "Characters & ASCII"} },
+                    { id: "C.L08", status: "planned", title: {"fa": "قالب‌بندی خروجی", "de": "Formatierte Ausgabe", "en": "Formatted Output"} },
+                ] },
+            { id: "C03", title: {"fa": "ورودی", "de": "Eingabe", "en": "Input"}, review: "C03.REV", langStatus: { fa: "draft", de: "draft", en: "draft" },
+                lessons: [
+                    { id: "C.L09", status: "planned", title: {"fa": "خواندن ورودی با scanf", "de": "Eingabe mit scanf", "en": "Reading Input with scanf"} },
+                    { id: "C.L10", status: "planned", title: {"fa": "وقتی ورودی خراب است", "de": "Wenn die Eingabe schiefgeht", "en": "When Input Goes Wrong"} },
+                ] },
+            { id: "C04", title: {"fa": "تصمیم", "de": "Entscheidungen", "en": "Decisions"}, review: "C04.REV", langStatus: { fa: "draft", de: "draft", en: "draft" },
+                lessons: [
+                    { id: "C.L11", status: "planned", title: {"fa": "مقایسه و مقدار درست و نادرست", "de": "Vergleiche und Wahrheitswerte", "en": "Comparisons & Truth"} },
+                    { id: "C.L12", status: "planned", title: {"fa": "if و else", "de": "if und else", "en": "if and else"} },
+                    { id: "C.L13", status: "planned", title: {"fa": "ترکیب شرط‌ها", "de": "Bedingungen verknüpfen", "en": "Combining Conditions"} },
+                    { id: "C.L14", status: "planned", title: {"fa": "switch", "de": "switch", "en": "switch"} },
+                ] },
+            { id: "C05", title: {"fa": "تکرار", "de": "Schleifen", "en": "Loops"}, review: "C05.REV", langStatus: { fa: "draft", de: "draft", en: "draft" },
+                lessons: [
+                    { id: "C.L15", status: "planned", title: {"fa": "حلقهٔ while", "de": "Die while-Loop", "en": "The while Loop"} },
+                    { id: "C.L16", status: "planned", title: {"fa": "حلقهٔ for", "de": "Die for-Loop", "en": "The for Loop"} },
+                    { id: "C.L17", status: "planned", title: {"fa": "do-while، break و continue", "de": "do-while, break und continue", "en": "do-while, break, continue"} },
+                    { id: "C.L18", status: "planned", title: {"fa": "حلقهٔ تودرتو", "de": "Verschachtelte Loops", "en": "Nested Loops"} },
+                    { id: "C.L19", status: "planned", title: {"fa": "ردیابی و خطای یکی‌کم‌یکی‌زیاد", "de": "Tracing und Off-by-One", "en": "Tracing & Off-by-One"} },
+                ] },
+            { id: "C06", title: {"fa": "تابع", "de": "Funktionen", "en": "Functions"}, review: "C06.REV", langStatus: { fa: "draft", de: "draft", en: "draft" },
+                lessons: [
+                    { id: "C.L20", status: "planned", title: {"fa": "تعریف و فراخوانی تابع", "de": "Funktionen definieren und aufrufen", "en": "Defining & Calling Functions"} },
+                    { id: "C.L21", status: "planned", title: {"fa": "پارامتر و مقدار بازگشتی", "de": "Parameter und Rückgabewerte", "en": "Parameters & Return Values"} },
+                    { id: "C.L22", status: "planned", title: {"fa": "scope و متغیر محلی", "de": "Scope und lokale Variablen", "en": "Scope & Local Variables"} },
+                    { id: "C.L23", status: "planned", title: {"fa": "stack فراخوانی و recursion", "de": "Call Stack und Rekursion", "en": "The Call Stack & Recursion"} },
+                ] },
+            { id: "C07", title: {"fa": "آرایه و رشته", "de": "Arrays und Strings", "en": "Arrays & Strings"}, review: "C07.REV", langStatus: { fa: "draft", de: "draft", en: "draft" },
+                lessons: [
+                    { id: "C.L24", status: "planned", title: {"fa": "آرایه", "de": "Arrays", "en": "Arrays"} },
+                    { id: "C.L25", status: "planned", title: {"fa": "آرایه و تابع", "de": "Arrays und Funktionen", "en": "Arrays & Functions"} },
+                    { id: "C.L26", status: "planned", title: {"fa": "آرایهٔ دوبعدی", "de": "Zweidimensionale Arrays", "en": "Two-Dimensional Arrays"} },
+                    { id: "C.L27", status: "planned", title: {"fa": "رشته: آرایه‌ای از char", "de": "Strings: Arrays aus char", "en": "Strings: Arrays of char"} },
+                    { id: "C.L28", status: "planned", title: {"fa": "کتابخانهٔ رشته", "de": "Die String-Bibliothek", "en": "The String Library"} },
+                ] },
+            { id: "C08", title: {"fa": "pointer", "de": "Pointer", "en": "Pointers"}, review: "C08.REV", langStatus: { fa: "draft", de: "draft", en: "draft" },
+                lessons: [
+                    { id: "C.L29", status: "planned", title: {"fa": "آدرس و pointer", "de": "Adressen und Pointer", "en": "Addresses & Pointers"} },
+                    { id: "C.L30", status: "planned", title: {"fa": "pointer و تابع", "de": "Pointer und Funktionen", "en": "Pointers & Functions"} },
+                    { id: "C.L31", status: "planned", title: {"fa": "pointer و آرایه", "de": "Pointer und Arrays", "en": "Pointers & Arrays"} },
+                    { id: "C.L32", status: "planned", title: {"fa": "const و pointer رشته", "de": "const und String-Pointer", "en": "const & String Pointers"} },
+                ] },
+            { id: "C09", title: {"fa": "دادهٔ ساختاریافته", "de": "Strukturierte Daten", "en": "Structured Data"}, review: "C09.REV", langStatus: { fa: "draft", de: "draft", en: "draft" },
+                lessons: [
+                    { id: "C.L33", status: "planned", title: {"fa": "struct", "de": "struct", "en": "struct"} },
+                    { id: "C.L34", status: "planned", title: {"fa": "typedef و enum", "de": "typedef und enum", "en": "typedef and enum"} },
+                    { id: "C.L35", status: "planned", title: {"fa": "آرایه‌ای از struct", "de": "Arrays von Structs", "en": "Arrays of Structs"} },
+                ] },
+            { id: "C10", title: {"fa": "حافظهٔ پویا", "de": "Dynamischer Speicher", "en": "Dynamic Memory"}, review: "C10.REV", langStatus: { fa: "draft", de: "draft", en: "draft" },
+                lessons: [
+                    { id: "C.L36", status: "planned", title: {"fa": "malloc و free", "de": "malloc und free", "en": "malloc and free"} },
+                    { id: "C.L37", status: "planned", title: {"fa": "آرایهٔ رشدپذیر", "de": "Wachsende Arrays", "en": "Growing Arrays"} },
+                    { id: "C.L38", status: "planned", title: {"fa": "linked list", "de": "Linked Lists", "en": "Linked Lists"} },
+                    { id: "C.L39", status: "planned", title: {"fa": "اشکال‌های حافظه", "de": "Speicherfehler", "en": "Memory Bugs"} },
+                ] },
+            { id: "C11", title: {"fa": "فایل", "de": "Dateien", "en": "Files"}, review: "C11.REV", langStatus: { fa: "draft", de: "draft", en: "draft" },
+                lessons: [
+                    { id: "C.L40", status: "planned", title: {"fa": "خواندن و نوشتن فایل", "de": "Dateien lesen und schreiben", "en": "Reading & Writing Files"} },
+                    { id: "C.L41", status: "planned", title: {"fa": "خواندن خط به خط و ورودی امن", "de": "Zeilenweise lesen und sichere Eingabe", "en": "Line by Line & Safe Input"} },
+                ] },
+            { id: "C12", title: {"fa": "برنامهٔ واقعی", "de": "Echte Programme", "en": "Real Programs"}, review: "C12.REV", langStatus: { fa: "draft", de: "draft", en: "draft" },
+                lessons: [
+                    { id: "C.L42", status: "planned", title: {"fa": "چند فایل و header", "de": "Mehrere Dateien und Header", "en": "Multiple Files & Headers"} },
+                    { id: "C.L43", status: "planned", title: {"fa": "preprocessor و ماکرو", "de": "Präprozessor und Makros", "en": "The Preprocessor & Macros"} },
+                    { id: "C.L44", status: "planned", title: {"fa": "کامپایل، link و make", "de": "Kompilieren, Linken und make", "en": "Compiling, Linking & make"} },
+                    { id: "C.L45", status: "planned", title: {"fa": "آرگومان خط فرمان", "de": "Kommandozeilenargumente", "en": "Command-Line Arguments"} },
+                ] },
+            { id: "C13", title: {"fa": "کیفیت و فراتر", "de": "Qualität und mehr", "en": "Quality & Beyond"}, review: "C13.REV", langStatus: { fa: "draft", de: "draft", en: "draft" },
+                lessons: [
+                    { id: "C.L46", status: "planned", title: {"fa": "اشکال‌زدایی", "de": "Debugging", "en": "Debugging"} },
+                    { id: "C.L47", status: "planned", title: {"fa": "رفتار تعریف‌نشده", "de": "Undefiniertes Verhalten", "en": "Undefined Behavior"} },
+                    { id: "C.L48", status: "planned", title: {"fa": "بیت و بایت", "de": "Bits und Bytes", "en": "Bits & Bytes"} },
+                    { id: "C.L49", status: "planned", title: {"fa": "تست برنامهٔ خودت", "de": "Den eigenen Code testen", "en": "Testing Your Code"} },
+                    { id: "C.L50", status: "planned", title: {"fa": "function pointer و qsort", "de": "Function Pointer und qsort", "en": "Function Pointers & qsort"} },
+                ] },
+            ],
+        }],
+    };
+})(typeof window !== "undefined" ? window : globalThis);

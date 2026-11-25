@@ -1,0 +1,142 @@
+#!/usr/bin/env node
+/**
+ * Open every written lesson in headless Chrome from file://, in every language, and use it as a learner would:
+ * run the worked example, solve each auto-checked exercise with its model solution and check that the page accepts it,
+ * and submit a wrong answer to see that it is rejected. Fails on any page error.
+ *
+ *   node tools/headless-lesson.js [--shots <dir>]     (--shots saves a full-page screenshot per lesson and language)
+ * Needs google-chrome (or CHROME=path) and Node 22+.
+ */
+'use strict';
+const cp = require('child_process'), path = require('path'), http = require('http'), fs = require('fs');
+const root = path.join(__dirname, '..');
+const Data = require(path.join(root, 'lib/Data.js'));
+const N = Data.loadNode(root);
+const lessons = Object.values(N.index.lesson).filter(L => L.unit).map(L => L.id);
+const shotsAt = process.argv.indexOf('--shots');
+const shots = shotsAt > 0 ? process.argv[shotsAt + 1] : null;
+
+const port = 9800 + Math.floor(Math.random() * 500);
+const chrome = cp.spawn(process.env.CHROME || 'google-chrome', ['--headless=new', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage',
+    '--no-first-run', '--window-size=1100,900', '--remote-debugging-port=' + port, '--user-data-dir=/tmp/np-lesson-' + port, 'about:blank'],
+    { stdio: ['ignore', 'ignore', 'pipe'] });
+chrome.on('error', e => { console.error('cannot start Chrome:', e.message); process.exit(1); });
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const getJson = u => new Promise((res, rej) => http.get(u, r => { let s = ''; r.on('data', d => s += d); r.on('end', () => { try { res(JSON.parse(s)); } catch (e) { rej(e); } }); }).on('error', rej));
+
+// runs inside the page: returns a report of what worked
+const PROBE = `(async () => {
+    const wait = async (f, ms) => { for (let i = 0; i < ms / 50; i++) { const v = f(); if (v) return v; await new Promise(r => setTimeout(r, 50)); } return null; };
+    const N = window.Nullpunkt, ix = NullpunktData.index(N);
+    const L = ix.lesson[new URLSearchParams(location.search).get('lesson')];
+    const rep = { h1: document.querySelector('h1').textContent, blocks: document.querySelectorAll('.np-block').length, ok: [], bad: [] };
+    // worked example
+    const ex = document.querySelector('#example .np-code');
+    ex.querySelector('.np-btn.primary').click();
+    const out = await wait(() => /exit code 0/.test(ex.querySelector('.np-out').textContent) && ex.querySelector('.np-out').textContent, 20000);
+    (out ? rep.ok : rep.bad).push('example runs');
+    // exercises
+    for (const b of L.unit.bands) {
+        for (const it of b.items) {
+            const itemEl = [...document.querySelectorAll('#' + CSS.escape(b.id) + ' .np-item')][b.items.indexOf(it)];
+            const check = [...itemEl.querySelectorAll('.np-btn')].find(x => x.querySelector('.np-icon') && x.textContent.trim() && !x.disabled && x.classList.contains('primary') && !/^(Run|Ausführen|اجرا)$/.test(x.textContent.trim()));
+            if (b.type === 'B.write' || b.type === 'B.fix') {
+                const ed = itemEl.querySelector('.np-editor');
+                // a wrong answer first: the starter or the broken code must not pass
+                ed.value = b.type === 'B.fix' ? ix.code[it.broken].source : it.starter; ed.dispatchEvent(new Event('input'));
+                check.click();
+                const v1 = await wait(() => itemEl.querySelector('.np-result .np-verdict'), 20000);
+                (v1 && !v1.classList.contains('ok') ? rep.ok : rep.bad).push(it.id + ' rejects the start code');
+                ed.value = it.solution; ed.dispatchEvent(new Event('input'));
+                itemEl.querySelector('.np-result').innerHTML = '';
+                check.click();
+                const v2 = await wait(() => itemEl.querySelector('.np-result .np-verdict'), 20000);
+                (v2 && v2.classList.contains('ok') ? rep.ok : rep.bad).push(it.id + ' accepts the model solution');
+            } else if (b.type === 'B.predict') {
+                const g = itemEl.querySelector('.np-guess');
+                g.value = ix.generated.code[it.code].gcc.stdout;
+                check.click();
+                const v = await wait(() => itemEl.querySelector('.np-result .np-verdict'), 5000);
+                (v && v.classList.contains('ok') ? rep.ok : rep.bad).push(it.id + ' accepts the right prediction');
+            } else if (b.type === 'B.parsons') {
+                check.click();
+                const v1 = await wait(() => itemEl.querySelector('.np-result .np-verdict'), 20000);
+                (v1 && !v1.classList.contains('ok') ? rep.ok : rep.bad).push(it.id + ' rejects the shuffled order');
+                // move lines into the solution order with the buttons
+                for (let pos = 0; pos < it.solution.length; pos++) {
+                    for (let guard = 0; guard < 10; guard++) {
+                        const lis = [...itemEl.querySelectorAll('.np-parsons li')];
+                        const want = it.lines[it.solution[pos]];
+                        const at = lis.findIndex(li => li.querySelector('code').textContent === want);
+                        if (at === pos) break;
+                        lis[at].querySelector('.np-up').click();
+                    }
+                }
+                itemEl.querySelector('.np-result').innerHTML = '';
+                check.click();
+                const v2 = await wait(() => itemEl.querySelector('.np-result .np-verdict'), 20000);
+                (v2 && v2.classList.contains('ok') ? rep.ok : rep.bad).push(it.id + ' accepts the right order');
+            }
+        }
+    }
+    rep.key = document.querySelectorAll('#key tbody tr').length;
+    const de = document.documentElement;
+    if (de.scrollWidth > de.clientWidth + 1) {
+        const wide = [...document.querySelectorAll('body *')].filter(e => e.getBoundingClientRect().width > de.clientWidth + 1).slice(-3).map(e => e.tagName + '.' + e.className);
+        rep.bad.push('page is wider than the window (' + de.scrollWidth + ' > ' + de.clientWidth + '): ' + wide.join(', '));
+    }
+    rep.terms = document.querySelectorAll('#terms dt').length;
+    return JSON.stringify(rep);
+})()`;
+
+(async function () {
+    let targets;
+    for (let i = 0; i < 150 && !(targets && targets.some(t => t.type === 'page')); i++) {
+        try { targets = await getJson('http://127.0.0.1:' + port + '/json'); } catch (e) { /* not up yet */ }
+        if (!(targets && targets.some(t => t.type === 'page'))) await sleep(200);
+    }
+    const page = targets && targets.find(t => t.type === 'page');
+    if (!page) { console.error('Chrome did not open a page'); chrome.kill(); process.exit(1); }
+    const ws = new WebSocket(page.webSocketDebuggerUrl);
+    let id = 0;
+    const waiting = new Map(), errors = [];
+    ws.onmessage = ev => {
+        const m = JSON.parse(ev.data);
+        if (m.id && waiting.has(m.id)) { waiting.get(m.id)(m.result || m.error); waiting.delete(m.id); }
+        if (m.method === 'Runtime.exceptionThrown') errors.push(m.params.exceptionDetails.exception ? m.params.exceptionDetails.exception.description : m.params.exceptionDetails.text);
+        if (m.method === 'Runtime.consoleAPICalled' && m.params.type === 'error') errors.push(m.params.args.map(a => a.value || a.description).join(' '));
+    };
+    await new Promise(r => { ws.onopen = r; });
+    const send = (method, params) => new Promise(r => { const i = ++id; waiting.set(i, r); ws.send(JSON.stringify({ id: i, method, params: params || {} })); });
+    await send('Runtime.enable');
+    await send('Page.enable');
+    let failed = false;
+    for (const lesson of lessons) {
+        for (const lang of N.registry.languages) {
+            errors.length = 0;
+            const url = 'file://' + path.join(root, 'lesson.html') + '?lesson=' + lesson + '&lang=' + lang;
+            await send('Page.navigate', { url });
+            await sleep(1500);
+            const res = await send('Runtime.evaluate', { expression: PROBE, awaitPromise: true, returnByValue: true });
+            let rep;
+            try { rep = JSON.parse(res.result.value); } catch (e) { rep = { bad: ['probe failed: ' + JSON.stringify(res.exceptionDetails || res).slice(0, 400)], ok: [] }; }
+            const bad = rep.bad.concat(errors.map(e => 'page error: ' + e));
+            console.log((bad.length ? 'FAIL ' : 'PASS ') + lesson + ' ' + lang + ' — ' + rep.ok.length + ' checks passed, ' + rep.blocks + ' blocks, ' +
+                rep.key + ' answer-key rows, ' + rep.terms + ' terms · ' + rep.h1);
+            bad.forEach(b => console.log('     ' + b));
+            if (bad.length) failed = true;
+            if (shots) {
+                fs.mkdirSync(shots, { recursive: true });
+                const m = await send('Page.getLayoutMetrics');
+                const h = Math.ceil(m.cssContentSize ? m.cssContentSize.height : m.contentSize.height);
+                await send('Emulation.setDeviceMetricsOverride', { width: 1100, height: h, deviceScaleFactor: 1, mobile: false });
+                const shot = await send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true });
+                fs.writeFileSync(path.join(shots, lesson + '-' + lang + '.png'), Buffer.from(shot.data, 'base64'));
+                await send('Emulation.clearDeviceMetricsOverride');
+            }
+        }
+    }
+    ws.close();
+    chrome.kill();
+    process.exit(failed ? 1 : 0);
+})().catch(e => { console.error(e); chrome.kill(); process.exit(1); });

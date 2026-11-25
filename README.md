@@ -4,7 +4,7 @@
 
 A free, self-study C course for first-year computer science students, in three languages: Deutsch, English and فارسی. Every example runs in your browser — a real C compiler compiled to WebAssembly, offline, straight from `file://`, with nothing sent to a server.
 
-> **Status: in development.** There is no lesson to study yet. This repository currently holds the rule documents that every lesson will follow, and the next commits add the in-browser C runner and the first sample lesson. Version 1.0 will cover C (ISO C17); C++ comes after.
+> **Status: in development.** Lesson 1 is written as a sample, in all three languages — open `lesson.html?lesson=C.L01&lang=en` (or `de`, `fa`), straight from disk or on [GitHub Pages](https://mohsen-1984.github.io/Nullpunkt/). Version 1.0 will cover C (ISO C17); C++ comes after.
 
 ## What makes it different
 
@@ -31,12 +31,24 @@ The course is written against a small set of rule documents (drafts, in Persian 
 | Folder | What it holds |
 |---|---|
 | `docs/rules/` | The rule documents above |
-| `lib/` | `CRunner.js` (compile and run C in the browser) and `WasiShim.js` (its small WASI host) |
+| `data/` | The course itself, as data: catalog, glossary, prompts, mistakes, chapters; `data/generated/` holds real compiler results |
+| `lesson.html`, `site/` | The lesson page |
+| `lib/` | `CRunner.js` and `WasiShim.js` (compile and run C in the browser), `Data.js`, `Inline.js`, `CodeScan.js` |
 | `vendor/wcc/` | XCC, the C compiler, as one script — see its README |
 | `tests/` | Lab programs and their expected results, taken from gcc |
-| `tools/` | Build scripts, and `runner-lab/` — a page that runs the whole lab in any browser |
+| `tools/` | `check.js` (the checker), `gen-expect.js` (real results from gcc and XCC), build scripts, browser tests, and `runner-lab/` |
 
 Open `tools/runner-lab/index.html` (straight from disk is fine) and press **Run lab** to check the runner in your browser.
+
+## Writing lessons
+
+Content lives only in `data/`. After a change:
+
+```sh
+node tools/gen-expect.js       # compile and run every code record and test with gcc and XCC
+node tools/check.js            # every checkable rule — must report 0 errors, 0 warnings
+node tools/headless-lesson.js  # use each lesson in headless Chrome, in every language
+```
 
 ## License
 
