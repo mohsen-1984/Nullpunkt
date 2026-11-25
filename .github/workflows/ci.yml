@@ -9,9 +9,25 @@ permissions:
   contents: read
 
 jobs:
+  content:
+    name: Lessons (checker, generated results, pages)
+    # pinned: generated compiler messages depend on the gcc version (gcc 13.3 on Ubuntu 24.04)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Generated results are up to date (gcc and XCC)
+        run: node tools/gen-expect.js --check
+      - name: Checker — zero errors, zero warnings
+        run: node tools/check.js
+      - name: Every lesson in headless Chrome, every language, from file://
+        run: node tools/headless-lesson.js
+
   lab:
     name: Runner lab (Node + Chrome)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -28,7 +44,7 @@ jobs:
 
   vendor:
     name: vendor/wcc is reproducible
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -47,3 +63,10 @@ jobs:
         run: |
           node tools/build-wcc.js /tmp/xcc
           git diff --exit-code vendor/wcc/
+      - name: Rebuild the icons from Lucide and compare
+        run: |
+          version=$(node -e 'const fs=require("fs");const f=fs.readdirSync("vendor/lucide").find(n=>/^icons_.*\.js$/.test(n));console.log(require("./vendor/lucide/"+f).version)')
+          git clone --depth 1 --branch "$version" --filter=blob:none --sparse https://github.com/lucide-icons/lucide /tmp/lucide
+          git -C /tmp/lucide sparse-checkout set icons
+          node tools/build-icons.js /tmp/lucide "$version"
+          git diff --exit-code vendor/lucide/
