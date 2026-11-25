@@ -7,18 +7,12 @@
     'use strict';
     const N = window.Nullpunkt, ix = NullpunktData.index(N), reg = ix.reg, G = ix.generated;
     const params = new URLSearchParams(location.search);
-    const LANGS = N.registry.languages;
-    let lang = params.get('lang');
-    try { if (!lang) lang = localStorage.getItem('np.lang'); } catch (e) { /* storage may be blocked */ }
-    if (LANGS.indexOf(lang) < 0) lang = 'en';
+    const lang = document.documentElement.lang;     // set by site/boot.js from ?lang=, the stored choice or the browser
     const lessonId = params.get('lesson') || 'C.L01';
     const L = ix.lesson[lessonId];
     const U = NullpunktUI[lang];
     const esc = NullpunktInline.esc;
     const TIMEOUT_MS = 5000;
-
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
 
     const href = (id, l) => 'lesson.html?lesson=' + encodeURIComponent(id) + '&lang=' + (l || lang);
     const letters = reg.letters[lang];
@@ -507,26 +501,31 @@
     }
 
     // ---------- page ----------
-    function langSwitch() {
-        const nav = el('nav', 'np-langs');
-        nav.innerHTML = icon('languages') + LANGS.map(l => l === lang ? '<strong lang="' + l + '">' + esc(N.registry.languageNames[l]) + '</strong>'
-            : '<a lang="' + l + '" href="' + esc(href(lessonId, l)) + '">' + esc(N.registry.languageNames[l]) + '</a>').join(' · ');
-        nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => store.set('lang', a.lang)));
-        return nav;
-    }
-
     function render() {
         const root = document.getElementById('lesson');
-        const head = document.getElementById('site-head');
-        head.appendChild(langSwitch());
-        if (!L || !L.unit) { root.appendChild(el('p', '', esc(U.planned))); return; }
+        const C = NullpunktCourse, S = U.site;
+        if (!L || !L.unit) {
+            root.appendChild(el('h1', '', esc(L ? U.lesson + ' ' + L.n + ': ' + L.catalog.title[lang] : 'Nullpunkt')));
+            root.appendChild(el('p', '', esc(U.planned) + ' — <a href="' + esc(C.homeHref(lang, 'path')) + '">' + esc(S.path) + '</a>'));
+            NullpunktChrome.mount({ page: 'lesson', nav: [], tree: C.tree(ix, lang, lessonId) });
+            return;
+        }
         const cat = L.catalog, ch = ix.chapter[L.chapter];
         const title = cat.title[lang] + (lang !== 'en' ? ' — ' + cat.title.en : '');
         document.title = U.lesson + ' ' + L.n + ': ' + cat.title[lang] + ' — Nullpunkt';
         const status = ch.catalog.langStatus[lang];
-        root.appendChild(el('p', 'np-crumb', esc(U.chapter) + ' ' + ch.n + ': ' + esc(ch.catalog.title[lang]) + ' · ' + cat.minutes + ' ' + esc(U.minutes) +
-            (status !== 'reviewed' ? ' · <span class="np-badge">' + esc(U.inDevelopment) + '</span>' : '')));
+        // the leading path: home › chapter › lesson
+        const crumbs = el('ol', 'np-crumbs');
+        crumbs.setAttribute('aria-label', S.aria.crumbs);
+        crumbs.innerHTML = '<li><a href="' + esc(C.homeHref(lang)) + '">' + esc(S.home) + '</a></li>' +
+            '<li><a href="' + esc(C.homeHref(lang, 'chapter-' + ch.id)) + '">' + esc(U.chapter) + ' ' + ch.n + ': ' + esc(ch.catalog.title[lang]) + '</a></li>' +
+            '<li aria-current="page">' + esc(U.lesson) + ' ' + L.n + '</li>';
+        root.appendChild(crumbs);
         root.appendChild(el('h1', '', esc(U.lesson) + ' ' + L.n + ': ' + esc(title)));
+        root.appendChild(el('p', 'np-lesson-meta', icon('clock') + '<span>' + cat.minutes + ' ' + esc(U.minutes) + '</span>' +
+            (status !== 'reviewed' ? '<span class="np-badge">' + esc(U.inDevelopment) + '</span>' : '')));
+        store.set('visited.' + L.id, true);
+        store.set('last', L.id);
 
         L.unit.blocks.forEach(b => {
             const def = reg.blocks[b.block];
@@ -552,8 +551,13 @@
         }
         if (prev && prev.unit) nav.firstChild.href = href(prev.id);
         root.appendChild(nav);
+
+        // the chrome: the lesson's blocks are the page's sections; the learning path is the rail
+        const navItems = L.unit.blocks.map(b => ({ id: b.block, label: reg.blocks[b.block].title[lang], short: reg.blocks[b.block].short[lang] }));
+        NullpunktChrome.mount({ page: 'lesson', nav: navItems, tree: C.tree(ix, lang, L.id) });
+        const q = params.get('q');
+        if (q && window.NullpunktSearch) NullpunktSearch.highlight(q);
     }
 
     render();
-    store.set('lang', lang);
 })();

@@ -21,7 +21,7 @@ const LANGS = N.registry.languages;
 const findings = [];
 const err = (rule, id, msg) => findings.push({ level: 'error', rule, id, msg });
 const warn = (rule, id, msg) => findings.push({ level: 'warning', rule, id, msg });
-const COVERED = new Set(('S.ID.02 S.ID.03 S.DAT.02 S.DAT.04 S.MRK.01 S.MRK.02 S.MRK.04 S.TYP.01 S.TYP.02 S.TYP.04 S.TYP.05 ' +
+const COVERED = new Set(('S.DAT.06 S.ID.02 S.ID.03 S.DAT.02 S.DAT.04 S.MRK.01 S.MRK.02 S.MRK.04 S.TYP.01 S.TYP.02 S.TYP.04 S.TYP.05 ' +
     'S.TYP.06 S.TYP.15 S.CH.05 S.CH.06 S.STD.02 S.STY.01 S.STY.04 S.STY.08 S.PIT.01 S.PIT.03 S.PIT.04 S.PIT.06 S.BND.01 ' +
     'S.BND.02 S.BND.03 S.PRM.01 S.PRM.02 S.PRM.03 S.AST.01 C.LES.01 C.SLF.01 C.PRD.01 C.FRB.01').split(' '));
 const rule = r => r;
@@ -257,6 +257,17 @@ Object.values(ix.prompt).forEach(p => {
     if (/[*#`]/.test(p.text)) err('S.PRM.01', p.id, 'Markdown in a prompt');
     if (!p.guide || !p.guide.does || !p.guide.give || !p.guide.output) err(rule('S.PRM.02'), p.id, 'needs the three guide answers');
     if (typeof p.waits !== 'boolean') err(rule('S.PRM.03'), p.id, 'waits must be true or false');
+});
+
+// ---------- pages load every data file (S.DAT.06) ----------
+['index.html', 'lesson.html'].forEach(pg => {
+    const html = fs.readFileSync(path.join(root, pg), 'utf8');
+    const srcs = [...html.matchAll(/<script src="([^"]+)"/g)].map(m => m[1]);
+    fs.readdirSync(path.join(root, 'data')).filter(f => f.endsWith('.js')).forEach(f => {
+        if (srcs.indexOf('data/' + f) < 0) err('S.DAT.06', pg, 'does not load data/' + f);
+    });
+    if (srcs.indexOf('data/generated/expect.js') < 0) err('S.DAT.06', pg, 'does not load data/generated/expect.js');
+    srcs.forEach(s => { if (!/^https?:/.test(s) && !fs.existsSync(path.join(root, s))) err('S.DAT.06', pg, 'loads a missing file: ' + s); });
 });
 
 // ---------- icons (S.AST.01) ----------

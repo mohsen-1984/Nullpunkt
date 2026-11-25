@@ -1,0 +1,58 @@
+diff --git a/include/limits.h b/include/limits.h
+index 03837493..107c1258 100644
+--- a/include/limits.h
++++ b/include/limits.h
+@@ -10,27 +10,27 @@
+ #define SHRT_MAX   ( 32767)  //  (2^15)-1
+ #define USHRT_MAX  (65535)  // (2^16)-1
+ 
+-#define INT_MIN    (-2147483648)  // -(2^31)
++#define INT_MIN    (-2147483647 - 1)  // -(2^31): 2147483648 alone does not fit in int
+ #define INT_MAX    ( 2147483647)  //  (2^31)-1
+-#define UINT_MAX   (4294967295)  // (2^32)-1
++#define UINT_MAX   (4294967295U)  // (2^32)-1
+ 
+ #if defined(__ILP32__)
+ 
+-#define LONG_MIN   (-2147483648)  // -(2^31)
+-#define LONG_MAX   ( 2147483647)  //  (2^31)-1
+-#define ULONG_MAX  (4294967295)  // (2^32)-1
++#define LONG_MIN   (-2147483647L - 1)  // -(2^31)
++#define LONG_MAX   ( 2147483647L)  //  (2^31)-1
++#define ULONG_MAX  (4294967295UL)  // (2^32)-1
+ 
+-#define LLONG_MIN  (-9223372036854775808LL)  // -(2^63)
++#define LLONG_MIN  (-9223372036854775807LL - 1)  // -(2^63)
+ #define LLONG_MAX  ( 9223372036854775807LL)  //  (2^63)-1
+ #define ULLONG_MAX (18446744073709551615ULL)  // (2^64)-1
+ 
+ #elif defined(__LP64__)
+ 
+-#define LONG_MIN   (-9223372036854775808L)  // -(2^63)
++#define LONG_MIN   (-9223372036854775807L - 1)  // -(2^63)
+ #define LONG_MAX   ( 9223372036854775807L)  //  (2^63)-1
+ #define ULONG_MAX  (18446744073709551615UL)  // (2^64)-1
+ 
+-#define LLONG_MIN  (-9223372036854775808LL)  // -(2^63)
++#define LLONG_MIN  (-9223372036854775807LL - 1)  // -(2^63)
+ #define LLONG_MAX  ( 9223372036854775807LL)  //  (2^63)-1
+ #define ULLONG_MAX (18446744073709551615ULL)  // (2^64)-1
+ 
+diff --git a/libsrc/stdio/vfprintf.c b/libsrc/stdio/vfprintf.c
+index e40bbea7..4892a705 100644
+--- a/libsrc/stdio/vfprintf.c
++++ b/libsrc/stdio/vfprintf.c
+@@ -382,9 +382,12 @@ int vfprintf(FILE *fp, const char *fmt_, va_list ap) {
+         nlong = 2;
+         c = fmt[++i];
+       }
+-    } else if (c == 'z') {
++    } else if (c == 'z' || c == 't') {  // size_t, ptrdiff_t: the same width on every target
+       sizez = true;
+       c = fmt[++i];
++    } else if (c == 'j') {  // intmax_t: long long
++      nlong = 2;
++      c = fmt[++i];
+     }
+ 
+     switch (c) {

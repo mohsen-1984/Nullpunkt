@@ -1,28 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nullpunkt</title>
+<title>Nullpunkt — lesson</title>
+<meta name="description" content="A lesson of Nullpunkt, a free self-study C course in English, German and Persian: predict, run the code in your browser, look inside the machine, meet the common mistakes, practice with exercises checked by tests.">
+<meta name="keywords" content="C programming, learn C, C course, C17, C tutorial, C for beginners, computer science, first year, self-study, programming course, run C in browser, WebAssembly C compiler, XCC, gcc, C lernen, Programmieren lernen, Informatik Studium, آموزش C, آموزش برنامه نویسی, زبان C">
+<meta name="author" content="mohsen-1984 (mhn.com@gmail.com)">
+<meta name="contributor" content="Anthropic Claude Opus 5.5">
+<meta name="theme-color" content="#3B5BDB">
+<link rel="canonical" href="https://mohsen-1984.github.io/Nullpunkt/lesson.html">
+<!-- link previews: Open Graph (Telegram, WhatsApp, LinkedIn, Mastodon, Facebook …) and X / Twitter; the picture: tools/og-image.html -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nullpunkt">
+<meta property="og:title" content="Nullpunkt — C from zero · C von Null an · C از صفر">
+<meta property="og:description" content="A free self-study C course in English, German and Persian. Every example runs in your browser — a real C compiler, offline, nothing uploaded.">
+<meta property="og:url" content="https://mohsen-1984.github.io/Nullpunkt/lesson.html">
+<meta property="og:image" content="https://mohsen-1984.github.io/Nullpunkt/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Nullpunkt — C from zero: a C course with a compiler that runs in your browser">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="fa_IR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nullpunkt — C from zero">
+<meta name="twitter:description" content="A free self-study C course in English, German and Persian, with a C compiler that runs in your browser.">
+<meta name="twitter:image" content="https://mohsen-1984.github.io/Nullpunkt/assets/og-image.png">
+<meta name="twitter:image:alt" content="Nullpunkt — C from zero: a C course with a compiler that runs in your browser">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233B5BDB'/%3E%3Cellipse cx='16' cy='16' rx='7' ry='10' fill='none' stroke='%23fff' stroke-width='3.2'/%3E%3Ccircle cx='16' cy='16' r='2.6' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<!-- before the stylesheets: theme, language and direction from the stored choice, before the first paint -->
+<script src="site/config.js"></script>
+<script src="site/boot.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;600&family=Vazirmatn:wght@400;600&display=swap">
+<link rel="stylesheet" href="site/shell.css">
 <link rel="stylesheet" href="site/lesson.css">
 </head>
 <body data-wcc="vendor/wcc/wcc_659a177.js">
-<header id="site-head" class="np-head">
-    <a class="np-brand" href="index.html">
-        <svg viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="26" fill="none" stroke="currentColor" stroke-width="7"/><circle cx="36" cy="36" r="7" fill="currentColor"/></svg>
-        <span>Nullpunkt</span>
-    </a>
-</header>
-<main id="lesson" class="np-main"></main>
-
+<!-- the chrome (header, drawer, rail, footer, search) is added by site/chrome.js; the lesson by site/lesson.js -->
+<div class="np-layout"><aside id="ncRail" class="np-rail" hidden></aside><main id="main" tabindex="-1"><article id="lesson" class="np-content np-main"></article></main></div>
 <script src="vendor/lucide/icons_1.80.0.js"></script>
 <script src="vendor/codemirror/codemirror_6.41.0.js"></script>
+<script src="lib/Data.js"></script>
+<script src="lib/Search.js"></script>
 <script src="lib/WasiShim.js"></script>
 <script src="lib/CRunner.js"></script>
-<script src="lib/Data.js"></script>
 <script src="lib/Inline.js"></script>
 <script src="data/registry.js"></script>
 <script src="data/S00-registry.js"></script>
@@ -33,6 +59,10 @@
 <script src="data/C01-getting-started.js"></script>
 <script src="data/generated/expect.js"></script>
 <script src="site/ui.js"></script>
+<script src="site/ui-site.js"></script>
+<script src="site/course.js"></script>
+<script src="site/chrome.js"></script>
+<script src="site/search.js"></script>
 <script src="site/lesson.js"></script>
 </body>
 </html>
