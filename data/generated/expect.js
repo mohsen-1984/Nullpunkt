@@ -6,6 +6,91 @@
   "xcc": "659a1773f20499864a8c3fdc7cd25cb506092bc1"
  },
  "code": {
+  "C.O02.K01": {
+   "hash": "7076fbbfd4317c81",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "asm": ".LC0:\n\t.string\t\"Hello\"\n.LC1:\n\t.string\t\"%d\\n\"\nmain:\n\tsub\trsp, 8\n\tlea\trdi, .LC0[rip]\n\tcall\tputs@PLT\n\tmov\tesi, 42\n\tlea\trdi, .LC1[rip]\n\tmov\teax, 0\n\tcall\tprintf@PLT\n\tmov\teax, 0\n\tadd\trsp, 8\n\tret\n",
+    "stdout": "Hello\n42\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Hello\n42\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.O02.K02": {
+   "hash": "d5efe9a10e107c91",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 6,
+      "col": 22,
+      "severity": "error",
+      "message": "expected ';' before 'return'"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:6:22: error: expected ';' before 'return'"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 7,
+      "col": null,
+      "message": "`;' expected"
+     }
+    ],
+    "log": "main.c(7): `;' expected\n    return 0;\n    ^~~~~~"
+   }
+  },
+  "C.O03.K01": {
+   "hash": "cfc0490c89dee3e0",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "201710\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "199901\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.O04.K01": {
+   "hash": "88658e572f70a31f",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Hello from my own computer\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Hello from my own computer\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
   "C.L01.K01": {
    "hash": "929effc418166fa4",
    "gcc": {

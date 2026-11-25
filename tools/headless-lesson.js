@@ -30,14 +30,18 @@ const PROBE = `(async () => {
     const N = window.Nullpunkt, ix = NullpunktData.index(N);
     const L = ix.lesson[new URLSearchParams(location.search).get('lesson')];
     const rep = { h1: document.querySelector('h1').textContent, blocks: document.querySelectorAll('.np-block').length, ok: [], bad: [] };
-    // worked example
+    // worked example (orientation lessons have none)
     const ex = document.querySelector('#example .np-code');
+    if (ex) {
     ex.querySelector('.np-btn.primary').click();
     // an example may show a compile error on purpose (lesson 2): then the compiler's message must appear instead
     const exCode = ix.code[(L.unit.blocks.find(b => b.block === 'example').content.find(n => n.type === 'code') || {}).ref];
     const exOk = !exCode || exCode.intent === 'ok';
     const out = await wait(() => (exOk ? /exit code 0/ : /main[.]c[(][0-9]+[)]/).test(ex.querySelector('.np-out').textContent) && ex.querySelector('.np-out').textContent, 20000);
     (out ? rep.ok : rep.bad).push(exOk ? 'example runs' : 'example shows its compile error');
+    }
+    // assembly beside the C code, where a lesson shows it
+    document.querySelectorAll('.np-asm-pre').forEach(p => (p.textContent.indexOf('ret') >= 0 && p.textContent.indexOf('call') >= 0 ? rep.ok : rep.bad).push('assembly shown'));
     // exercises
     for (const b of L.unit.bands) {
         for (const it of b.items) {
@@ -55,6 +59,16 @@ const PROBE = `(async () => {
                 check.click();
                 const v2 = await wait(() => itemEl.querySelector('.np-result .np-verdict'), 20000);
                 (v2 && v2.classList.contains('ok') ? rep.ok : rep.bad).push(it.id + ' accepts the model solution');
+            } else if (b.type === 'B.choice') {
+                // a wrong option shows its feedback and does not finish the item; the right one does
+                const radios = [...itemEl.querySelectorAll('input[type=radio]')];
+                const wrong = it.options.findIndex(o => !o.correct), right = it.options.findIndex(o => o.correct);
+                radios[wrong].click();
+                const v1 = itemEl.querySelector('.np-result .np-verdict');
+                (v1 && v1.classList.contains('warn') && !itemEl.classList.contains('np-done') ? rep.ok : rep.bad).push(it.id + ' answers a wrong choice');
+                radios[right].click();
+                const v2 = itemEl.querySelector('.np-result .np-verdict');
+                (v2 && v2.classList.contains('ok') && itemEl.classList.contains('np-done') ? rep.ok : rep.bad).push(it.id + ' accepts the right choice');
             } else if (b.type === 'B.predict') {
                 const g = itemEl.querySelector('.np-guess');
                 g.value = ix.generated.code[it.code].gcc.stdout;
@@ -84,7 +98,7 @@ const PROBE = `(async () => {
     }
     rep.key = document.querySelectorAll('#key tbody tr').length;
     rep.cm = !!window.NullpunktCM && document.querySelectorAll('.cm-editor').length;
-    if (window.NullpunktCM) { const toks = new Set([...document.querySelectorAll('[class*="np-tok-"]')].map(e => e.className)); rep.toks = [...toks].sort().join(' '); if (!toks.size) rep.bad.push('no syntax highlighting'); }
+    if (window.NullpunktCM) { const toks = new Set([...document.querySelectorAll('[class*="np-tok-"]')].map(e => e.className)); rep.toks = [...toks].sort().join(' '); if (!toks.size && document.querySelector('.cm-editor, .np-code-pre')) rep.bad.push('no syntax highlighting'); }
     const de = document.documentElement;
     if (de.scrollWidth > de.clientWidth + 1) {
         const wide = [...document.querySelectorAll('body *')].filter(e => e.getBoundingClientRect().width > de.clientWidth + 1).slice(-3).map(e => e.tagName + '.' + e.className);

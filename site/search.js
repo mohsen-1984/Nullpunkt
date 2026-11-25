@@ -57,6 +57,11 @@
         return 'lesson.html?lesson=' + encodeURIComponent(d.lesson) + '&lang=' + lang + '&q=' + encodeURIComponent(q) + (d.block ? '#' + d.block : '');
     }
 
+    function sectionIcon(ix, d) {
+        var L = ix.lesson[d.lesson], b = L && L.unit && L.unit.blocks.find(function (x) { return x.id === d.block; });
+        return b && b.icon;
+    }
+
     function run() {
         var u = U(), q = input.value.trim(), e = getEngine();
         list.innerHTML = ''; items = []; sel = -1;
@@ -71,10 +76,10 @@
         res.forEach(function (r, i) {
             var d = r.doc, L = d.lesson && e.ix.lesson[d.lesson], li = document.createElement('li');
             li.setAttribute('role', 'presentation');
-            var where = d.kind === 'term' ? u.searchGlossary + (L ? ' · ' + g.NullpunktUI[lang].lesson + ' ' + L.n : '')
-                : d.kind === 'planned' ? g.NullpunktUI[lang].lesson + ' ' + L.n + ' · ' + u.searchPlanned
-                : g.NullpunktUI[lang].lesson + ' ' + L.n + (d.section ? ' · ' + d.section : '');
-            var icon = d.kind === 'term' ? 'book-a' : d.kind === 'planned' ? 'circle-dashed' : d.block ? ((e.ix.reg.blocks[d.block] || {}).icon || 'book-open') : 'book-open';
+            var where = d.kind === 'term' ? u.searchGlossary + (L ? ' · ' + g.NullpunktUI[lang].lesson + ' ' + L.label : '')
+                : d.kind === 'planned' ? g.NullpunktUI[lang].lesson + ' ' + L.label + ' · ' + u.searchPlanned
+                : g.NullpunktUI[lang].lesson + ' ' + L.label + (d.section ? ' · ' + d.section : '');
+            var icon = d.kind === 'term' ? 'book-a' : d.kind === 'planned' ? 'circle-dashed' : d.block ? ((e.ix.reg.blocks[d.block] || {}).icon || sectionIcon(e.ix, d) || 'book-open') : 'book-open';
             var snip = r.snippet.map(function (p) { return p.hit ? '<mark>' + esc(p.text) + '</mark>' : esc(p.text); }).join('');
             li.innerHTML = '<a role="option" id="ncSr' + i + '" class="np-sr' + (d.kind === 'planned' ? ' is-planned' : '') + '" href="' + esc(href(d, q)) + '">' +
                 '<span class="np-sr-ic">' + svg(icon) + '</span><span class="np-sr-body"><span class="np-sr-where">' + esc(where) + '</span>' +

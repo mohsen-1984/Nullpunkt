@@ -21,7 +21,7 @@
     function hero() {
         const first = C.resume(ix), visitedAny = ix.lessonList.some(L => C.store('visited.' + L.id));
         const cta = first ? '<a class="np-cta primary" href="' + esc(C.lessonHref(first.id, lang)) + '">' + svg('play', 'ic-flip') +
-            esc(visitedAny && first.n > 1 ? c.continueAt.replace('{n}', first.n) : c.start) + '</a>' : '';
+            esc(visitedAny ? c.continueAt.replace('{n}', first.label) : c.start) + '</a>' : '';
         const tags = SITE.languages.filter(l => l !== lang).map(l => '<span lang="' + l + '">' + esc(NullpunktUI[l].site.tagline) + '</span>').join(' · ');
         const demo = ix.code[DEMO], out = G && G.code[DEMO] ? G.code[DEMO].gcc.stdout : '';
         return '<section class="np-hero" id="top"><div>' +
@@ -43,7 +43,7 @@
             h += '<li class="np-chapter' + (written ? '' : ' is-planned') + '" id="chapter-' + ch.id + '"><h3><span class="np-chapter-n">' + ch.n + '</span>' + esc(ch.catalog.title[lang]) + '</h3><ol>';
             lessons.forEach(L => {
                 const st = C.state(L), icon = '<span class="np-tree-state is-' + st + '">' + svg(C.STATE_ICON[st]) + '</span>';
-                const title = '<span>' + L.n + '. ' + esc(L.catalog.title[lang]) + '</span>';
+                const title = '<span>' + L.label + '. ' + esc(L.catalog.title[lang]) + '</span>';
                 if (L.unit) {
                     const p = C.progress(L);
                     const meta = p.done ? c.exercises.replace('{d}', p.done).replace('{n}', p.total) : c.minutesShort.replace('{m}', L.catalog.minutes);

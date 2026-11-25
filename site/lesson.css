@@ -114,3 +114,34 @@ div.np-editor .cm-cursor { border-left-color: var(--np-ink); }
 div.np-editor .cm-selectionBackground, div.np-editor .cm-focused .cm-selectionBackground { background: color-mix(in srgb, var(--np-accent) 25%, transparent) !important; }
 div.np-editor .cm-matchingBracket { background: color-mix(in srgb, var(--np-ok) 25%, transparent); }
 div.np-editor .cm-tooltip { background: var(--np-bg); color: var(--np-ink); border: 1px solid var(--np-line); font-family: var(--np-sans); }
+
+/* orientation lessons (C.ORI.01): myths, terminal transcripts, tabs per system, assembly, choice exercises */
+.np-myth { border: 1px solid var(--np-line); border-radius: 10px; margin: 1rem 0; overflow: hidden; }
+.np-myth p { display: flex; gap: .6rem; align-items: flex-start; margin: 0; padding: .7rem 1rem; }
+.np-myth .np-icon { margin-top: .3rem; }
+.np-myth-claim { background: var(--np-soft); font-weight: 600; }
+.np-myth-claim .np-icon { color: var(--np-warn); }
+.np-myth-fact .np-icon { color: var(--np-ok); }
+.np-sh { margin: 1rem 0; border-radius: 10px; overflow: hidden; background: #16181D; color: #E6E8EC; text-align: left; }
+.np-sh figcaption { display: flex; align-items: center; gap: .4rem; padding: .4rem .8rem; font: 600 .78rem var(--np-sans); color: #A9AFBC; background: #22252C; }
+.np-sh figcaption .np-icon { width: 15px; height: 15px; color: #A9AFBC; }
+.np-sh pre { padding: .7rem .9rem; font-size: .86rem; line-height: 1.6; white-space: pre-wrap; }
+.np-sh-p { color: #7AA2F7; user-select: none; }
+.np-sh-c { color: #F2F4F8; }
+.np-sh-r { color: #7F8796; }
+.np-sh-o { color: #B8C0CC; }
+.np-tabs { margin: 1rem 0; border: 1px solid var(--np-line); border-radius: 10px; }
+.np-tabbar { display: flex; gap: 2px; padding: 4px; border-bottom: 1px solid var(--np-line); background: var(--np-soft); border-radius: 10px 10px 0 0; }
+.np-tab { font: 600 .9rem var(--np-sans); padding: .35rem .9rem; border-radius: 7px; color: var(--np-muted); background: none; border: 0; cursor: pointer; }
+.np-tab[aria-selected="true"] { background: var(--np-surface); color: var(--np-accent); box-shadow: var(--np-shadow-sm); }
+.np-tabpanel { padding: .25rem 1rem .5rem; }
+.np-asm { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin: 1rem 0; }
+.np-asm pre { margin: 0; }
+.np-asm-pre { white-space: pre; overflow-x: auto; }
+@media (max-width: 700px) { .np-asm { grid-template-columns: 1fr; } }
+.np-choice { display: grid; gap: .4rem; margin: .4rem 0; }
+.np-option { display: flex; gap: .6rem; align-items: flex-start; border: 1px solid var(--np-line); border-radius: 8px; padding: .5rem .75rem; cursor: pointer; background: var(--np-surface); }
+.np-option:hover { border-color: var(--np-accent); }
+.np-option input { margin-top: .35rem; accent-color: var(--np-accent); }
+.np-option.is-right { border-color: var(--np-ok); background: color-mix(in srgb, var(--np-ok) 9%, transparent); }
+.np-option.is-wrong { border-color: var(--np-warn); background: color-mix(in srgb, var(--np-warn) 9%, transparent); }

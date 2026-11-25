@@ -13,13 +13,13 @@
             searchEmpty: 'Nothing found for “{q}”. Try fewer or shorter words.', searchTry: 'Try', searchCount: '{n} results',
             searchGlossary: 'Glossary', searchPlanned: 'Coming later', close: 'Close', version: 'Version', releaseNotes: 'Release notes',
             license: 'Content CC BY-SA 4.0 · Code MIT', soon: 'Coming soon', exercises: '{d} of {n} exercises', minutesShort: '{m} min',
-            start: 'Start with lesson 1', continueAt: 'Continue: lesson {n}', searchCourse: 'Search the course',
+            start: 'Start the course', continueAt: 'Continue: lesson {n}', searchCourse: 'Search the course',
             nav: { path: ['Learning path', 'Path'], method: ['How a lesson works', 'Method'], browser: ['C in your browser', 'Browser'], name: ['Why “Nullpunkt”', 'Name'] },
             hero: {
                 eyebrow: 'Free · ISO C17 · three languages',
                 lead: 'A self-study C course for first-year computer science students who start from zero. Every example runs in your browser — a real C compiler, on your own machine, with nothing sent anywhere.',
             },
-            pathLead: '13 chapters, 50 lessons, from your first printf to pointers, memory and files. Lessons appear here as they are written.',
+            pathLead: 'A short orientation, then 13 chapters and 50 lessons, from your first printf to pointers, memory and files. Lessons appear here as they are written.',
             method: {
                 lead: 'Every lesson follows the same path, so you always know where you are.',
                 steps: [
@@ -59,13 +59,13 @@
             searchEmpty: 'Nichts gefunden für „{q}“. Versuch es mit weniger oder kürzeren Wörtern.', searchTry: 'Probier', searchCount: '{n} Treffer',
             searchGlossary: 'Glossar', searchPlanned: 'Kommt später', close: 'Schließen', version: 'Version', releaseNotes: 'Versionshinweise',
             license: 'Inhalt CC BY-SA 4.0 · Code MIT', soon: 'Kommt bald', exercises: '{d} von {n} Übungen', minutesShort: '{m} Min.',
-            start: 'Mit Lektion 1 beginnen', continueAt: 'Weiter: Lektion {n}', searchCourse: 'Den Kurs durchsuchen',
+            start: 'Kurs beginnen', continueAt: 'Weiter: Lektion {n}', searchCourse: 'Den Kurs durchsuchen',
             nav: { path: ['Lernpfad', 'Pfad'], method: ['So funktioniert eine Lektion', 'Methode'], browser: ['C im Browser', 'Browser'], name: ['Warum „Nullpunkt“', 'Name'] },
             hero: {
                 eyebrow: 'Kostenlos · ISO C17 · drei Sprachen',
                 lead: 'Ein C-Kurs zum Selbstlernen für Informatik-Erstsemester, die bei null anfangen. Jedes Beispiel läuft in deinem Browser — ein echter C-Compiler auf deinem eigenen Rechner, ohne dass etwas verschickt wird.',
             },
-            pathLead: '13 Kapitel, 50 Lektionen, vom ersten printf bis zu Pointern, Speicher und Dateien. Lektionen erscheinen hier, sobald sie geschrieben sind.',
+            pathLead: 'Eine kurze Orientierung, dann 13 Kapitel und 50 Lektionen, vom ersten printf bis zu Pointern, Speicher und Dateien. Lektionen erscheinen hier, sobald sie geschrieben sind.',
             method: {
                 lead: 'Jede Lektion folgt demselben Weg, damit du immer weißt, wo du bist.',
                 steps: [
@@ -105,13 +105,13 @@
             searchEmpty: 'برای «{q}» چیزی پیدا نشد. واژه‌های کمتر یا کوتاه‌تری امتحان کن.', searchTry: 'امتحان کن', searchCount: '{n} نتیجه',
             searchGlossary: 'واژه‌نامه', searchPlanned: 'بعداً می‌آید', close: 'بستن', version: 'نسخه', releaseNotes: 'یادداشت‌های نسخه',
             license: 'محتوا CC BY-SA 4.0 · کد MIT', soon: 'به‌زودی', exercises: '{d} از {n} تمرین', minutesShort: '{m} دقیقه',
-            start: 'شروع با درس 1', continueAt: 'ادامه: درس {n}', searchCourse: 'جست‌وجو در دوره',
+            start: 'شروع دوره', continueAt: 'ادامه: درس {n}', searchCourse: 'جست‌وجو در دوره',
             nav: { path: ['مسیر یادگیری', 'مسیر'], method: ['هر درس چطور پیش می‌رود', 'روش'], browser: ['C در مرورگر', 'مرورگر'], name: ['چرا «Nullpunkt»', 'نام'] },
             hero: {
                 eyebrow: 'رایگان · ISO C17 · سه زبان',
                 lead: 'دورهٔ خودآموز C برای دانشجوی سال اول علوم کامپیوتر که از صفر شروع می‌کند. هر مثال در مرورگر خودت اجرا می‌شود — یک compiler واقعی C، روی کامپیوتر خودت، بی‌آنکه چیزی جایی فرستاده شود.',
             },
-            pathLead: '13 فصل و 50 درس، از اولین printf تا pointer، حافظه و فایل. هر درس که نوشته شود، اینجا می‌آید.',
+            pathLead: 'یک جهت‌یابی کوتاه، سپس 13 فصل و 50 درس، از اولین printf تا pointer، حافظه و فایل. هر درس که نوشته شود، اینجا می‌آید.',
             method: {
                 lead: 'همهٔ درس‌ها یک مسیر را می‌روند تا همیشه بدانی کجای کاری.',
                 steps: [

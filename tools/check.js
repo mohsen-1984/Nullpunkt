@@ -21,7 +21,7 @@ const LANGS = N.registry.languages;
 const findings = [];
 const err = (rule, id, msg) => findings.push({ level: 'error', rule, id, msg });
 const warn = (rule, id, msg) => findings.push({ level: 'warning', rule, id, msg });
-const COVERED = new Set(('S.DAT.06 S.ID.02 S.ID.03 S.DAT.02 S.DAT.04 S.MRK.01 S.MRK.02 S.MRK.04 S.TYP.01 S.TYP.02 S.TYP.04 S.TYP.05 ' +
+const COVERED = new Set(('C.ORI.01 S.DAT.06 S.ID.02 S.ID.03 S.DAT.02 S.DAT.04 S.MRK.01 S.MRK.02 S.MRK.04 S.TYP.01 S.TYP.02 S.TYP.04 S.TYP.05 ' +
     'S.TYP.06 S.TYP.15 S.CH.05 S.CH.06 S.STD.02 S.STY.01 S.STY.04 S.STY.08 S.PIT.01 S.PIT.03 S.PIT.04 S.PIT.06 S.BND.01 ' +
     'S.BND.02 S.BND.03 S.PRM.01 S.PRM.02 S.PRM.03 S.AST.01 C.LES.01 C.SLF.01 C.PRD.01 C.FRB.01').split(' '));
 const rule = r => r;
@@ -30,8 +30,8 @@ ix.problems.forEach(p => err(rule(p.rule), p.id, p.msg));
 
 // ---------- Ids (S.ID.02, patterns) ----------
 const PATTERNS = [
-    [ix.lesson, /^C\.L\d{2}$/], [ix.code, /^C\.L\d{2}\.K\d{2}$/], [ix.mistake, /^[MEWRULSPY]-\d{2,3}$/],
-    [ix.band, /^C\.L\d{2}\.X\d{2}$/], [ix.item, /^C\.L\d{2}\.X\d{2}\.\d{2}$/], [ix.term, /^T\.[a-z0-9-]+$/],
+    [ix.lesson, /^C\.[LO]\d{2}$/], [ix.code, /^C\.[LO]\d{2}\.K\d{2}$/], [ix.mistake, /^[MEWRULSPY]-\d{2,3}$/],
+    [ix.band, /^C\.[LO]\d{2}\.X\d{2}$/], [ix.item, /^C\.[LO]\d{2}\.X\d{2}\.\d{2}$/], [ix.term, /^T\.[a-z0-9-]+$/],
     [ix.construct, /^K\.[a-z0-9-]+$/], [ix.chunk, /^CH\.[a-z0-9-]+$/], [ix.prompt, /^AI(-\d|\.MASTER)$/],
 ];
 PATTERNS.forEach(([map, re]) => Object.keys(map).forEach(id => { if (!re.test(id)) err(rule('S.ID.02'), id, 'Id does not match ' + re); }));
@@ -146,6 +146,7 @@ ix.codeList.forEach(c => {
     } else if (c.intent === 'platform') {
         if (sameOut) warn('S.STD.02', c.id, 'intent platform, but gcc and XCC give the same result');
     } else if (c.intent !== 'ub') err('S.CH.05', c.id, 'unknown intent ' + c.intent);
+    if (c.asm && !(e.gcc && e.gcc.asm)) err('C.ORI.01', c.id, 'asm: true, but no generated assembly — run node tools/gen-expect.js');
     if (codeMode[c.id] === 'predict' && c.source.split('\n').filter(Boolean).length > 12) err(rule('C.PRD.01'), c.id, 'predict code longer than 12 lines');
 });
 
@@ -179,6 +180,14 @@ Object.values(ix.band).forEach(b => {
         if (!it.why) err('S.BND.02', where, 'needs a why (shown in the answer key)');
         if (b.type === 'B.predict') { if (!ix.code[it.code]) err('S.ID.03', where, 'code ' + it.code + ' missing'); return; }
         if (b.type === 'B.explain') { if (!it.model) err(rule('S.BND.02'), where, 'explain item needs a model answer'); return; }
+        if (b.type === 'B.choice') {
+            const opts = it.options || [];
+            if (!it.prompt) err('S.BND.02', where, 'choice item needs a prompt');
+            if (opts.length < 2) err('S.BND.02', where, 'choice item needs at least two options');
+            if (opts.filter(o => o.correct === true).length !== 1) err('S.BND.02', where, 'choice item needs exactly one correct option');
+            opts.forEach((o, i) => { if (!o.text || !o.feedback) err('S.BND.02', where, 'option ' + (i + 1) + ' needs text and feedback'); });
+            return;
+        }
         if (!tests.some(t => t.purpose === 'normal')) err('S.BND.02', where, 'needs a test with purpose normal');
         const readsInput = tests.some(t => t.stdin) || /\bscanf\b|\bgetchar\b|\bfgets\b/.test(it.solution || '');
         if (readsInput && !tests.some(t => t.purpose === 'edge')) err('S.BND.02', where, 'reads input, so it needs an edge test');
@@ -200,6 +209,33 @@ Object.values(ix.band).forEach(b => {
     });
 });
 
+// ---------- orientation lessons (C.ORI.01): light skeleton, no construct ladder ----------
+function checkOrientation(L, u) {
+    const o = conv.orientation, blocks = u.blocks.map(b => b.block);
+    o.required.forEach(k => { if (blocks.indexOf(k) < 0) err('C.ORI.01', L.id, 'missing block ' + k); });
+    o.first.forEach((k, i) => { if (blocks[i] !== k) err('C.ORI.01', L.id, 'block ' + (i + 1) + ' must be ' + k); });
+    const lastStart = blocks.findIndex(b => o.last.indexOf(b) >= 0);
+    blocks.forEach((b, i) => {
+        if (i < o.first.length) return;
+        const inLast = o.last.indexOf(b) >= 0;
+        if (!inLast && o.allowed.indexOf(b) < 0) err('C.ORI.01', L.id, 'block ' + b + ' is not allowed in an orientation lesson');
+        if (!inLast && lastStart >= 0 && i > lastStart) err('C.ORI.01', L.id, 'block ' + b + ' comes after ' + blocks[lastStart]);
+    });
+    const tail = blocks.filter(b => o.last.indexOf(b) >= 0);
+    tail.forEach((b, i) => { if (i && o.last.indexOf(b) <= o.last.indexOf(tail[i - 1])) err('C.ORI.01', L.id, 'block ' + b + ' is out of order'); });
+    const ids = new Set();
+    u.blocks.forEach(b => {
+        const id = b.id || b.block;
+        if (ids.has(id)) err('C.ORI.01', L.id, 'block id ' + id + ' used twice');
+        ids.add(id);
+        if (b.block === 'section' && (!b.id || !b.title || !b.short || !b.icon)) err('C.ORI.01', L.id, 'section ' + (b.id || '?') + ' needs id, title, short and icon');
+        if (b.block === 'section' && reg.blocks[b.id]) err('C.ORI.01', L.id, 'section id ' + b.id + ' is the name of a block');
+        if (['cando', 'terms', 'selfcheck', 'key'].indexOf(b.block) >= 0 && b.content.length) err('C.ORI.01', L.id, 'block ' + b.block + ' is generated and must be empty');
+    });
+    if (!(u.bands || []).length) err('C.ORI.01', L.id, 'needs at least one exercise band');
+    (u.bands || []).forEach(b => { if (!u.blocks.some(bl => (bl.content || []).some(nd => nd.type === 'band' && nd.ref === b.id))) err('S.ID.03', b.id, 'band is not placed in any block'); });
+}
+
 // ---------- lessons: skeleton, can-do, bands, ladder (C.LES.01, C.SLF.01, S.BND.01/03, S.CH.06, C.FRB.01) ----------
 const constructs = conv.constructs;
 Object.values(ix.lesson).forEach(L => {
@@ -208,6 +244,7 @@ Object.values(ix.lesson).forEach(L => {
     if (!L.unit) return;
     const u = L.unit;
     if (!cat.cando || cat.cando.length !== 5) err(rule('C.SLF.01'), L.id, 'cando must have exactly 5 items');
+    if (L.orientation) { checkOrientation(L, u); return; }
     // skeleton order and presence
     const order = conv.skeleton.map(s => s.block);
     let last = -1;
@@ -276,6 +313,7 @@ const icons = require(path.join(root, 'vendor/lucide', iconsFile)).icons;
 const usedIcons = new Set(reg.uiIcons);
 [reg.blocks, reg.bandTypes, reg.noteKinds, reg.unitTypes].forEach(gr => Object.values(gr).forEach(x => usedIcons.add(x.icon)));
 Object.values(ix.prompt).forEach(p => usedIcons.add(p.icon));
+Object.values(ix.lesson).forEach(L => { if (L.unit) L.unit.blocks.forEach(b => { if (b.icon) usedIcons.add(b.icon); }); });
 usedIcons.forEach(n => { if (!icons[n]) err(rule('S.AST.01'), n, 'icon not in vendor/lucide — run tools/build-icons.js'); });
 
 // ---------- report ----------

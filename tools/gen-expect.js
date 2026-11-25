@@ -29,6 +29,16 @@ const hash = o => crypto.createHash('sha256').update(JSON.stringify(o)).digest('
 const tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'np-expect-'));
 let n = 0;
 
+/** readable x86-64 assembly of main.c for orientation lessons (C.ORI.01): optimised a little (-O1), Intel syntax,
+ *  without the hardening that hides the plain calls (CET, fortify), and without assembler bookkeeping directives */
+function asmOf(dir, env) {
+    const a = cp.spawnSync('gcc', ['-std=c17', '-O1', '-S', '-masm=intel', '-fno-asynchronous-unwind-tables', '-fcf-protection=none',
+        '-U_FORTIFY_SOURCE', '-o', '-', 'main.c'], { cwd: dir, encoding: 'utf8', env });
+    return (a.stdout || '').split('\n')
+        .filter(l => !/^\s*\.(file|ident|section|size|type|text|globl|align|p2align|long|intel_syntax)\b|^[0-9]:|^\s*\.string\s+"GNU"/.test(l))
+        .join('\n').trim() + '\n';
+}
+
 function parseGcc(log) {
     const out = [];
     log.split('\n').forEach(line => {
@@ -55,6 +65,7 @@ function runGcc(input) {
         ok = l.status === 0;
     }
     const res = { compiled: ok, diagnostics: parseGcc(log), log };
+    if (ok && input.asm) res.asm = asmOf(dir, env);
     if (!res.compiled || input.noRun) return res;
     for (const f of Object.keys(input.files || {})) fs.writeFileSync(path.join(dir, f), input.files[f]);
     const r = cp.spawnSync(path.join(dir, 'main'), input.args || [], { cwd: dir, input: input.stdin || '', encoding: 'utf8', timeout: 5000 });
@@ -86,7 +97,7 @@ const program = (source, rec) => ({ source, stdin: rec.stdin || '', args: rec.ar
     for (const code of N.index.codeList) {
         const input = program(code.source, code);
         // code with undefined behavior (or a warning about it) is compiled but not run: its output is not reproducible
-        const run = (code.intent === 'ub' || code.intent === 'warning') ? Object.assign({ noRun: true }, input) : input;
+        const run = Object.assign({ noRun: code.intent === 'ub' || code.intent === 'warning', asm: !!code.asm }, input);
         out.code[code.id] = { hash: hash([input, tag]), gcc: runGcc(run), xcc: await runXcc(run) };
     }
 
