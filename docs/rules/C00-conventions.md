@@ -282,6 +282,8 @@
 | `%td` در `printf` | چاپ نمی‌شود | تفاضل pointer با تبدیل به `long long` و `%lld` |
 | `INT_MIN`، `LONG_MIN`، `UINT_MAX`، `ULONG_MAX` در `limits.h` | مقدار غلط در `printf` | تا رفع upstream از این ثابت‌ها در `printf` استفاده نمی‌شود |
 | خواندن از `NULL` | بدون خطا | فقط نوشتن در `NULL` شناخته می‌شود؛ درس `C.L47` این را صریح می‌گوید |
+| بازیابی پس از خطا — error recovery | پس از بعضی خطاهای نحوی (ویرگول یا `"` جاافتاده) `;' expected` و `expression expected` تا سقف خطاها تکرار می‌شوند | `CRunner` پیام‌ها را تا اولین تکرارِ عین‌به‌عین نگه می‌دارد و تعداد پیام‌های بریده را می‌گوید |
+| نام ناشناخته و نبودِ `#include` | XCC خطا می‌دهد (`undeclared`)، gcc فقط warning و سپس خطای linker یا اجرا | dimension `W` با `intent: "warning"`؛ تمرین در مرورگر رد می‌شود و درس تفاوت را در `note` از نوع `platform` می‌گوید (`W-01`) |
 
 **پرچم‌های کامپایل — Compiler Flags** `C.FLG.01` — در هر متنی که دستور کامپایل می‌آید: `-std=c17 -Wall -Wextra -pedantic`. از درس `C.L46`: به‌علاوهٔ `-g -fsanitize=address,undefined`. هیچ پرچم دیگری بدون توضیح.
 

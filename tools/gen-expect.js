@@ -34,6 +34,8 @@ function parseGcc(log) {
     log.split('\n').forEach(line => {
         const m = line.match(/^main\.c:(\d+):(\d+): (error|warning|note): (.*)$/);
         if (m) out.push({ line: +m[1], col: +m[2], severity: m[3], message: m[4] });
+        const ld = line.match(/(undefined reference to .*)$/);
+        if (ld) out.push({ line: null, col: null, severity: 'error', message: ld[1], stage: 'link' });
     });
     return out;
 }
@@ -42,11 +44,18 @@ function runGcc(input) {
     const dir = path.join(tmpRoot, String(n++));
     fs.mkdirSync(dir);
     fs.writeFileSync(path.join(dir, 'main.c'), input.source);
-    // LC_ALL=C: plain ASCII quotes in messages, the same on every machine (a UTF-8 locale gives ‘;’)
-    const c = cp.spawnSync('gcc', GCC_FLAGS.concat(['-o', 'main', 'main.c', '-lm']), { cwd: dir, encoding: 'utf8', env: Object.assign({}, process.env, { LC_ALL: 'C', LANG: 'C' }) });
-    const log = (c.stderr || '').trim();
-    const res = { compiled: c.status === 0, diagnostics: parseGcc(log), log };
-    if (!res.compiled) return res;
+    // LC_ALL=C: plain ASCII quotes in messages, the same on every machine (a UTF-8 locale gives ‘;’).
+    // Compile and link in two steps, so a link error names main.o instead of a random temporary file.
+    const env = Object.assign({}, process.env, { LC_ALL: 'C', LANG: 'C' });
+    const c = cp.spawnSync('gcc', GCC_FLAGS.concat(['-c', '-o', 'main.o', 'main.c']), { cwd: dir, encoding: 'utf8', env });
+    let log = (c.stderr || '').trim(), ok = c.status === 0;
+    if (ok) {
+        const l = cp.spawnSync('gcc', ['-o', 'main', 'main.o', '-lm'], { cwd: dir, encoding: 'utf8', env });
+        log = [log, (l.stderr || '').trim()].filter(Boolean).join('\n');
+        ok = l.status === 0;
+    }
+    const res = { compiled: ok, diagnostics: parseGcc(log), log };
+    if (!res.compiled || input.noRun) return res;
     for (const f of Object.keys(input.files || {})) fs.writeFileSync(path.join(dir, f), input.files[f]);
     const r = cp.spawnSync(path.join(dir, 'main'), input.args || [], { cwd: dir, input: input.stdin || '', encoding: 'utf8', timeout: 5000 });
     res.stdout = r.stdout;
@@ -59,7 +68,7 @@ function runGcc(input) {
 async function runXcc(input) {
     const c = engine.compile(input.source);
     const res = { compiled: c.ok, diagnostics: c.diagnostics, log: c.log.trim() };
-    if (!c.ok) return res;
+    if (!c.ok || input.noRun) return res;
     let stdout = '', stderr = '';
     const r = await engine.run(c.wasm, { stdin: input.stdin || '', args: input.args, files: input.files,
         onOutput: (t, isErr) => { if (isErr) stderr += t; else stdout += t; } });
@@ -76,7 +85,9 @@ const program = (source, rec) => ({ source, stdin: rec.stdin || '', args: rec.ar
 
     for (const code of N.index.codeList) {
         const input = program(code.source, code);
-        out.code[code.id] = { hash: hash([input, tag]), gcc: runGcc(input), xcc: await runXcc(input) };
+        // code with undefined behavior (or a warning about it) is compiled but not run: its output is not reproducible
+        const run = (code.intent === 'ub' || code.intent === 'warning') ? Object.assign({ noRun: true }, input) : input;
+        out.code[code.id] = { hash: hash([input, tag]), gcc: runGcc(run), xcc: await runXcc(run) };
     }
 
     for (const item of N.index.itemList) {
@@ -91,9 +102,11 @@ const program = (source, rec) => ({ source, stdin: rec.stdin || '', args: rec.ar
                 const wrongSource = t.variant || (item.broken && N.index.code[item.broken].source);
                 const wrongInput = program(wrongSource, t);
                 entry.hash = hash([input, wrongInput, tag]);
-                const good = runGcc(input), bad = runGcc(wrongInput);
+                // `rejects`: the browser's check (XCC) turns the mistake down; `gccRejects`: gcc would too, or warns
+                const good = runGcc(input), bad = runGcc(wrongInput), badX = await runXcc(wrongInput);
                 entry.expect = { stdout: good.stdout, exitCode: good.exitCode };
-                entry.rejects = !bad.compiled || bad.stdout !== good.stdout || bad.exitCode !== good.exitCode;
+                entry.rejects = !badX.compiled || badX.stdout !== good.stdout || badX.exitCode !== good.exitCode;
+                entry.gccRejects = !bad.compiled || bad.diagnostics.some(d => d.severity === 'warning') || bad.stdout !== good.stdout;
             } else {
                 const good = runGcc(input), x = await runXcc(input);
                 entry.expect = { stdout: good.stdout, exitCode: good.exitCode };

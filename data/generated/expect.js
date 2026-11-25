@@ -300,6 +300,1027 @@
     ],
     "log": "main.c(5): String not closed\n    printf(\"Good night\\n);\n                          ^"
    }
+  },
+  "C.L02.K01": {
+   "hash": "5761f422b4145632",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 5,
+      "col": 5,
+      "severity": "warning",
+      "message": "implicit declaration of function 'Printf'; did you mean 'printf'? [-Wimplicit-function-declaration]"
+     },
+     {
+      "line": null,
+      "col": null,
+      "severity": "error",
+      "message": "undefined reference to `Printf'",
+      "stage": "link"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:5:5: warning: implicit declaration of function 'Printf'; did you mean 'printf'? [-Wimplicit-function-declaration]\n/usr/bin/ld: main.o: in function `main':\nmain.c:(.text+0x27): undefined reference to `Printf'\ncollect2: error: ld returned 1 exit status"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 5,
+      "col": null,
+      "message": "`Printf' undeclared"
+     },
+     {
+      "file": "main.c",
+      "line": 5,
+      "col": null,
+      "message": "cannot call except function"
+     }
+    ],
+    "log": "main.c(5): `Printf' undeclared\n    Printf(\"Tuesday\\n\");\n    ^~~~~~\nmain.c(5): cannot call except function\n    Printf(\"Tuesday\\n\");\n    ^~~~~~"
+   }
+  },
+  "C.L02.K02": {
+   "hash": "55e1b471c5db7256",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 5,
+      "col": 40,
+      "severity": "error",
+      "message": "expected ';' before 'printf'"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:5:40: error: expected ';' before 'printf'"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 6,
+      "col": null,
+      "message": "`;' expected"
+     }
+    ],
+    "log": "main.c(6): `;' expected\n    printf(\"Fix one thing at a time.\\n\");\n    ^~~~~~"
+   }
+  },
+  "C.L02.K03": {
+   "hash": "4fee4d63de1b4342",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Monday\nTuesday\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Monday\nTuesday\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L02.K04": {
+   "hash": "e32c7131f7bacb25",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 6,
+      "col": 5,
+      "severity": "error",
+      "message": "expected declaration or statement at end of input"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:6:5: error: expected declaration or statement at end of input"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 6,
+      "col": null,
+      "message": "`}' expected"
+     }
+    ],
+    "log": "main.c(6): `}' expected"
+   }
+  },
+  "C.L02.K05": {
+   "hash": "454d87739a6282c6",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Hello\nBye\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Hello\nBye\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L02.K06": {
+   "hash": "3274ed9ea246fee2",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [
+     {
+      "line": 2,
+      "col": 5,
+      "severity": "warning",
+      "message": "implicit declaration of function 'printf' [-Wimplicit-function-declaration]"
+     },
+     {
+      "line": 2,
+      "col": 5,
+      "severity": "note",
+      "message": "include '<stdio.h>' or provide a declaration of 'printf'"
+     },
+     {
+      "line": 2,
+      "col": 5,
+      "severity": "warning",
+      "message": "incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]"
+     },
+     {
+      "line": 2,
+      "col": 5,
+      "severity": "note",
+      "message": "include '<stdio.h>' or provide a declaration of 'printf'"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:2:5: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]\nmain.c:2:5: note: include '<stdio.h>' or provide a declaration of 'printf'\nmain.c:2:5: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]\nmain.c:2:5: note: include '<stdio.h>' or provide a declaration of 'printf'"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 2,
+      "col": null,
+      "message": "`printf' undeclared"
+     },
+     {
+      "file": "main.c",
+      "line": 2,
+      "col": null,
+      "message": "cannot call except function"
+     }
+    ],
+    "log": "main.c(2): `printf' undeclared\n    printf(\"Hello\\n\");\n    ^~~~~~\nmain.c(2): cannot call except function\n    printf(\"Hello\\n\");\n    ^~~~~~"
+   }
+  },
+  "C.L02.K07": {
+   "hash": "555ba2f543defc5a",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Hello\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Hello\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L02.K08": {
+   "hash": "48d9ba6d51a5a48c",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 12,
+      "severity": "warning",
+      "message": "missing terminating \" character"
+     },
+     {
+      "line": 4,
+      "col": 12,
+      "severity": "error",
+      "message": "missing terminating \" character"
+     },
+     {
+      "line": 5,
+      "col": 24,
+      "severity": "error",
+      "message": "expected ')' before ';' token"
+     },
+     {
+      "line": 4,
+      "col": 11,
+      "severity": "note",
+      "message": "to match this '('"
+     },
+     {
+      "line": 5,
+      "col": 5,
+      "severity": "warning",
+      "message": "passing argument 1 of 'printf' makes pointer from integer without a cast [-Wint-conversion]"
+     },
+     {
+      "line": 8,
+      "col": 1,
+      "severity": "warning",
+      "message": "format not a string literal and no format arguments [-Wformat-security]"
+     },
+     {
+      "line": 7,
+      "col": 14,
+      "severity": "error",
+      "message": "expected ';' before '}' token"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:12: warning: missing terminating \" character\nmain.c:4:12: error: missing terminating \" character\nmain.c:5:24: error: expected ')' before ';' token\nmain.c:4:11: note: to match this '('\nmain.c:5:5: warning: passing argument 1 of 'printf' makes pointer from integer without a cast [-Wint-conversion]\nIn file included from main.c:1:\n/usr/include/stdio.h:363:43: note: expected 'const char * restrict' but argument is of type 'int'\nmain.c:8:1: warning: format not a string literal and no format arguments [-Wformat-security]\nmain.c:7:14: error: expected ';' before '}' token"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": 23,
+      "message": "String not closed"
+     }
+    ],
+    "log": "main.c(4): String not closed\n    printf(\"Monday\\n);\n                      ^"
+   }
+  },
+  "C.L02.K09": {
+   "hash": "b6d75de8ff7380ff",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 5,
+      "severity": "warning",
+      "message": "implicit declaration of function 'prinf'; did you mean 'printf'? [-Wimplicit-function-declaration]"
+     },
+     {
+      "line": null,
+      "col": null,
+      "severity": "error",
+      "message": "undefined reference to `prinf'",
+      "stage": "link"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:5: warning: implicit declaration of function 'prinf'; did you mean 'printf'? [-Wimplicit-function-declaration]\n/usr/bin/ld: main.o: in function `main':\nmain.c:(.text+0x18): undefined reference to `prinf'\ncollect2: error: ld returned 1 exit status"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": null,
+      "message": "`prinf' undeclared"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": null,
+      "message": "cannot call except function"
+     }
+    ],
+    "log": "main.c(4): `prinf' undeclared\n    prinf(\"Almost right\\n\");\n    ^~~~~\nmain.c(4): cannot call except function\n    prinf(\"Almost right\\n\");\n    ^~~~~"
+   }
+  },
+  "C.L02.K10": {
+   "hash": "85b7394d71098a1b",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [
+     {
+      "line": 2,
+      "col": 5,
+      "severity": "warning",
+      "message": "implicit declaration of function 'printf' [-Wimplicit-function-declaration]"
+     },
+     {
+      "line": 2,
+      "col": 5,
+      "severity": "note",
+      "message": "include '<stdio.h>' or provide a declaration of 'printf'"
+     },
+     {
+      "line": 2,
+      "col": 5,
+      "severity": "warning",
+      "message": "incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]"
+     },
+     {
+      "line": 2,
+      "col": 5,
+      "severity": "note",
+      "message": "include '<stdio.h>' or provide a declaration of 'printf'"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:2:5: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]\nmain.c:2:5: note: include '<stdio.h>' or provide a declaration of 'printf'\nmain.c:2:5: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]\nmain.c:2:5: note: include '<stdio.h>' or provide a declaration of 'printf'"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 2,
+      "col": null,
+      "message": "`printf' undeclared"
+     },
+     {
+      "file": "main.c",
+      "line": 2,
+      "col": null,
+      "message": "cannot call except function"
+     },
+     {
+      "file": "main.c",
+      "line": 3,
+      "col": null,
+      "message": "cannot call except function"
+     }
+    ],
+    "log": "main.c(2): `printf' undeclared\n    printf(\"Where is stdio.h?\\n\");\n    ^~~~~~\nmain.c(2): cannot call except function\n    printf(\"Where is stdio.h?\\n\");\n    ^~~~~~\nmain.c(3): cannot call except function\n    printf(\"Not here.\\n\");\n    ^~~~~~"
+   }
+  },
+  "C.L02.K11": {
+   "hash": "af8a73bc71eb31dc",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 5,
+      "severity": "warning",
+      "message": "implicit declaration of function 'print'; did you mean 'printf'? [-Wimplicit-function-declaration]"
+     },
+     {
+      "line": null,
+      "col": null,
+      "severity": "error",
+      "message": "undefined reference to `print'",
+      "stage": "link"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:5: warning: implicit declaration of function 'print'; did you mean 'printf'? [-Wimplicit-function-declaration]\n/usr/bin/ld: main.o: in function `main':\nmain.c:(.text+0x18): undefined reference to `print'\ncollect2: error: ld returned 1 exit status"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": null,
+      "message": "`print' undeclared"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": null,
+      "message": "cannot call except function"
+     }
+    ],
+    "log": "main.c(4): `print' undeclared\n    print(\"Good luck\\n\");\n    ^~~~~\nmain.c(4): cannot call except function\n    print(\"Good luck\\n\");\n    ^~~~~"
+   }
+  },
+  "C.L02.K12": {
+   "hash": "65208b7249242f07",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 7,
+      "col": 5,
+      "severity": "error",
+      "message": "expected declaration or statement at end of input"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:7:5: error: expected declaration or statement at end of input"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 7,
+      "col": null,
+      "message": "`}' expected"
+     }
+    ],
+    "log": "main.c(7): `}' expected"
+   }
+  },
+  "C.L02.K13": {
+   "hash": "945ba6a7eb4b1815",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [
+     {
+      "line": 2,
+      "col": 5,
+      "severity": "warning",
+      "message": "implicit declaration of function 'printf' [-Wimplicit-function-declaration]"
+     },
+     {
+      "line": 2,
+      "col": 5,
+      "severity": "note",
+      "message": "include '<stdio.h>' or provide a declaration of 'printf'"
+     },
+     {
+      "line": 2,
+      "col": 5,
+      "severity": "warning",
+      "message": "incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]"
+     },
+     {
+      "line": 2,
+      "col": 5,
+      "severity": "note",
+      "message": "include '<stdio.h>' or provide a declaration of 'printf'"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:2:5: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]\nmain.c:2:5: note: include '<stdio.h>' or provide a declaration of 'printf'\nmain.c:2:5: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]\nmain.c:2:5: note: include '<stdio.h>' or provide a declaration of 'printf'"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 2,
+      "col": null,
+      "message": "`printf' undeclared"
+     },
+     {
+      "file": "main.c",
+      "line": 2,
+      "col": null,
+      "message": "cannot call except function"
+     },
+     {
+      "file": "main.c",
+      "line": 3,
+      "col": null,
+      "message": "cannot call except function"
+     }
+    ],
+    "log": "main.c(2): `printf' undeclared\n    printf(\"Keep calm\\n\");\n    ^~~~~~\nmain.c(2): cannot call except function\n    printf(\"Keep calm\\n\");\n    ^~~~~~\nmain.c(3): cannot call except function\n    printf(\"and read the message\\n\");\n    ^~~~~~"
+   }
+  },
+  "C.L03.K01": {
+   "hash": "68b35f3f94664577",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "2 + 3\n5\n2 + 3 = 5\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "2 + 3\n5\n2 + 3 = 5\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L03.K02": {
+   "hash": "bef138b8250e6961",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Snack bar\nSandwich\t4\nJuice x2\t6\nTotal\t\t10\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Snack bar\nSandwich\t4\nJuice x2\t6\nTotal\t\t10\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L03.K03": {
+   "hash": "0bccbbc1c4a983e6",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Name:\tAda\nShe said \"Hello\"\nFolder: C:\\Users\\Ada\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Name:\tAda\nShe said \"Hello\"\nFolder: C:\\Users\\Ada\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L03.K04": {
+   "hash": "a21fef171ecc21ed",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "7 * 6\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "7 * 6\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L03.K05": {
+   "hash": "104039ae8d5f9e03",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "42\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "42\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L03.K06": {
+   "hash": "282b16f0d91462c0",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "File: C:\notes\today.txt\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "File: C:\notes\today.txt\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L03.K07": {
+   "hash": "5b5176d70f15e08e",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "File: C:\\notes\\today.txt\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "File: C:\\notes\\today.txt\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L03.K08": {
+   "hash": "542c37f95cedeefd",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 18,
+      "severity": "error",
+      "message": "expected ')' before numeric constant"
+     },
+     {
+      "line": 4,
+      "col": 14,
+      "severity": "warning",
+      "message": "format '%d' expects a matching 'int' argument [-Wformat=]"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:18: error: expected ')' before numeric constant\nmain.c:4:14: warning: format '%d' expects a matching 'int' argument [-Wformat=]"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": 19,
+      "message": "`,' or `)` expected"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": 19,
+      "message": "`;' expected"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": 24,
+      "message": "`;' expected"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": 24,
+      "message": "expression expected"
+     }
+    ],
+    "log": "main.c(4): `,' or `)` expected\n    printf(\"%d\\n\" 7 * 6);\n                  ^\nmain.c(4): `;' expected\n    printf(\"%d\\n\" 7 * 6);\n                  ^\nmain.c(4): `;' expected\n    printf(\"%d\\n\" 7 * 6);\n                       ^\nmain.c(4): expression expected\n    printf(\"%d\\n\" 7 * 6);\n                       ^\n(21 more messages cut: they repeat the ones above)"
+   }
+  },
+  "C.L03.K09": {
+   "hash": "3e2ac0b09f014c82",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 23,
+      "severity": "error",
+      "message": "expected ')' before 'Hello'"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:23: error: expected ')' before 'Hello'"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": null,
+      "message": "`,' or `)` expected"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": null,
+      "message": "`;' expected"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": null,
+      "message": "`Hello' undeclared"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": null,
+      "message": "`;' expected"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": 32,
+      "message": "`;' expected"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": 32,
+      "message": "expression expected"
+     }
+    ],
+    "log": "main.c(4): `,' or `)` expected\n    printf(\"She said \"Hello\"\\n\");\n                      ^~~~~\nmain.c(4): `;' expected\n    printf(\"She said \"Hello\"\\n\");\n                      ^~~~~\nmain.c(4): `Hello' undeclared\n    printf(\"She said \"Hello\"\\n\");\n                      ^~~~~\nmain.c(4): `;' expected\n    printf(\"She said \"Hello\"\\n\");\n                           ^~~~\nmain.c(4): `;' expected\n    printf(\"She said \"Hello\"\\n\");\n                               ^\nmain.c(4): expression expected\n    printf(\"She said \"Hello\"\\n\");\n                               ^\n(19 more messages cut: they repeat the ones above)"
+   }
+  },
+  "C.L03.K10": {
+   "hash": "1474b9687e91a6bb",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "She said \"Hello\"\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "She said \"Hello\"\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L03.K11": {
+   "hash": "5820c3046a414148",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 24,
+      "severity": "warning",
+      "message": "format '%d' expects a matching 'int' argument [-Wformat=]"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:24: warning: format '%d' expects a matching 'int' argument [-Wformat=]"
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": ""
+   }
+  },
+  "C.L03.K12": {
+   "hash": "1f19491e1062b2fd",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "2 + 3 = 5\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "2 + 3 = 5\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L03.K13": {
+   "hash": "ce3188e4c2b7b80d",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 5,
+      "col": 18,
+      "severity": "error",
+      "message": "expected ')' before numeric constant"
+     },
+     {
+      "line": 5,
+      "col": 14,
+      "severity": "warning",
+      "message": "format '%d' expects a matching 'int' argument [-Wformat=]"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:5:18: error: expected ')' before numeric constant\nmain.c:5:14: warning: format '%d' expects a matching 'int' argument [-Wformat=]"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 5,
+      "col": null,
+      "message": "`,' or `)` expected"
+     },
+     {
+      "file": "main.c",
+      "line": 5,
+      "col": null,
+      "message": "`;' expected"
+     },
+     {
+      "file": "main.c",
+      "line": 5,
+      "col": 26,
+      "message": "`;' expected"
+     },
+     {
+      "file": "main.c",
+      "line": 5,
+      "col": 26,
+      "message": "expression expected"
+     }
+    ],
+    "log": "main.c(5): `,' or `)` expected\n    printf(\"%d\\n\" 24 * 60);\n                  ^~\nmain.c(5): `;' expected\n    printf(\"%d\\n\" 24 * 60);\n                  ^~\nmain.c(5): `;' expected\n    printf(\"%d\\n\" 24 * 60);\n                         ^\nmain.c(5): expression expected\n    printf(\"%d\\n\" 24 * 60);\n                         ^\n(21 more messages cut: they repeat the ones above)"
+   }
+  },
+  "C.L03.K14": {
+   "hash": "fbbe8f91cdc216a4",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "42\n4 2\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "42\n4 2\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L03.K15": {
+   "hash": "e81c0898d2adb056",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "10 - 4 = 6\n10 - 4\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "10 - 4 = 6\n10 - 4\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L03.K16": {
+   "hash": "cbe8335f132e7804",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "C:\\new\nC:\new\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "C:\\new\nC:\new\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L03.K17": {
+   "hash": "2a5d46468ff5df99",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 35,
+      "severity": "error",
+      "message": "expected ')' before numeric constant"
+     },
+     {
+      "line": 4,
+      "col": 31,
+      "severity": "warning",
+      "message": "format '%d' expects a matching 'int' argument [-Wformat=]"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:35: error: expected ')' before numeric constant\nmain.c:4:31: warning: format '%d' expects a matching 'int' argument [-Wformat=]"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": 36,
+      "message": "`,' or `)` expected"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": 36,
+      "message": "`;' expected"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": 42,
+      "message": "`;' expected"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": 42,
+      "message": "expression expected"
+     }
+    ],
+    "log": "main.c(4): `,' or `)` expected\n    printf(\"Hours in a week: %d\\n\" 7 * 24);\n                                   ^\nmain.c(4): `;' expected\n    printf(\"Hours in a week: %d\\n\" 7 * 24);\n                                   ^\nmain.c(4): `;' expected\n    printf(\"Hours in a week: %d\\n\" 7 * 24);\n                                         ^\nmain.c(4): expression expected\n    printf(\"Hours in a week: %d\\n\" 7 * 24);\n                                         ^\n(21 more messages cut: they repeat the ones above)"
+   }
+  },
+  "C.L03.K18": {
+   "hash": "969e88a5a68453c4",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 20,
+      "severity": "error",
+      "message": "expected ')' before 'Enter'"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:20: error: expected ')' before 'Enter'"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": null,
+      "message": "`,' or `)` expected"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": null,
+      "message": "`;' expected"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": null,
+      "message": "`Enter' undeclared"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": null,
+      "message": "`;' expected"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": 38,
+      "message": "`;' expected"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": 38,
+      "message": "expression expected"
+     }
+    ],
+    "log": "main.c(4): `,' or `)` expected\n    printf(\"Press \"Enter\" to start\\n\");\n                   ^~~~~\nmain.c(4): `;' expected\n    printf(\"Press \"Enter\" to start\\n\");\n                   ^~~~~\nmain.c(4): `Enter' undeclared\n    printf(\"Press \"Enter\" to start\\n\");\n                   ^~~~~\nmain.c(4): `;' expected\n    printf(\"Press \"Enter\" to start\\n\");\n                        ^~~~~~~~~~~~~\nmain.c(4): `;' expected\n    printf(\"Press \"Enter\" to start\\n\");\n                                     ^\nmain.c(4): expression expected\n    printf(\"Press \"Enter\" to start\\n\");\n                                     ^\n(19 more messages cut: they repeat the ones above)"
+   }
+  },
+  "C.L03.K19": {
+   "hash": "593d42648adc2453",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 24,
+      "severity": "warning",
+      "message": "format '%d' expects a matching 'int' argument [-Wformat=]"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:24: warning: format '%d' expects a matching 'int' argument [-Wformat=]"
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": ""
+   }
   }
  },
  "tests": {
@@ -325,7 +1346,8 @@
     "stdout": "Line one\nLine two\n",
     "exitCode": 0
    },
-   "rejects": true
+   "rejects": true,
+   "gccRejects": true
   },
   "C.L01.X03.02.T01": {
    "hash": "d00523f175509a2a",
@@ -341,7 +1363,8 @@
     "stdout": "Good morning\nGood night\n",
     "exitCode": 0
    },
-   "rejects": true
+   "rejects": true,
+   "gccRejects": true
   },
   "C.L01.X04.01.T01": {
    "hash": "4a5dcdac25062285",
@@ -357,7 +1380,8 @@
     "stdout": "Name: Ada Lovelace\nCourse: C from zero\nLesson: 1\n",
     "exitCode": 0
    },
-   "rejects": true
+   "rejects": true,
+   "gccRejects": true
   },
   "C.L01.X06.01.T01": {
    "hash": "3de0daea80aea23d",
@@ -373,7 +1397,203 @@
     "stdout": "+----------------+\n| Learning C     |\n| Back at 18:00  |\n+----------------+\n",
     "exitCode": 0
    },
-   "rejects": true
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L02.X01.01.T01": {
+   "hash": "80af74136aeb8f9b",
+   "expect": {
+    "stdout": "Hi\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L02.X02.01.T01": {
+   "hash": "c23532dc5c6fd2a1",
+   "expect": {
+    "stdout": "Good luck\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L02.X02.01.T02": {
+   "hash": "0f6582d86bc03aa8",
+   "expect": {
+    "stdout": "Good luck\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L02.X02.02.T01": {
+   "hash": "e5e3f674614f0ee6",
+   "expect": {
+    "stdout": "Step one\nStep two\nStep three\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L02.X02.02.T02": {
+   "hash": "030ea5203acf1120",
+   "expect": {
+    "stdout": "Step one\nStep two\nStep three\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L02.X02.03.T01": {
+   "hash": "2d44ea541104fcbd",
+   "expect": {
+    "stdout": "Keep calm\nand read the message\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L02.X02.03.T02": {
+   "hash": "e708d58c7b70569a",
+   "expect": {
+    "stdout": "Keep calm\nand read the message\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L02.X03.01.T01": {
+   "hash": "029af3a161a16151",
+   "expect": {
+    "stdout": "I can read\nerror messages.\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L02.X03.01.T02": {
+   "hash": "f2a53cf10b4089ba",
+   "expect": {
+    "stdout": "I can read\nerror messages.\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L02.X03.01.T03": {
+   "hash": "39fdcf8454878985",
+   "expect": {
+    "stdout": "I can read\nerror messages.\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L02.X05.01.T01": {
+   "hash": "4c5ad5fe8444c10c",
+   "expect": {
+    "stdout": "1. Read the first message.\n2. Go to its line and the line before.\n3. Ask: what did it expect?\n4. Fix one thing, compile again.\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L03.X02.01.T01": {
+   "hash": "c070d18d24c8519c",
+   "expect": {
+    "stdout": "Hours in a week: 168\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L03.X02.01.T02": {
+   "hash": "9cf397ce04322635",
+   "expect": {
+    "stdout": "Hours in a week: 168\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L03.X02.02.T01": {
+   "hash": "cc60aeff62a614dd",
+   "expect": {
+    "stdout": "Press \"Enter\" to start\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L03.X02.02.T02": {
+   "hash": "d99c8705d63bde2c",
+   "expect": {
+    "stdout": "Press \"Enter\" to start\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L03.X02.03.T01": {
+   "hash": "435cbcc71e50bb0f",
+   "expect": {
+    "stdout": "6 x 7 = 42\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L03.X02.03.T02": {
+   "hash": "93912c5d2e2fdb35",
+   "expect": {
+    "stdout": "6 x 7 = 42\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L03.X03.01.T01": {
+   "hash": "e9d4db3b0e6b922c",
+   "expect": {
+    "stdout": "Saved to C:\\notes\\today.txt\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L03.X03.01.T02": {
+   "hash": "87a324ae2847efa3",
+   "expect": {
+    "stdout": "Saved to C:\\notes\\today.txt\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L03.X03.02.T01": {
+   "hash": "e5295109c774821a",
+   "expect": {
+    "stdout": "A day has 86400 seconds.\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L03.X03.02.T02": {
+   "hash": "c3baa986d5248442",
+   "expect": {
+    "stdout": "A day has 86400 seconds.\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L03.X05.01.T01": {
+   "hash": "09c9b986442e7d1d",
+   "expect": {
+    "stdout": "7 x 1 = 7\n7 x 2 = 14\n7 x 3 = 21\n7 x 4 = 28\n7 x 5 = 35\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L03.X05.01.T02": {
+   "hash": "20587706d42fc2e3",
+   "expect": {
+    "stdout": "7 x 1 = 7\n7 x 2 = 14\n7 x 3 = 21\n7 x 4 = 28\n7 x 5 = 35\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
   }
  }
 };

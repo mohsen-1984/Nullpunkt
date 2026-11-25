@@ -35,6 +35,33 @@
                     output: { fa: 'سه پرسش، یکی‌یکی: کجا، چه، چرا.', de: 'Drei Fragen, eine nach der anderen: wo, was, warum.', en: 'Three questions, one at a time: where, what, why.' },
                 },
             },
+            {
+                id: 'AI-2', icon: 'bug', waits: true,
+                name: { en: 'Error quiz', fa: 'مسابقهٔ خطا', de: 'Fehler-Quiz' },
+                text: 'I am on lesson {lesson} of my C course. Quiz me on compiler messages.\n' +
+                    'Show me one short C program, at most 8 lines, using only printf, with exactly one mistake.\n' +
+                    'Ask me first: will it compile? Then: which line will gcc point to, and what will it say?\n' +
+                    'Wait for my answer after each question. Then show me the real gcc message and explain it.',
+                guide: {
+                    does: { fa: 'برنامهٔ کوتاهی با یک اشتباه می‌سازد و از تو می‌خواهد پیام compiler را پیش از دیدنش حدس بزنی.', de: 'Erstellt ein kurzes Programm mit einem Fehler und lässt dich die Compiler-Meldung vorhersagen, bevor du sie siehst.', en: 'Makes a short program with one mistake and asks you to predict the compiler message before you see it.' },
+                    give: { fa: 'فقط همین پرامپت؛ بعد به پرسش‌ها جواب بده.', de: 'Nur diesen Prompt; danach beantwortest du die Fragen.', en: 'Just this prompt; then answer the questions.' },
+                    output: { fa: 'یک برنامه و دو پرسش، یکی‌یکی؛ بعد پیام واقعی gcc.', de: 'Ein Programm und zwei Fragen, eine nach der anderen; danach die echte gcc-Meldung.', en: 'One program and two questions, one at a time; then the real gcc message.' },
+                },
+            },
+            {
+                id: 'AI-3', icon: 'printer', waits: true,
+                name: { en: 'printf drill', fa: 'تمرین printf', de: 'printf-Training' },
+                text: 'I am on lesson {lesson} of my C course. Drill me on printf.\n' +
+                    'Write five printf statements that use only text, %d, the escape sequences backslash-n, backslash-t,\n' +
+                    'backslash-backslash and backslash-quote, and calculations with plus, minus and times.\n' +
+                    'Show them one at a time and ask me for the exact output. Wait for my answer,\n' +
+                    'then tell me if I am right and why, before you show the next one.',
+                guide: {
+                    does: { fa: 'پنج statement کوتاه `printf` نشانت می‌دهد و می‌خواهد خروجی دقیق هر کدام را بگویی.', de: 'Zeigt dir fünf kurze `printf`-Statements und lässt dich die genaue Ausgabe jedes einzelnen sagen.', en: 'Shows you five short `printf` statements and asks you for the exact output of each.' },
+                    give: { fa: 'فقط همین پرامپت؛ جواب‌ها را خودت بنویس، بدون اجرا.', de: 'Nur diesen Prompt; schreib deine Antworten selbst, ohne auszuführen.', en: 'Just this prompt; write your answers yourself, without running anything.' },
+                    output: { fa: 'یک statement در هر نوبت و بازخورد کوتاه پس از جوابت.', de: 'Ein Statement pro Runde und eine kurze Rückmeldung nach deiner Antwort.', en: 'One statement per turn and short feedback after your answer.' },
+                },
+            },
         ],
     };
 })(typeof window !== 'undefined' ? window : globalThis);

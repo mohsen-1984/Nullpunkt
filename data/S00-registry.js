@@ -87,7 +87,8 @@
 
         // icons used by the page itself (buttons, status); the rest come from the registries above
         uiIcons: ['play', 'square', 'undo-2', 'copy', 'keyboard', 'timer', 'circle-check', 'circle-x', 'languages',
-            'sun-moon', 'chevron-left', 'chevron-right', 'chevron-up', 'chevron-down', 'lightbulb', 'key-round', 'x', 'menu'],
+            'sun-moon', 'chevron-left', 'chevron-right', 'chevron-up', 'chevron-down', 'lightbulb', 'key-round', 'x', 'menu',
+            'octagon-x', 'triangle-exclamation-point'],
 
         // the alphabet for exercise letters, per language (S.TYP.11); taken from position, never stored
         letters: {

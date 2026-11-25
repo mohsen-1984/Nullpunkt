@@ -69,6 +69,60 @@
                     en: 'What a program prints on the screen.',
                 },
             },
+            {
+                id: 'T.compile-error', en: 'compile error', use: { fa: 'compile error', de: 'Compile-Fehler' },
+                gloss: { fa: 'خطای کامپایل', de: 'Übersetzungsfehler' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: 'قاعده‌ای از C که رعایت نشده؛ compiler برنامه‌ای نمی‌سازد.',
+                    de: 'Eine verletzte Regel von C; der Compiler baut kein Programm.',
+                    en: 'A broken rule of C; the compiler builds no program.',
+                },
+            },
+            {
+                id: 'T.warning', en: 'warning', use: { fa: 'warning', de: 'Warnung' },
+                gloss: { fa: 'هشدار', de: 'warning' }, deArticle: 'die', series: ['C'],
+                def: {
+                    fa: 'پیامی دربارهٔ چیزی مشکوک در کد؛ برنامه ساخته می‌شود، ولی احتمالاً درست کار نمی‌کند.',
+                    de: 'Eine Meldung über etwas Verdächtiges im Code; das Programm wird gebaut, arbeitet aber wahrscheinlich nicht richtig.',
+                    en: 'A message about something suspicious in the code; the program is built but probably does not work correctly.',
+                },
+            },
+            {
+                id: 'T.linker', en: 'linker', use: { fa: 'linker', de: 'Linker' },
+                gloss: { fa: 'پیونددهنده', de: 'Binder' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: 'برنامه‌ای که پس از compiler، کد تو را به کد کتابخانه‌ها (مثل `printf`) وصل می‌کند.',
+                    de: 'Ein Programm, das nach dem Compiler deinen Code mit dem Code der Bibliotheken (wie `printf`) verbindet.',
+                    en: 'A program that, after the compiler, joins your code with the code of libraries (like `printf`).',
+                },
+            },
+            {
+                id: 'T.format-string', en: 'format string', use: { fa: 'format string', de: 'Format-String' },
+                gloss: { fa: 'رشتهٔ قالب', de: 'Formatzeichenkette' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: 'متن اول `printf`، بین دو `"`؛ می‌گوید چه چاپ شود و مقدارها کجا بنشینند.',
+                    de: 'Der erste Text von `printf`, zwischen den `"`; er sagt, was ausgegeben wird und wo die Werte stehen.',
+                    en: 'The first text of `printf`, between the `"`; it says what is printed and where the values go.',
+                },
+            },
+            {
+                id: 'T.format-specifier', en: 'format specifier', use: { fa: 'format specifier', de: 'Format-Specifier' },
+                gloss: { fa: 'جای‌نگه‌دار مقدار', de: 'Formatangabe' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: 'نشانه‌ای مثل `%d` در format string که جای یک مقدار را نگه می‌دارد.',
+                    de: 'Ein Zeichen wie `%d` im Format-String, das den Platz für einen Wert freihält.',
+                    en: 'A marker like `%d` in the format string that holds the place of a value.',
+                },
+            },
+            {
+                id: 'T.argument', en: 'argument', use: { fa: 'argument', de: 'Argument' },
+                gloss: { fa: 'ورودی تابع', de: 'Übergabewert' }, deArticle: 'das', series: ['C'],
+                def: {
+                    fa: 'هر مقداری که درون پرانتز به یک تابع مثل `printf` می‌دهی؛ argumentها با `,` جدا می‌شوند.',
+                    de: 'Jeder Wert, den du in den Klammern an eine Funktion wie `printf` übergibst; Argumente werden durch `,` getrennt.',
+                    en: 'Each value you give to a function like `printf` inside the parentheses; arguments are separated by `,`.',
+                },
+            },
         ],
     };
 })(typeof window !== 'undefined' ? window : globalThis);
