@@ -11,6 +11,8 @@ pre { margin: 0; white-space: pre-wrap; word-break: break-word; unicode-bidi: is
 .np-crumb { color: var(--np-muted); font-size: .9rem; margin: 0; }
 .np-badge { color: var(--np-warn); border: 1px solid currentColor; border-radius: 4px; padding: 0 .4em; font-size: .8rem; }
 h1 { font-size: 1.7rem; line-height: 1.35; margin: .25rem 0 1.5rem; }
+.np-title-en { display: block; font-size: .95rem; font-weight: 400; color: var(--np-muted); margin-top: .35rem; }
+html[dir="rtl"] .np-title-en { text-align: right; }
 h2 { scroll-margin-top: calc(var(--header-h) + var(--spy-offset)); display: flex; align-items: center; gap: .5rem; font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-bottom: .3rem; border-bottom: 1px solid var(--np-line); }
 h3 { display: flex; align-items: center; gap: .45rem; font-size: 1.05rem; margin: 1.25rem 0 .5rem; flex-wrap: wrap; }
 .np-icon { width: 20px; height: 20px; flex: none; color: var(--np-accent); }

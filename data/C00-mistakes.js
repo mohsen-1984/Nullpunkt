@@ -4,6 +4,10 @@
     var N = g.Nullpunkt = g.Nullpunkt || { files: {} };
     N.files.C00M = {
         id: 'C00M', kind: 'mistakes', series: 'C', version: '0.1.0',
+        // Ids that were published and then retired: never used again (S.ID.01)
+        retired: [
+            { id: 'W-01', by: 'E-07', since: '0.1.1', why: 'Missing #include <stdio.h> is an error from gcc 14 on and in clang, not a warning (C.CMP.01).' },
+        ],
         mistakes: [
             {
                 id: 'M-01', dim: 'M', src: 'SRC.prior', contrast: 'CT.false',
@@ -76,7 +80,7 @@
                 },
             },
             {
-                id: 'W-01', dim: 'W', src: 'SRC.prior', contrast: 'CT.new',
+                id: 'E-07', dim: 'E', src: 'SRC.prior', contrast: 'CT.new',
                 title: {
                     fa: '`#include <stdio.h>` جا افتاده',
                     de: '`#include <stdio.h>` fehlt',
@@ -84,9 +88,9 @@
                 },
                 wrong: 'C.L02.K06', right: 'C.L02.K07',
                 why: {
-                    fa: 'در Python، `print` همیشه آماده است. در C، `printf` در کتابخانهٔ استاندارد است و `#include <stdio.h>` آن را به compiler معرفی می‌کند. gcc بدون آن فقط warning می‌دهد و برنامه را می‌سازد، ولی compiler این صفحه خطا می‌دهد. warning را هم مثل خطا جدی بگیر.',
-                    de: 'In Python ist `print` immer da. In C steht `printf` in der Standardbibliothek, und `#include <stdio.h>` macht es dem Compiler bekannt. gcc gibt ohne diese Zeile nur eine Warnung aus und baut das Programm trotzdem, der Compiler dieser Seite meldet einen Fehler. Nimm Warnungen genauso ernst wie Fehler.',
-                    en: 'In Python, `print` is always there. In C, `printf` lives in the standard library, and `#include <stdio.h>` introduces it to the compiler. Without that line gcc only gives a warning and still builds the program, while the compiler on this page reports an error. Take warnings as seriously as errors.',
+                    fa: 'در Python، `print` همیشه آماده است. در C، `printf` در کتابخانهٔ استاندارد است و `#include <stdio.h>` آن را به compiler معرفی می‌کند. بدون آن، compiler نام `printf` را نمی‌شناسد و برنامه ساخته نمی‌شود. gcc قدیمی (13 و پیش از آن) فقط warning می‌داد؛ آن warning را هم مثل خطا جدی بگیر.',
+                    de: 'In Python ist `print` immer da. In C steht `printf` in der Standardbibliothek, und `#include <stdio.h>` macht es dem Compiler bekannt. Ohne diese Zeile kennt der Compiler den Namen `printf` nicht, und es entsteht kein Programm. Ein altes gcc (13 und früher) gab nur eine Warnung aus; nimm auch diese Warnung so ernst wie einen Fehler.',
+                    en: 'In Python, `print` is always there. In C, `printf` lives in the standard library, and `#include <stdio.h>` introduces it to the compiler. Without that line the compiler does not know the name `printf`, and no program is built. An old gcc (13 and before) only gave a warning; take that warning as seriously as an error.',
                 },
             },
             {

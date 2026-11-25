@@ -16,9 +16,9 @@
 
 **مبنا:** ISO C17 (`O-04`)، کامپایلر مرجع `gcc -std=c17 -Wall -Wextra -pedantic`، کامپایلر مرورگر XCC.
 
-**در نسخهٔ 1.0 هست:** هر چیزی که درس «مقدمهٔ برنامه‌نویسی» با C در ترم اول و دوم دانشگاه معمولاً می‌خواهد: نوع‌های پایه، جریان کنترل، تابع، آرایه و رشته، pointer، struct، حافظهٔ پویا، فایل، برنامهٔ چندفایلی، preprocessor، کار با بیت، اشکال‌زدایی و تست، و function pointer.
+**در نسخهٔ 1.0 هست:** هر چیزی که درس «مقدمهٔ برنامه‌نویسی» با C در ترم اول و دوم دانشگاه معمولاً می‌خواهد: نوع‌های پایه، جریان کنترل، تابع، آرایه و رشته، pointer، struct، حافظهٔ پویا، فایل، برنامهٔ چندفایلی، preprocessor، کار با بیت، اشکال‌زدایی و تست، و function pointer؛ و در فصل 14، stream و دستگاه، terminal، تصویر، `volatile`، `union` و bit-field.
 
-**در نسخهٔ 1.0 نیست — Not Yet Said:** `union`، تابع با آرگومان متغیر (`stdarg.h`)، `setjmp`، thread، شبکه، ویژگی‌های C23 (فقط یادداشت). این فهرست در صفحهٔ «دربارهٔ مجموعه» به فراگیر هم گفته می‌شود (`S.CH.03`). `C.SCP.01`
+**در نسخهٔ 1.0 نیست — Not Yet Said:** تابع با آرگومان متغیر (`stdarg.h`)، `setjmp`، thread، شبکه، ویژگی‌های C23 (فقط یادداشت). این فهرست در صفحهٔ «دربارهٔ مجموعه» به فراگیر هم گفته می‌شود (`S.CH.03`). `C.SCP.01`
 
 ---
 
@@ -30,7 +30,7 @@
 
 | Id | فارسی — English | Deutsch |
 |---|---|---|
-| `C.L01` | برنامه چیست و کامپایلر چه می‌کند — What a Program Is | Was ein Programm ist |
+| `C.L01` | برنامه چیست و compiler چه می‌کند — What a Program Is | Was ein Programm ist |
 | `C.L02` | خواندن پیام خطا — Reading Error Messages | Fehlermeldungen lesen |
 | `C.L03` | خروجی با printf — Output with printf | Ausgabe mit printf |
 
@@ -76,7 +76,7 @@
 |---|---|---|
 | `C.L20` | تعریف و فراخوانی تابع — Defining & Calling Functions | Funktionen definieren und aufrufen |
 | `C.L21` | پارامتر و مقدار بازگشتی — Parameters & Return Values | Parameter und Rückgabewerte |
-| `C.L22` | scope و متغیر محلی — Scope & Local Variables | Scope und lokale Variablen |
+| `C.L22` | scope، طول عمر و static — Scope, Lifetime & static | Scope, Lebensdauer und static |
 | `C.L23` | stack فراخوانی و recursion — The Call Stack & Recursion | Call Stack und Rekursion |
 
 ### فصل 7: آرایه و رشته — Arrays & Strings — Arrays und Strings
@@ -128,7 +128,7 @@
 |---|---|---|
 | `C.L42` | چند فایل و header — Multiple Files & Headers | Mehrere Dateien und Header |
 | `C.L43` | preprocessor و ماکرو — The Preprocessor & Macros | Präprozessor und Makros |
-| `C.L44` | کامپایل، link و make — Compiling, Linking & make | Kompilieren, Linken und make |
+| `C.L44` | compile، link و make — Compiling, Linking & make | Kompilieren, Linken und make |
 | `C.L45` | آرگومان خط فرمان — Command-Line Arguments | Kommandozeilenargumente |
 
 ### فصل 13: کیفیت و فراتر — Quality & Beyond — Qualität und mehr
@@ -148,11 +148,28 @@
 | `C.L51` | stream و دستگاه: stdin، stdout، stderr — Streams & Devices | Streams und Geräte |
 | `C.L52` | terminal: رنگ، مکان‌نما، کلید — The Terminal: Colors, Cursor, Keys | Das Terminal: Farben, Cursor, Tasten |
 | `C.L53` | گرافیک در C: از graphics.h تا کتابخانه‌های امروزی — Graphics in C | Grafik in C |
-| `C.L54` | گفت‌وگو با سخت‌افزار: register و volatile — Talking to Hardware | Mit Hardware sprechen |
+| `C.L54` | گفت‌وگو با سخت‌افزار: volatile، union و bit-field — Talking to Hardware | Mit Hardware sprechen |
 
 **متن و گرافیک — Text and Graphics** `C.DEV.01` — استاندارد C هیچ «حالت متنی» یا «حالت گرافیکی» ندارد. C فقط stream می‌شناسد (`stdin`، `stdout`، `stderr` و فایل)، و سیستم‌عامل هر دستگاهی را پشت یک stream می‌گذارد. «text mode» و «graphics mode» اصطلاح‌های دوران DOS‌اند (Turbo C و `graphics.h`/BGI، `conio.h`)؛ این‌ها بخشی از C نیستند، روی compilerهای امروزی کار نمی‌کنند، و دوره آن‌ها را فقط به‌عنوان تاریخچه و باور رایج (`M-`) معرفی می‌کند. معادل امروزی: terminal با escape sequenceهای ANSI (`C.L52`)، فایل تصویری که با C استاندارد نوشته می‌شود (مثلاً PPM، `C.L53`) و کتابخانه‌هایی مانند raylib و SDL برای پنجره و پیکسل (بیرون از استاندارد، فقط معرفی). دسترسی مستقیم به سخت‌افزار در embedded با registerهای نگاشته‌به‌حافظه و `volatile` است (`C.L54`). در مرورگر، خروجی escape sequence و تصویر در round اجرایی آن درس‌ها به runner افزوده می‌شود.
 
 **ترتیب در مسیر — Order Along the Path** `C.PTH.01` — هر درس فقط به درس‌های پیش از خودش ارجاع پیش‌نیاز (`prereq`) می‌دهد؛ ارجاع به درس بعدی فقط در بلوک `notyet` و یادداشت `simplification` مجاز است.
+
+### جای مباحث — Topic Homes `C.TOP.01`
+
+مبحث‌هایی که جای طبیعی‌شان در عنوان درس پیدا نیست، اینجا ثبت‌اند (بازبینی کاتالوگ، نوامبر 2026). هر مبحث یک خانهٔ اصلی دارد و در مارپیچ (`S.CH.12`) برمی‌گردد.
+
+| مبحث | خانهٔ اصلی | پیش و پس از آن | چرا |
+|---|---|---|---|
+| `math.h` (`sqrt`، `pow`، `-lm`) | `C.L21` | `C.L06`: فقط یادداشت `notyet` که `^` توان نیست (`M-`، `SRC.math`) | فراخوانی تابعی که مقدار برمی‌گرداند همان موضوع `C.L21` است؛ `-lm` به linker درس `C.L02` وصل می‌شود |
+| `rand`، `srand`، `time` | `C.L17` (بازی حدس عدد با `do-while`) | تکهٔ `CH.rand-seed`؛ seed و `% n` در `C.L22`؛ سوگیری `% n` در `C.L47` | پروژهٔ پیشنهادی درس 0.5 (بازی حدس عدد) زود ممکن می‌شود |
+| `static` و طول عمر (storage duration) | `C.L22` (محلی و ایستا) | `C.L36` (allocated)، `C.L42` (`static` سراسری و linkage) | سه گذر مارپیچ: lifetime، heap، فایل |
+| `union` و bit-field | `C.L54` (نگاشت register) | اشارهٔ کوتاه در `C.L48`؛ ترتیب بیت‌ها implementation-defined است (`P-`) | کاربرد واقعی‌شان در embedded است؛ بدون آن، مثال‌ها ساختگی می‌شوند |
+| `stderr` و exit status | `C.L40` (اولین استفاده با `fprintf(stderr, …)` و `return 1`) | `C.L51`: redirection، pipe، کد خروج در shell | پیام خطای برنامه از همان اولین فایل لازم است |
+| اشتباه‌های امنیتی `S-` | از فصل 3: `C.L10` (`scanf("%s")` بی‌طول) | `C.L28` (`strcpy`، format string)، `C.L37` (سرریز در محاسبهٔ اندازه)، `C.L39` (use-after-free، double free)، `C.L41` (ورودی امن)، `C.L45` (`argv`) | ورودی از فصل 3 وارد می‌شود و سطح حمله از همان‌جا شروع می‌شود |
+
+**فصل 14 در پایان — Chapter 14 Last:** فصل 14 در پایان می‌ماند، چون به فایل (`C.L40`)، کار با بیت (`C.L48`) و pointer نیاز دارد؛ فقط `stderr` و exit status زودتر می‌آیند (جدول بالا).
+
+**واحد مرور — Review Units:** هر فصل 1 تا 14 یک واحد مرور (`Cnn.REV`) دارد؛ فصل 0 ندارد، چون تمرین‌های خودش کار «بیا جلو یا برگرد» را می‌کنند (`C.ORI.01`).
 
 ---
 
@@ -247,9 +264,10 @@
 | `C.L14` | `switch`، `case`، `default`، `break` در `switch` |
 | `C.L15` | `while` |
 | `C.L16` | `for`، اعلان شمارنده در `for` |
-| `C.L17` | `do`، `break` و `continue` در حلقه |
+| `C.L17` | `do`، `break` و `continue` در حلقه؛ `rand`، `srand`، `time` (تکهٔ `CH.rand-seed`) |
 | `C.L20` | تعریف تابع، `void`، `return`، prototype — قاب `main` توضیح داده می‌شود |
-| `C.L22` | متغیر سراسری، `static` محلی |
+| `C.L21` | `math.h`: `sqrt`، `pow`؛ `-lm` |
+| `C.L22` | متغیر سراسری، `static` محلی، طول عمر (storage duration) خودکار و ایستا |
 | `C.L24` | آرایه، `[]`، مقداردهی اولیهٔ آرایه، `sizeof`، `size_t`، `%zu` |
 | `C.L26` | آرایهٔ دوبعدی |
 | `C.L27` | ثابت رشته در آرایهٔ `char`، `%s` |
@@ -261,7 +279,7 @@
 | `C.L34` | `typedef`، `enum` |
 | `C.L36` | `stdlib.h`: `malloc`، `free`، `exit` |
 | `C.L37` | `calloc`، `realloc` |
-| `C.L40` | `FILE`، `fopen`، `fclose`، `fprintf`، `fscanf`، `perror` |
+| `C.L40` | `FILE`، `fopen`، `fclose`، `fprintf`، `fscanf`، `perror`؛ `fprintf(stderr, …)` و `return 1` (`C.TOP.01`) |
 | `C.L41` | `fgets`، `sscanf`، `strtol` |
 | `C.L42` | `#include "…"`، header guard، `extern` — قاب `#include <stdio.h>` توضیح داده می‌شود |
 | `C.L43` | `#define`، ماکرو با پارامتر، `#if`، `#ifdef` |
@@ -271,7 +289,7 @@
 | `C.L50` | function pointer، `qsort` |
 | `C.L51` | `fprintf(stderr, …)`، `exit`، `EXIT_SUCCESS`/`EXIT_FAILURE`، `fflush` |
 | `C.L52` | escape با `\x1b`؛ رشته‌های ANSI |
-| `C.L54` | `volatile`، `uintptr_t` |
+| `C.L54` | `volatile`، `uintptr_t`، `union`، bit-field |
 
 **سازهٔ ممنوع — Forbidden Constructs** `C.FRB.01` — هرگز، در هیچ درسی، حتی به‌عنوان اشتباه: `gets`. فقط در درس اشتباه‌های امنیتی و با برچسب `S-`: `scanf("%s", …)` بدون طول، `strcpy` به مقصد کوچک‌تر.
 
@@ -284,7 +302,7 @@
 | Id | تکه | از | توضیح در |
 |---|---|---|---|
 | `CH.main-frame` | `#include <stdio.h>`، `int main(void) { … }`، `return 0;` | `C.L01` | `C.L20` (تابع) و `C.L42` (header) |
-| `CH.math-h` | `#include <math.h>` با `sqrt` و `pow` | `C.L06` | `C.L42` |
+| `CH.rand-seed` | `#include <stdlib.h>`، `#include <time.h>`، `srand((unsigned) time(NULL));` | `C.L17` | `C.L36` (`stdlib.h`) و `C.L42` (header) |
 
 متن درس هر جا تکه‌ای را برای اولین بار به کار می‌برد، یادداشت `simplification` دارد: «فعلاً قبول کن؛ در درس N توضیح می‌دهیم.»
 
@@ -303,9 +321,11 @@
 | `INT_MIN`، `LONG_MIN`، `UINT_MAX`، `ULONG_MAX` در `limits.h` | مقدار غلط در `printf` | تا رفع upstream از این ثابت‌ها در `printf` استفاده نمی‌شود |
 | خواندن از `NULL` | بدون خطا | فقط نوشتن در `NULL` شناخته می‌شود؛ درس `C.L47` این را صریح می‌گوید |
 | بازیابی پس از خطا — error recovery | پس از بعضی خطاهای نحوی (ویرگول یا `"` جاافتاده) `;' expected` و `expression expected` تا سقف خطاها تکرار می‌شوند | `CRunner` پیام‌ها را تا اولین تکرارِ عین‌به‌عین نگه می‌دارد و تعداد پیام‌های بریده را می‌گوید |
-| نام ناشناخته و نبودِ `#include` | XCC خطا می‌دهد (`undeclared`)، gcc فقط warning و سپس خطای linker یا اجرا | dimension `W` با `intent: "warning"`؛ تمرین در مرورگر رد می‌شود و درس تفاوت را در `note` از نوع `platform` می‌گوید (`W-01`) |
+| نام ناشناخته و نبودِ `#include` | XCC خطا می‌دهد (`undeclared`)؛ gcc 15 (مرجع، `C.CMP.01`) هم خطا می‌دهد، ولی gcc 13 و پیش از آن فقط warning و سپس خطای linker | dimension `E` (`E-07`، جانشین `W-01` بازنشسته)؛ رفتار gcc قدیمی در بلوک `standard` |
 
 **پرچم‌های کامپایل — Compiler Flags** `C.FLG.01` — در هر متنی که دستور کامپایل می‌آید: `-std=c17 -Wall -Wextra -pedantic`. از درس `C.L46`: به‌علاوهٔ `-g -fsanitize=address,undefined`. هیچ پرچم دیگری بدون توضیح.
+
+**کامپایلر مرجع — Reference Compiler** `C.CMP.01` — پیام‌ها و خروجی‌هایی که درس نشان می‌دهد از **gcc 15** ضبط می‌شوند، پیش‌فرض Ubuntu 26.04 LTS و در نتیجه WSL و Linux بیشتر فراگیرها؛ CI روی `ubuntu-26.04` اجرا می‌شود و `data/generated/expect.js` را با همان gcc می‌سازد. نسخهٔ دیگر فقط در یادداشت می‌آید: gcc 16 (Fedora، MSYS2) و clang (همان `gcc` روی macOS). هر جا رفتار نسخه‌ها فرق دارد — مثلاً اعلان ضمنی تابع (implicit declaration) که از gcc 14 و در clang خطاست و در gcc 13 فقط هشدار — درس رفتار مرجع را نشان می‌دهد و فرق را در بلوک `standard` می‌گوید. مرجع در هر round پیش از انتشار بازبینی می‌شود.
 
 **چندفایلی در مرورگر — Multi-file in the Browser** `C.MUL.01` — درس‌های فصل 12 به اجرای چند فایل `.c` و `.h` نیاز دارند؛ اجراگر مرورگر پیش از نوشتن این فصل این قابلیت را می‌گیرد (XCC چند فایل را می‌پذیرد).
 

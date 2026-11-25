@@ -3,22 +3,23 @@
 Open work and backlog only — what is done lives in the code, the rule documents (`docs/rules/`) and the release notes
 (`CHANGELOG.md`). Rounds are listed in the order planned; the target of 1.0 is the whole C course.
 
-## Review first (start of the next session)
+## Open from the first review round (0.1.1)
 
-- [ ] Logo: choose among the Claude Design samples; update `assets/favicon.svg`, the mark in `site/chrome.js`,
-      `tools/og-image.html` and the PNGs.
-- [ ] Read chapters 0 and 1 in all three languages as a learner: German by a native speaker, Persian term
-      consistency (English term beside the Persian one), facts dated November 2026.
-- [ ] Catalog review before writing further: placement of chapter 14 (`C.DEV.01`); where `math.h`, `rand`/`time`,
-      `static` and storage duration, `union`, bit-fields and the security mistakes (`S-`) are taught; review units.
-- [ ] UX on real devices: phone (editor, drawer, tabs), RTL, dark theme, keyboard only, a screen reader; load time of
-      the compiler (600 KB) on a slow connection.
-- [ ] CI: move `actions/checkout` and `actions/setup-node` off Node 20 (deprecation warning).
+- [ ] UX on real devices: phone (editor, drawer, tabs), a screen reader in each language (VoiceOver, NVDA, TalkBack);
+      load time of the compiler (600 KB, about 210 KB compressed) on a slow connection. Headless checks pass at 15
+      widths × 3 languages; the logo's card works with a tap, the keyboard and Esc.
+- [ ] Lesson 2 now has no warning example (`W-01` became `E-07` under gcc 15): add `W-02` in lesson 3 —
+      `printf("%d\n")` without its argument (`-Wformat`), which XCC runs and prints garbage.
+- [ ] Record clang's messages beside gcc's (macOS learners), at least for the error clinic.
+- [ ] The runner: when XCC reports `Unresolved: env.__main_argc_argv`, say “no function called `main`”.
+- [ ] Performance: every page loads every chapter's data file (about 100 KB per chapter, so 1.5–2 MB by 1.0). Decide
+      before chapter 4: one data file per lesson page plus a prebuilt search index, and CodeMirror only when an editor
+      first scrolls into view.
 
 ## Next — 0.2: chapter 2 and the review unit
 
 - [ ] Read chapter 0 with a learner from zero in each language; check the facts dated November 2026 again before
-      each release (TIOBE, compiler defaults).
+      each release (TIOBE, compiler defaults, the reference gcc of `C.CMP.01`).
 
 - [ ] Review unit `C01.REV` with an *On your PC* block (`onpc`): gcc or clang, VS Code or CLion, the same three
       lessons on a real machine.

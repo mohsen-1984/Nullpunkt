@@ -37,9 +37,15 @@
     }
     function reducedMotion() { return !!(g.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches); }
     function isRTL() { return document.documentElement.dir === 'rtl'; }
-    var MARK = '<svg class="np-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="currentColor"/>' +
-        '<ellipse cx="16" cy="16" rx="7" ry="10" fill="none" stroke="var(--np-on-accent)" stroke-width="3.2"/>' +
-        '<circle cx="16" cy="16" r="2.6" fill="var(--np-on-accent)"/></svg>';
+    // the mark: a code editor in 8-bit pixels — a C and the cursor after it (docs/rules/S00-assets.md). One 16 × 16 grid,
+    // so it is sharp at 16 px; the tile takes currentColor, the ink the color on it; the cursor blinks on hover.
+    var MARK_TILE = 'M2 0h12v1h1v1h1v12h-1v1h-1v1h-12v-1h-1v-1h-1v-12h1v-1h1z',
+        MARK_INK = 'M2 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM3 4h6v1h-6zM2 5h8v1h-8zM2 6h2v1h-2zM8 6h2v1h-2zM2 7h2v1h-2zM2 8h2v1h-2z' +
+            'M2 9h2v1h-2zM8 9h2v1h-2zM2 10h8v1h-8zM3 11h6v1h-6z',
+        MARK_CURSOR = 'M12 10h3v2h-3z';
+    var MARK = '<svg class="np-mark" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">' +
+        '<path fill="currentColor" d="' + MARK_TILE + '"/><path fill="var(--np-on-accent)" d="' + MARK_INK + '"/>' +
+        '<path class="np-mark__cursor" fill="var(--np-on-accent)" d="' + MARK_CURSOR + '"/></svg>';
 
     var S = { cfg: SITE.chrome, rail: SITE.rail, lang: document.documentElement.lang, c: null, page: '', nav: [], tree: null, docked: false };
 
@@ -52,9 +58,12 @@
         header.innerHTML =
             '<div class="header-row" id="ncRow">' +
             '<button class="icon-btn menu-btn" id="ncMenu" type="button" aria-expanded="false" aria-controls="ncDrawer">' + svg('menu', 'ic-open') + svg('x', 'ic-close') + '</button>' +
-            '<a class="brand" id="ncBrand"><span class="brand__mark">' + MARK + '</span><span class="brand__text">' +
+            '<div class="brand-group" id="ncBrandGroup"><span class="mark-wrap"><button class="brand__mark" id="ncMark" type="button" aria-describedby="ncMarkTip">' + MARK + '</button>' +
+            '<span class="mark-tip" id="ncMarkTip" role="tooltip"></span></span>' +
+            '<a class="brand" id="ncBrand"><span class="brand__text">' +
             '<span class="brand__org"><span class="o-full">Nullpunkt</span><span class="o-short">Nullpunkt</span></span>' +
             '<span class="brand__dept"></span><span class="brand__org brand-measure" id="ncBrandMeasure" aria-hidden="true"></span></span></a>' +
+            '<a class="np-version" id="ncVersion" dir="ltr" rel="noopener"></a></div>' +
             '<div class="nav-slot" id="ncNavSlot"><nav class="site-nav" id="ncNav"></nav></div>' +
             '<div class="header-actions" id="ncActions"></div></div>' +
             '<div class="nav-row" id="ncNavRow">' +
@@ -65,8 +74,8 @@
 
         var scrim = el('div', { class: 'scrim', id: 'ncScrim' });
         var dlg = el('dialog', { class: 'drawer', id: 'ncDrawer' });
-        dlg.innerHTML = '<div class="drawer__head"><span class="drawer__brand"><span class="brand__mark">' + MARK + '</span><span class="brand__text">' +
-            '<span class="brand__org">Nullpunkt</span><span class="brand__dept"></span></span></span>' +
+        dlg.innerHTML = '<div class="drawer__head"><a class="drawer__brand" id="ncDrawerBrand"><span class="brand__mark">' + MARK + '</span><span class="brand__text">' +
+            '<span class="brand__org">Nullpunkt</span><span class="brand__dept"></span></span></a>' +
             '<button class="icon-btn drawer__close" id="ncDrawerClose" type="button">' + svg('x') + '</button></div>' +
             '<nav class="drawer__nav" id="ncDrawerNav"></nav><div class="drawer__course" id="ncDrawerCourse"></div>' +
             '<div class="drawer__actions" id="ncDrawerActions"></div>';
@@ -81,7 +90,14 @@
         render: function () {
             var cfg = S.cfg, c = S.c;
             $('ncBrand').setAttribute('href', 'index.html?lang=' + S.lang);
+            $('ncDrawerBrand').setAttribute('href', 'index.html?lang=' + S.lang);
+            $('ncDrawerBrand').setAttribute('aria-label', c.aria.home);
             $('ncBrand').setAttribute('aria-label', c.aria.home);
+            $('ncMark').setAttribute('aria-label', c.aria.logo);
+            $('ncMarkTip').textContent = c.logoTip;
+            var v = $('ncVersion');
+            v.href = SITE.repoUrl + '/releases/tag/v' + SITE.version; v.textContent = 'v' + SITE.version;
+            v.title = c.releaseNotes; v.setAttribute('aria-label', c.version + ' ' + SITE.version + ' — ' + c.releaseNotes);
             document.querySelectorAll('.brand__dept').forEach(function (n) { n.textContent = c.tagline; });
             $('ncNav').setAttribute('aria-label', c.aria.primaryNav);
             $('ncDrawerNav').setAttribute('aria-label', c.aria.drawerNav);
@@ -174,15 +190,12 @@
 
     function footer() {
         var c = S.c, f = $('ncFooter'), names = g.Nullpunkt.registry.languageNames;
-        var rel = SITE.repoUrl + '/releases/tag/v' + SITE.version;
         f.innerHTML = '<div class="footer-inner"><div class="footer-brand"><span class="brand__mark">' + MARK + '</span><div><strong>Nullpunkt</strong>' +
             '<span class="footer-tag"></span><p class="footer-note"></p></div></div><div class="footer-links">' +
-            '<a class="np-version" id="ncVersion"></a><span class="footer-langs"></span>' +
+            '<span class="footer-langs"></span>' +
             '<a class="footer-repo" rel="noopener"></a><span class="footer-license"></span></div></div>';
         f.querySelector('.footer-tag').textContent = ' — ' + c.tagline;
         f.querySelector('.footer-note').textContent = c.footer;
-        var v = $('ncVersion');
-        v.href = rel; v.textContent = 'v' + SITE.version; v.title = c.releaseNotes;
         var langs = f.querySelector('.footer-langs');
         SITE.languages.forEach(function (l) {
             var a = el(l === S.lang ? 'strong' : 'a', { lang: l }, names[l]);
@@ -250,7 +263,7 @@
         measureBrandMin: function () {
             var text = 'Nullpunkt', n = S.cfg.brand.minVisibleChars, m = $('ncBrandMeasure');
             m.textContent = Array.from(text).length > n ? Array.from(text).slice(0, n).join('') + '…' : text;
-            var w = m.getBoundingClientRect().width, mark = document.querySelector('#ncBrand .brand__mark').getBoundingClientRect().width;
+            var w = m.getBoundingClientRect().width, mark = $('ncMark').getBoundingClientRect().width;
             $('ncHeader').style.setProperty('--brand-min', Math.ceil(mark + 10 + w + 1) + 'px');
         },
         evaluate: function () {
@@ -539,6 +552,20 @@
     }
 
     /* ---------------------------- mount ------------------------------------------------------------- */
+    /* ---------------------------- the mark's card: what the logo means ------------------------------ */
+    // hover or keyboard focus shows it (CSS); a click or tap pins it open, a second click, Escape or a click
+    // elsewhere closes it — so it works on touch screens, where a button may never get focus
+    var markTip = {
+        init: function () {
+            var b = $('ncMark'), wrap = b.parentNode;
+            function set(open) { wrap.setAttribute('data-open', open ? 'on' : 'off'); b.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+            set(false);
+            b.addEventListener('click', function (e) { e.stopPropagation(); set(wrap.getAttribute('data-open') !== 'on'); });
+            document.addEventListener('click', function () { if (wrap.getAttribute('data-open') === 'on') set(false); });
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && wrap.getAttribute('data-open') === 'on') { set(false); b.focus(); } });
+        },
+    };
+
     function mount(opts) {
         S.page = opts.page;
         S.nav = opts.nav || [];
@@ -548,6 +575,7 @@
         shell();
         drawer.init();
         navrow.init();
+        markTip.init();
         chrome.render();
         fit.attach();
         spy.refresh();
