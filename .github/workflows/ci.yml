@@ -11,8 +11,8 @@ permissions:
 jobs:
   # Generated results (data/generated/expect.js) come from the reference gcc, which an author's own machine may not
   # have. On a pull request from this repository, this job records them again with the reference gcc and, if they
-  # changed, commits them to the pull request's branch. Pushes made with GITHUB_TOKEN start no new run, so push
-  # once more (or re-run) to get a green check on the new head.
+  # changed, commits them to the pull request's branch. The other jobs of this run still see the old results, so the
+  # run fails once; the commit starts a new run that checks the recorded results (or push again if it does not).
   regen:
     name: Record compiler results (reference gcc)
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
