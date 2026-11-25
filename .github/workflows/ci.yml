@@ -70,3 +70,9 @@ jobs:
           git -C /tmp/lucide sparse-checkout set icons
           node tools/build-icons.js /tmp/lucide "$version"
           git diff --exit-code vendor/lucide/
+      - name: Rebuild CodeMirror from the locked packages and compare
+        working-directory: tools/codemirror
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build
+          git diff --exit-code ../../vendor/codemirror/
