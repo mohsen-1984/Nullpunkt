@@ -24,6 +24,7 @@ const engine = CRunner.engineFactory(WasiShimFactory, bundle);
 
 const GCC_FLAGS = ['-std=c17', '-Wall', '-Wextra', '-pedantic', '-fdiagnostics-plain-output'];
 const gccVersion = cp.execFileSync('gcc', ['-dumpfullversion']).toString().trim();
+if (process.argv.includes('--check')) console.log('gcc ' + gccVersion);
 const hash = o => crypto.createHash('sha256').update(JSON.stringify(o)).digest('hex').slice(0, 16);
 const tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'np-expect-'));
 let n = 0;
@@ -41,7 +42,8 @@ function runGcc(input) {
     const dir = path.join(tmpRoot, String(n++));
     fs.mkdirSync(dir);
     fs.writeFileSync(path.join(dir, 'main.c'), input.source);
-    const c = cp.spawnSync('gcc', GCC_FLAGS.concat(['-o', 'main', 'main.c', '-lm']), { cwd: dir, encoding: 'utf8' });
+    // LC_ALL=C: plain ASCII quotes in messages, the same on every machine (a UTF-8 locale gives ‘;’)
+    const c = cp.spawnSync('gcc', GCC_FLAGS.concat(['-o', 'main', 'main.c', '-lm']), { cwd: dir, encoding: 'utf8', env: Object.assign({}, process.env, { LC_ALL: 'C', LANG: 'C' }) });
     const log = (c.stderr || '').trim();
     const res = { compiled: c.status === 0, diagnostics: parseGcc(log), log };
     if (!res.compiled) return res;
@@ -110,6 +112,11 @@ const program = (source, rec) => ({ source, stdin: rec.stdin || '', args: rec.ar
     if (process.argv.includes('--check')) {
         const same = fs.existsSync(file) && fs.readFileSync(file, 'utf8') === text;
         console.log(same ? 'data/generated/expect.js is up to date' : 'data/generated/expect.js is out of date — run: node tools/gen-expect.js');
+        if (!same && fs.existsSync(file)) {
+            const a = fs.readFileSync(file, 'utf8').split('\n'), b = text.split('\n');
+            const i = b.findIndex((l, k) => l !== a[k]);
+            console.log('first difference, line ' + (i + 1) + ':\n  file: ' + a[i] + '\n  now:  ' + b[i]);
+        }
         process.exit(same ? 0 : 1);
     }
     fs.mkdirSync(path.dirname(file), { recursive: true });
