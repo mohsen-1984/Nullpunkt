@@ -24,7 +24,7 @@
 
 ## مسیر یادگیری — Learning Path
 
-13 فصل، 50 درس، و یک واحد مرور در پایان هر فصل. عنوان‌ها پیش‌نویس‌اند؛ عنوان آلمانی پیش از انتشار بازبینی بومی می‌شود (`S.LNG.05`).
+14 فصل، 54 درس، یک فصل جهت‌یابی (`C.ORI.01`)، و یک واحد مرور در پایان هر فصل. عنوان‌ها پیش‌نویس‌اند؛ عنوان آلمانی پیش از انتشار بازبینی بومی می‌شود (`S.LNG.05`).
 
 ### فصل 1: شروع — Getting Started — Erste Schritte
 
@@ -140,6 +140,17 @@
 | `C.L48` | بیت و بایت — Bits & Bytes | Bits und Bytes |
 | `C.L49` | تست برنامهٔ خودت — Testing Your Code | Den eigenen Code testen |
 | `C.L50` | function pointer و qsort — Function Pointers & qsort | Function Pointer und qsort |
+
+### فصل 14: فراتر از کنسول — Beyond the Console — Jenseits der Konsole
+
+| Id | فارسی — English | Deutsch |
+|---|---|---|
+| `C.L51` | stream و دستگاه: stdin، stdout، stderr — Streams & Devices | Streams und Geräte |
+| `C.L52` | terminal: رنگ، مکان‌نما، کلید — The Terminal: Colors, Cursor, Keys | Das Terminal: Farben, Cursor, Tasten |
+| `C.L53` | گرافیک در C: از graphics.h تا کتابخانه‌های امروزی — Graphics in C | Grafik in C |
+| `C.L54` | گفت‌وگو با سخت‌افزار: register و volatile — Talking to Hardware | Mit Hardware sprechen |
+
+**متن و گرافیک — Text and Graphics** `C.DEV.01` — استاندارد C هیچ «حالت متنی» یا «حالت گرافیکی» ندارد. C فقط stream می‌شناسد (`stdin`، `stdout`، `stderr` و فایل)، و سیستم‌عامل هر دستگاهی را پشت یک stream می‌گذارد. «text mode» و «graphics mode» اصطلاح‌های دوران DOS‌اند (Turbo C و `graphics.h`/BGI، `conio.h`)؛ این‌ها بخشی از C نیستند، روی compilerهای امروزی کار نمی‌کنند، و دوره آن‌ها را فقط به‌عنوان تاریخچه و باور رایج (`M-`) معرفی می‌کند. معادل امروزی: terminal با escape sequenceهای ANSI (`C.L52`)، فایل تصویری که با C استاندارد نوشته می‌شود (مثلاً PPM، `C.L53`) و کتابخانه‌هایی مانند raylib و SDL برای پنجره و پیکسل (بیرون از استاندارد، فقط معرفی). دسترسی مستقیم به سخت‌افزار در embedded با registerهای نگاشته‌به‌حافظه و `volatile` است (`C.L54`). در مرورگر، خروجی escape sequence و تصویر در round اجرایی آن درس‌ها به runner افزوده می‌شود.
 
 **ترتیب در مسیر — Order Along the Path** `C.PTH.01` — هر درس فقط به درس‌های پیش از خودش ارجاع پیش‌نیاز (`prereq`) می‌دهد؛ ارجاع به درس بعدی فقط در بلوک `notyet` و یادداشت `simplification` مجاز است.
 
@@ -258,6 +269,9 @@
 | `C.L46` | `assert.h` |
 | `C.L48` | `&`، `\|`، `^`، `~`، `<<`، `>>` بیتی؛ `unsigned`؛ `stdint.h` |
 | `C.L50` | function pointer، `qsort` |
+| `C.L51` | `fprintf(stderr, …)`، `exit`، `EXIT_SUCCESS`/`EXIT_FAILURE`، `fflush` |
+| `C.L52` | escape با `\x1b`؛ رشته‌های ANSI |
+| `C.L54` | `volatile`، `uintptr_t` |
 
 **سازهٔ ممنوع — Forbidden Constructs** `C.FRB.01` — هرگز، در هیچ درسی، حتی به‌عنوان اشتباه: `gets`. فقط در درس اشتباه‌های امنیتی و با برچسب `S-`: `scanf("%s", …)` بدون طول، `strcpy` به مقصد کوچک‌تر.
 

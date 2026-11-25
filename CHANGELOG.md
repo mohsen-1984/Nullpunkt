@@ -21,6 +21,10 @@ version may change the data format. Dates are those of the release tags. The sin
   - **0.5 How to Learn C:** six habits, how the course helps, AI as a tutor, what Python knowledge helps or misleads,
     a weekly plan.
 - 8 new glossary terms; a new exercise type, **Choose** (`B.choice`), with feedback for every option.
+- **Chapter 14 — Beyond the Console** planned (lessons 51–54): streams and devices (`stdin`, `stdout`, `stderr`,
+  redirection, exit status), the terminal (ANSI colors, cursor, keys), graphics (why `graphics.h` and “text mode /
+  graphics mode” are DOS-era Turbo C, not standard C; image files and modern libraries), and hardware registers with
+  `volatile`. The path for 1.0 is now chapter 0, then 14 chapters and 54 lessons (rule `C.DEV.01`).
 
 ### Site
 
