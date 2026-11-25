@@ -11,14 +11,22 @@ const cp = require('child_process'), path = require('path'), http = require('htt
 const url = process.argv[2] || 'file://' + path.join(__dirname, 'runner-lab', 'index.html') + (process.env.INTERACTIVE ? '' : '?lab');
 const port = 9300 + Math.floor(Math.random() * 500);
 const chrome = cp.spawn(process.env.CHROME || 'google-chrome', ['--headless=new', '--no-sandbox', '--disable-gpu',
-    '--remote-debugging-port=' + port, '--user-data-dir=/tmp/clab-chrome-' + port, 'about:blank'], { stdio: 'ignore' });
+    '--disable-dev-shm-usage', '--no-first-run', '--remote-debugging-port=' + port,
+    '--user-data-dir=/tmp/clab-chrome-' + port, 'about:blank'], { stdio: ['ignore', 'ignore', 'pipe'] });
+let chromeErr = '';
+chrome.stderr.on('data', d => { chromeErr += d; });
+chrome.on('error', e => { console.error('cannot start Chrome:', e.message); process.exit(1); });
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const getJson = u => new Promise((res, rej) => http.get(u, r => { let s = ''; r.on('data', d => s += d); r.on('end', () => { try { res(JSON.parse(s)); } catch (e) { rej(e); } }); }).on('error', rej));
 
 (async function () {
     let targets;
-    for (let i = 0; i < 50; i++) { try { targets = await getJson('http://127.0.0.1:' + port + '/json'); break; } catch (e) { await sleep(200); } }
-    const page = targets.find(t => t.type === 'page');
+    for (let i = 0; i < 150 && !(targets && targets.some(t => t.type === 'page')); i++) {
+        try { targets = await getJson('http://127.0.0.1:' + port + '/json'); } catch (e) { /* not up yet */ }
+        if (!(targets && targets.some(t => t.type === 'page'))) await sleep(200);
+    }
+    const page = targets && targets.find(t => t.type === 'page');
+    if (!page) { console.error('Chrome did not open a page within 30 s\n' + chromeErr.slice(-2000)); chrome.kill(); process.exit(1); }
     const ws = new WebSocket(page.webSocketDebuggerUrl);
     let id = 0;
     const waiting = new Map(), logs = [];
