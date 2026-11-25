@@ -1,0 +1,23 @@
+{
+  "name": "nullpunkt-codemirror",
+  "private": true,
+  "description": "Build input for vendor/codemirror/ — CodeMirror 6 as one classic script (IIFE). Built by .github/workflows/vendor-codemirror.yml.",
+  "license": "MIT",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "dependencies": {
+    "@codemirror/autocomplete": "6.20.1",
+    "@codemirror/commands": "6.10.3",
+    "@codemirror/lang-cpp": "6.0.3",
+    "@codemirror/language": "6.12.3",
+    "@codemirror/lint": "6.9.5",
+    "@codemirror/state": "6.6.0",
+    "@codemirror/view": "6.41.0",
+    "@lezer/cpp": "1.1.5",
+    "@lezer/highlight": "1.2.3"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}

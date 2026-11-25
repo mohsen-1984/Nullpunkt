@@ -1,0 +1,37 @@
+name: Build vendor/codemirror
+
+# Builds CodeMirror into one classic script and commits it to the same branch, so the bundle never has to be built
+# on a machine without npm. Runs when the build input changes on a branch other than main, or by hand.
+on:
+  push:
+    branches-ignore: [main]
+    paths:
+      - 'tools/codemirror/**'
+      - '.github/workflows/vendor-codemirror.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install the pinned packages
+        working-directory: tools/codemirror
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install --no-audit --no-fund; fi
+      - name: Build
+        working-directory: tools/codemirror
+        run: npm run build
+      - name: Commit the bundle to this branch
+        run: |
+          git add vendor/codemirror tools/codemirror/package-lock.json
+          if git diff --cached --quiet; then echo "bundle unchanged"; exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -m "Build vendor/codemirror (CI)"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
