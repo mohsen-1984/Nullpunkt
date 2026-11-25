@@ -33,8 +33,11 @@ const PROBE = `(async () => {
     // worked example
     const ex = document.querySelector('#example .np-code');
     ex.querySelector('.np-btn.primary').click();
-    const out = await wait(() => /exit code 0/.test(ex.querySelector('.np-out').textContent) && ex.querySelector('.np-out').textContent, 20000);
-    (out ? rep.ok : rep.bad).push('example runs');
+    // an example may show a compile error on purpose (lesson 2): then the compiler's message must appear instead
+    const exCode = ix.code[(L.unit.blocks.find(b => b.block === 'example').content.find(n => n.type === 'code') || {}).ref];
+    const exOk = !exCode || exCode.intent === 'ok';
+    const out = await wait(() => (exOk ? /exit code 0/ : /main[.]c[(][0-9]+[)]/).test(ex.querySelector('.np-out').textContent) && ex.querySelector('.np-out').textContent, 20000);
+    (out ? rep.ok : rep.bad).push(exOk ? 'example runs' : 'example shows its compile error');
     // exercises
     for (const b of L.unit.bands) {
         for (const it of b.items) {

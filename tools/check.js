@@ -108,7 +108,7 @@ function checkStyle(source, where, isExample) {
         if (/\t/.test(l)) err(rule('S.STY.01'), where, 'line ' + (i + 1) + ': tab — use 4 spaces');
         if (l.length > 80) err('S.STY.01', where, 'line ' + (i + 1) + ': longer than 80 columns');
         const ind = l.match(/^ */)[0].length;
-        if (l.trim() && ind % 4) err('S.STY.01', where, 'line ' + (i + 1) + ': indentation is not a multiple of 4');
+        if (l.trim() && ind % 4 && !(ind % 4 === 1 && /^\s*\*/.test(l))) err('S.STY.01', where, 'line ' + (i + 1) + ': indentation is not a multiple of 4');
         if (/\/\/ Step\b/.test(l) && !isExample) err(rule('S.STY.08'), where, 'line ' + (i + 1) + ': subgoal comment outside a worked example');
         if (/\/\/ Step\b/.test(l) && !/^\s*\/\/ Step \d+: [a-z].*[^.]$/.test(l)) err('S.STY.08', where, 'line ' + (i + 1) + ': subgoal comment must be "// Step N: verb …" without a final period');
     });
@@ -175,6 +175,8 @@ Object.values(ix.band).forEach(b => {
     b.items.forEach(it => {
         const tests = it.tests || [];
         const where = it.id;
+        // the answer key shows a reason for every item (S.BND.02)
+        if (!it.why) err('S.BND.02', where, 'needs a why (shown in the answer key)');
         if (b.type === 'B.predict') { if (!ix.code[it.code]) err('S.ID.03', where, 'code ' + it.code + ' missing'); return; }
         if (b.type === 'B.explain') { if (!it.model) err(rule('S.BND.02'), where, 'explain item needs a model answer'); return; }
         if (!tests.some(t => t.purpose === 'normal')) err('S.BND.02', where, 'needs a test with purpose normal');

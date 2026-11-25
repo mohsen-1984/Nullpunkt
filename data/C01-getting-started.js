@@ -102,6 +102,252 @@ int main(void) {
     return 0;
 }
 ` },
+            // ---------- C.L02 ----------
+            { id: 'C.L02.K01', intent: 'compile-error', mistake: 'E-03', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("Monday\n");
+    Printf("Tuesday\n");
+    return 0;
+}
+` },
+            { id: 'C.L02.K02', intent: 'compile-error', mistake: 'E-01', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("Error messages are clues.\n");
+    printf("Read them from the top.\n")
+    printf("Fix one thing at a time.\n");
+    return 0;
+}
+` },
+            { id: 'C.L02.K03', intent: 'ok', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("Monday\n");
+    printf("Tuesday\n");
+    return 0;
+}
+` },
+            { id: 'C.L02.K04', intent: 'compile-error', mistake: 'E-04', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("Hello\n");
+    printf("Bye\n");
+    return 0;
+` },
+            { id: 'C.L02.K05', intent: 'ok', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("Hello\n");
+    printf("Bye\n");
+    return 0;
+}
+` },
+            { id: 'C.L02.K06', intent: 'warning', mistake: 'W-01', source: R`int main(void) {
+    printf("Hello\n");
+    return 0;
+}
+` },
+            { id: 'C.L02.K07', intent: 'ok', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("Hello\n");
+    return 0;
+}
+` },
+            { id: 'C.L02.K08', intent: 'compile-error', mistake: 'E-02', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("Monday\n);
+    printf("Tuesday\n");
+    printf("Wednesday\n");
+    return 0;
+}
+` },
+            { id: 'C.L02.K09', intent: 'compile-error', mistake: 'E-03', source: R`#include <stdio.h>
+
+int main(void) {
+    prinf("Almost right\n");
+    return 0;
+}
+` },
+            { id: 'C.L02.K10', intent: 'warning', mistake: 'W-01', source: R`int main(void) {
+    printf("Where is stdio.h?\n");
+    printf("Not here.\n");
+    return 0;
+}
+` },
+            { id: 'C.L02.K11', intent: 'compile-error', mistake: 'E-03', source: R`#include <stdio.h>
+
+int main(void) {
+    print("Good luck\n");
+    return 0;
+}
+` },
+            { id: 'C.L02.K12', intent: 'compile-error', mistake: 'E-04', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("Step one\n");
+    printf("Step two\n");
+    printf("Step three\n");
+    return 0;
+` },
+            { id: 'C.L02.K13', intent: 'warning', mistake: 'W-01', source: R`int main(void) {
+    printf("Keep calm\n");
+    printf("and read the message\n");
+    return 0;
+}
+` },
+            // ---------- C.L03 ----------
+            { id: 'C.L03.K01', intent: 'ok', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("2 + 3\n");
+    printf("%d\n", 2 + 3);
+    printf("%d + %d = %d\n", 2, 3, 2 + 3);
+    return 0;
+}
+` },
+            { id: 'C.L03.K02', intent: 'ok', source: R`#include <stdio.h>
+
+int main(void) {
+    // Step 1: print the heading
+    printf("Snack bar\n");
+    // Step 2: print each item with its price
+    printf("Sandwich\t%d\n", 4);
+    printf("Juice x2\t%d\n", 2 * 3);
+    // Step 3: print the total
+    printf("Total\t\t%d\n", 4 + 2 * 3);
+    return 0;
+}
+` },
+            { id: 'C.L03.K03', intent: 'ok', source: R`#include <stdio.h>
+
+int main(void) {
+    /* Three characters need a backslash in front:
+     * a tab, a double quote and the backslash itself */
+    printf("Name:\tAda\n");
+    printf("She said \"Hello\"\n");
+    printf("Folder: C:\\Users\\Ada\n");
+    return 0;
+}
+` },
+            { id: 'C.L03.K04', intent: 'ok', mistake: 'M-02', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("7 * 6\n");
+    return 0;
+}
+` },
+            { id: 'C.L03.K05', intent: 'ok', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("%d\n", 7 * 6);
+    return 0;
+}
+` },
+            { id: 'C.L03.K06', intent: 'ok', mistake: 'M-03', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("File: C:\notes\today.txt\n");
+    return 0;
+}
+` },
+            { id: 'C.L03.K07', intent: 'ok', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("File: C:\\notes\\today.txt\n");
+    return 0;
+}
+` },
+            { id: 'C.L03.K08', intent: 'compile-error', mistake: 'E-05', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("%d\n" 7 * 6);
+    return 0;
+}
+` },
+            { id: 'C.L03.K09', intent: 'compile-error', mistake: 'E-06', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("She said "Hello"\n");
+    return 0;
+}
+` },
+            { id: 'C.L03.K10', intent: 'ok', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("She said \"Hello\"\n");
+    return 0;
+}
+` },
+            { id: 'C.L03.K11', intent: 'ub', mistake: 'U-01', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("%d + %d = %d\n", 2, 3);
+    return 0;
+}
+` },
+            { id: 'C.L03.K12', intent: 'ok', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("%d + %d = %d\n", 2, 3, 2 + 3);
+    return 0;
+}
+` },
+            { id: 'C.L03.K13', intent: 'compile-error', mistake: 'E-05', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("Minutes in a day:\n");
+    printf("%d\n" 24 * 60);
+    return 0;
+}
+` },
+            { id: 'C.L03.K14', intent: 'ok', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("%d%d\n", 4, 2);
+    printf("%d %d\n", 4, 2);
+    return 0;
+}
+` },
+            { id: 'C.L03.K15', intent: 'ok', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("10 - 4 = %d\n", 10 - 4);
+    printf("%d - %d\n", 10, 4);
+    return 0;
+}
+` },
+            { id: 'C.L03.K16', intent: 'ok', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("C:\\new\n");
+    printf("C:\new\n");
+    return 0;
+}
+` },
+            { id: 'C.L03.K17', intent: 'compile-error', mistake: 'E-05', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("Hours in a week: %d\n" 7 * 24);
+    return 0;
+}
+` },
+            { id: 'C.L03.K18', intent: 'compile-error', mistake: 'E-06', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("Press "Enter" to start\n");
+    return 0;
+}
+` },
+            { id: 'C.L03.K19', intent: 'ub', mistake: 'U-01', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("%d x %d = %d\n", 6, 7);
+    return 0;
+}
+` },
         ],
 
         units: [{
@@ -412,6 +658,718 @@ int main(void) {
                     ],
                 },
             ],
-        }],
+        },
+        {
+            type: 'lesson', id: 'C.L02',
+            blocks: [
+                { block: 'why', content: [
+                    { type: 'p', text: {
+                        fa: 'برنامه‌نویس‌های حرفه‌ای هم هر روز پیام خطا می‌بینند. فرقشان با تازه‌کارها این نیست که خطا نمی‌کنند؛ این است که پیام را در چند ثانیه می‌خوانند و می‌دانند کجا را نگاه کنند.',
+                        de: 'Auch Profis sehen jeden Tag Fehlermeldungen. Der Unterschied zu Anfängern ist nicht, dass sie keine Fehler machen, sondern dass sie die Meldung in Sekunden lesen und wissen, wo sie hinschauen müssen.',
+                        en: 'Professional programmers see error messages every day too. What sets them apart from beginners is not that they make no mistakes; it is that they read the message in seconds and know where to look.',
+                    } },
+                    { type: 'p', text: {
+                        fa: 'پیام خطا قضاوت دربارهٔ تو نیست؛ سرنخ است. در این درس یاد می‌گیری این سرنخ را تکه‌تکه بخوانی.',
+                        de: 'Eine Fehlermeldung ist kein Urteil über dich, sondern ein Hinweis. In dieser Lektion lernst du, diesen Hinweis Stück für Stück zu lesen.',
+                        en: 'An error message is not a judgment about you; it is a clue. In this lesson you learn to read that clue piece by piece.',
+                    } },
+                ] },
+
+                { block: 'cando', content: [] },
+
+                { block: 'prior', content: [
+                    { type: 'p', text: {
+                        fa: 'از [[lesson:C.L01]] به یاد بیاور: compiler پیش از اجرا کل source code را بررسی می‌کند. اگر یک `;` جا بیفتد، پیام `expected \';\'` می‌گیری و برنامه‌ای ساخته نمی‌شود.',
+                        de: 'Erinnere dich an [[lesson:C.L01]]: Der Compiler prüft vor dem Ausführen den ganzen Source Code. Fehlt ein `;`, bekommst du die Meldung `expected \';\'`, und es entsteht kein Programm.',
+                        en: 'Remember from [[lesson:C.L01]]: the compiler checks the whole source code before anything runs. If a `;` is missing, you get the message `expected \';\'` and no program is built.',
+                    } },
+                ] },
+
+                { block: 'predict', content: [
+                    { type: 'p', text: {
+                        fa: 'خط 4 این برنامه کاملاً درست است. فقط در خط 5 یک حرف بزرگ آمده. پیش‌بینی کن: آیا `Monday` چاپ می‌شود؟ چه چیزی روی صفحه می‌آید؟',
+                        de: 'Zeile 4 dieses Programms ist völlig richtig. Nur in Zeile 5 steht ein Großbuchstabe. Sag voraus: Wird `Monday` ausgegeben? Was erscheint auf dem Bildschirm?',
+                        en: 'Line 4 of this program is completely correct. Only line 5 has a capital letter. Predict: is `Monday` printed? What appears on the screen?',
+                    } },
+                    { type: 'code', ref: 'C.L02.K01', mode: 'predict' },
+                    { type: 'p', text: {
+                        fa: 'هیچ چیز چاپ نمی‌شود، حتی `Monday`. وقتی compiler خطایی پیدا کند، اصلاً برنامه‌ای نمی‌سازد؛ پس چیزی برای اجرا نیست. خط‌های درست هم منتظر می‌مانند تا خطا درست شود.',
+                        de: 'Es wird nichts ausgegeben, nicht einmal `Monday`. Findet der Compiler einen Fehler, baut er überhaupt kein Programm; es gibt also nichts auszuführen. Auch die richtigen Zeilen warten, bis der Fehler behoben ist.',
+                        en: 'Nothing is printed, not even `Monday`. When the compiler finds an error, it builds no program at all, so there is nothing to run. The correct lines wait too, until the error is fixed.',
+                    } },
+                ] },
+
+                { block: 'example', content: [
+                    { type: 'p', text: {
+                        fa: 'این برنامه یک [[term:T.compile-error]] دارد. اجرایش کن، بعد پیام gcc را تکه‌تکه با جدول زیر بخوان.',
+                        de: 'Dieses Programm hat einen [[term:T.compile-error]]. Führ es aus und lies dann die Meldung von gcc Stück für Stück mit der Tabelle unten.',
+                        en: 'This program has a [[term:T.compile-error]]. Run it, then read the gcc message piece by piece with the table below.',
+                    } },
+                    { type: 'code', ref: 'C.L02.K02', mode: 'run' },
+                    { type: 'p', text: {
+                        fa: 'روی کامپیوتر خودت، gcc این را می‌گوید:',
+                        de: 'Auf deinem eigenen Rechner sagt gcc Folgendes:',
+                        en: 'On your own computer, gcc says this:',
+                    } },
+                    { type: 'table',
+                      head: [{ fa: 'تکه', de: 'Teil', en: 'Piece' }, { fa: 'نمونه', de: 'Beispiel', en: 'Example' }, { fa: 'معنا', de: 'Bedeutung', en: 'Meaning' }],
+                      rows: [
+                        [{ fa: 'فایل', de: 'Datei', en: 'File' }, { code: 'main.c' }, { fa: 'در کدام فایل', de: 'In welcher Datei', en: 'Which file' }],
+                        [{ fa: 'خط', de: 'Zeile', en: 'Line' }, { code: '5' }, { fa: 'شمارهٔ خط؛ خط پیش از آن را هم نگاه کن', de: 'Zeilennummer; schau dir auch die Zeile davor an', en: 'Line number; look at the line before it too' }],
+                        [{ fa: 'ستون', de: 'Spalte', en: 'Column' }, { code: '40' }, { fa: 'چندمین نویسه در آن خط', de: 'Das wievielte Zeichen in dieser Zeile', en: 'Which character in that line' }],
+                        [{ fa: 'نوع', de: 'Art', en: 'Kind' }, { code: 'error' }, { fa: '`error` یعنی برنامه ساخته نشد؛ `warning` یعنی ساخته شد ولی چیزی مشکوک است', de: '`error` heißt: kein Programm; `warning` heißt: Programm gebaut, aber etwas ist verdächtig', en: '`error` means no program was built; `warning` means it was built but something is suspicious' }],
+                        [{ fa: 'پیام', de: 'Meldung', en: 'Message' }, { code: "expected ';' before 'printf'" }, { fa: 'چه چیزی انتظار می‌رفت، و پیش از کجا', de: 'Was erwartet wurde, und vor welcher Stelle', en: 'What was expected, and before which spot' }],
+                      ] },
+                    { type: 'p', text: {
+                        fa: 'پس کل پیام این است: `main.c:5:40: error: expected \';\' before \'printf\'`. compiler این صفحه همین را کوتاه‌تر می‌گوید، با شمارهٔ خط در پرانتز و یک `^` زیر جای مشکل.',
+                        de: 'Die ganze Meldung lautet also: `main.c:5:40: error: expected \';\' before \'printf\'`. Der Compiler dieser Seite sagt dasselbe kürzer, mit der Zeilennummer in Klammern und einem `^` unter der Problemstelle.',
+                        en: 'So the whole message is: `main.c:5:40: error: expected \';\' before \'printf\'`. The compiler on this page says the same more briefly, with the line number in parentheses and a `^` under the problem spot.',
+                    } },
+                ] },
+
+                { block: 'machine', content: [
+                    { type: 'p', text: {
+                        fa: 'ساختن برنامه دو مرحله دارد و هر مرحله پیام‌های خودش را دارد:',
+                        de: 'Das Bauen eines Programms hat zwei Schritte, und jeder Schritt hat seine eigenen Meldungen:',
+                        en: 'Building a program has two steps, and each step has its own messages:',
+                    } },
+                    { type: 'list', ordered: true, items: [
+                        { fa: '**compiler** فایل تو را از بالا به پایین می‌خواند و قاعده‌های C را بررسی می‌کند. پیام‌هایش با `main.c:` و شمارهٔ خط شروع می‌شوند.',
+                          de: 'Der **Compiler** liest deine Datei von oben nach unten und prüft die Regeln von C. Seine Meldungen beginnen mit `main.c:` und einer Zeilennummer.',
+                          en: 'The **compiler** reads your file from top to bottom and checks the rules of C. Its messages start with `main.c:` and a line number.' },
+                        { fa: 'سپس [[term:T.linker]] کد تو را به کد کتابخانه وصل می‌کند؛ مثلاً `printf` را خودت ننوشته‌ای، در کتابخانهٔ استاندارد C است. اگر نامی را صدا زده باشی که هیچ‌جا نیست، linker می‌گوید `undefined reference`.',
+                          de: 'Danach verbindet der [[term:T.linker]] deinen Code mit dem Code der Bibliothek; `printf` zum Beispiel hast du nicht selbst geschrieben, es steht in der C-Standardbibliothek. Rufst du einen Namen auf, den es nirgends gibt, meldet der Linker `undefined reference`.',
+                          en: 'Then the [[term:T.linker]] joins your code with library code; you did not write `printf` yourself, for example, it lives in the C standard library. If you call a name that exists nowhere, the linker says `undefined reference`.' },
+                    ] },
+                    { type: 'p', text: {
+                        fa: 'compiler پس از اولین خطا هم به خواندن ادامه می‌دهد تا پیام‌های بیشتری بدهد. ولی بعد از یک خطا، دیگر مطمئن نیست کد را درست فهمیده؛ پس پیام‌های بعدی اغلب پیامد همان خطای اول‌اند. یک اشتباه می‌تواند چند پیام بسازد. همیشه از **اولین** پیام شروع کن.',
+                        de: 'Der Compiler liest nach dem ersten Fehler weiter, um mehr Meldungen zu liefern. Nach einem Fehler ist er aber nicht mehr sicher, ob er den Code richtig verstanden hat; die weiteren Meldungen sind daher oft Folgen des ersten Fehlers. Ein Fehler kann mehrere Meldungen erzeugen. Fang immer mit der **ersten** Meldung an.',
+                        en: 'After the first error, the compiler keeps reading to give you more messages. But after an error it is no longer sure it understood the code, so later messages are often consequences of the first one. One mistake can produce several messages. Always start with the **first** message.',
+                    } },
+                    { type: 'p', text: {
+                        fa: 'یک [[term:T.warning]] فرق دارد: برنامه ساخته می‌شود، ولی compiler چیزی مشکوک دیده. warning را نادیده نگیر؛ بیشتر وقت‌ها خبر از اشکالی واقعی می‌دهد.',
+                        de: 'Eine [[term:T.warning]] ist etwas anderes: Das Programm wird gebaut, aber der Compiler hat etwas Verdächtiges gesehen. Ignoriere Warnungen nicht; meistens kündigen sie einen echten Fehler an.',
+                        en: 'A [[term:T.warning]] is different: the program is built, but the compiler saw something suspicious. Do not ignore warnings; most of the time they point to a real problem.',
+                    } },
+                    { type: 'note', kind: 'platform', text: {
+                        fa: 'compiler این صفحه (XCC) سخت‌گیرتر و کم‌حرف‌تر از gcc است: بعضی چیزهایی را که gcc فقط warning می‌داند، خطا می‌داند، و نام‌های ناشناخته را پیش از linker می‌گیرد. شکل پیام‌ها هم فرق دارد. ولی خطا در هر دو همان است.',
+                        de: 'Der Compiler dieser Seite (XCC) ist strenger und wortkarger als gcc: Manches, wofür gcc nur warnt, ist für ihn ein Fehler, und unbekannte Namen findet er schon vor dem Linker. Auch die Form der Meldungen ist anders. Der Fehler ist in beiden aber derselbe.',
+                        en: 'The compiler on this page (XCC) is stricter and shorter than gcc: some things gcc only warns about are errors for it, and it catches unknown names before the linker. Its messages look different too. But the mistake is the same in both.',
+                    } },
+                ] },
+
+                { block: 'rule', content: [
+                    { type: 'list', items: [
+                        { fa: '**اول، اولین پیام را بخوان.** بقیه ممکن است پیامد همان باشند.', de: '**Lies zuerst die erste Meldung.** Die übrigen können Folgen davon sein.', en: '**Read the first message first.** The others may be its consequences.' },
+                        { fa: 'شکل پیام gcc: `file:line:column: kind: message`.', de: 'Form einer gcc-Meldung: `file:line:column: kind: message`.', en: 'Shape of a gcc message: `file:line:column: kind: message`.' },
+                        { fa: 'خطی را که پیام نشان می‌دهد و خط پیش از آن را نگاه کن.', de: 'Schau dir die gemeldete Zeile und die Zeile davor an.', en: 'Look at the line in the message and the line before it.' },
+                        { fa: '`error`: برنامه‌ای ساخته نشد. `warning`: ساخته شد، ولی جدی‌اش بگیر.', de: '`error`: kein Programm. `warning`: Programm gebaut, aber nimm es ernst.', en: '`error`: no program was built. `warning`: it was built, but take it seriously.' },
+                        { fa: '`undefined reference` از linker است: نامی را صدا زده‌ای که وجود ندارد.', de: '`undefined reference` kommt vom Linker: Du rufst einen Namen auf, den es nicht gibt.', en: '`undefined reference` comes from the linker: you call a name that does not exist.' },
+                        { fa: 'هر بار یک چیز را درست کن و دوباره compile کن.', de: 'Behebe immer nur eine Sache und kompiliere neu.', en: 'Fix one thing at a time and compile again.' },
+                    ] },
+                ] },
+
+                { block: 'mistakes', content: [
+                    { type: 'mistakes', refs: ['E-03', 'E-04', 'W-01'] },
+                ] },
+
+                { block: 'errors', content: [
+                    { type: 'p', text: {
+                        fa: 'در این برنامه فقط یک `"` جا افتاده. ببین gcc چند پیام می‌دهد.',
+                        de: 'In diesem Programm fehlt nur ein einziges `"`. Sieh dir an, wie viele Meldungen gcc ausgibt.',
+                        en: 'Only one `"` is missing in this program. See how many messages gcc gives.',
+                    } },
+                    { type: 'diagnostic', ref: 'C.L02.K08', explain: {
+                        where: {
+                            fa: 'اولین پیام به خط 4 اشاره می‌کند: همان‌جا که اشتباه است. پیام‌های بعدی به خط‌های 5، 7 و 8 اشاره می‌کنند که هیچ اشکالی ندارند.',
+                            de: 'Die erste Meldung zeigt auf Zeile 4: genau dort liegt der Fehler. Die weiteren Meldungen zeigen auf die Zeilen 5, 7 und 8, die völlig in Ordnung sind.',
+                            en: 'The first message points to line 4: exactly where the mistake is. Later messages point to lines 5, 7 and 8, which are perfectly fine.',
+                        },
+                        what: {
+                            fa: '`missing terminating " character` یعنی «`"` پایانی پیدا نشد».',
+                            de: '`missing terminating " character` heißt „das abschließende `"` fehlt“.',
+                            en: '`missing terminating " character` means "the closing `"` is missing".',
+                        },
+                        why: {
+                            fa: 'بی `"` پایانی، compiler بقیهٔ خط را متن می‌داند و دیگر `)` و `;` را نمی‌بیند. از آنجا به بعد همه‌چیز برایش درهم است و پیام‌های تازه می‌سازد.',
+                            de: 'Ohne das schließende `"` hält der Compiler den Rest der Zeile für Text und sieht `)` und `;` nicht mehr. Von da an ist für ihn alles durcheinander, und er erzeugt neue Meldungen.',
+                            en: 'Without the closing `"`, the compiler takes the rest of the line as text and no longer sees the `)` and `;`. From there on everything is confused for it, and it produces new messages.',
+                        },
+                        fix: {
+                            fa: 'فقط اولین پیام را درست کن: `"` را پس از `\\n` در خط 4 بگذار. همهٔ پیام‌های دیگر با هم ناپدید می‌شوند.',
+                            de: 'Behebe nur die erste Meldung: Setz das `"` nach `\\n` in Zeile 4. Alle anderen Meldungen verschwinden mit.',
+                            en: 'Fix only the first message: add the `"` after `\\n` on line 4. All the other messages disappear with it.',
+                        },
+                    } },
+                    { type: 'p', text: {
+                        fa: 'این یکی از compiler رد می‌شود، ولی linker آن را نمی‌پذیرد.',
+                        de: 'Dieses Programm kommt am Compiler vorbei, aber der Linker lehnt es ab.',
+                        en: 'This one gets past the compiler, but the linker rejects it.',
+                    } },
+                    { type: 'diagnostic', ref: 'C.L02.K09', explain: {
+                        where: {
+                            fa: 'gcc اول یک warning برای خط 4 می‌دهد. بعد linker، که شمارهٔ خط نمی‌شناسد، فقط نام را می‌گوید: `prinf`.',
+                            de: 'gcc gibt zuerst eine Warnung zu Zeile 4 aus. Danach nennt der Linker, der keine Zeilennummern kennt, nur den Namen: `prinf`.',
+                            en: 'gcc first gives a warning for line 4. Then the linker, which knows no line numbers, only names the name: `prinf`.',
+                        },
+                        what: {
+                            fa: '`implicit declaration of function \'prinf\'; did you mean \'printf\'?` یعنی «این نام را نمی‌شناسم؛ منظورت `printf` بود؟». `undefined reference` برای `prinf` یعنی «هیچ‌جا تابعی با این نام پیدا نکردم».',
+                            de: '`implicit declaration of function \'prinf\'; did you mean \'printf\'?` heißt „diesen Namen kenne ich nicht; meintest du `printf`?“. `undefined reference` zu `prinf` heißt „nirgends gibt es eine Funktion mit diesem Namen“.',
+                            en: '`implicit declaration of function \'prinf\'; did you mean \'printf\'?` means "I do not know this name; did you mean `printf`?". `undefined reference` to `prinf` means "there is no function with this name anywhere".',
+                        },
+                        why: {
+                            fa: 'یک حرف جا افتاده و نام دیگر همان نام نیست. C نام‌ها را حدس نمی‌زند.',
+                            de: 'Ein Buchstabe fehlt, und schon ist es ein anderer Name. C rät keine Namen.',
+                            en: 'One letter is missing, and it is a different name. C does not guess names.',
+                        },
+                        fix: {
+                            fa: '`prinf` را به `printf` تبدیل کن. پیشنهاد `did you mean` اغلب درست است.',
+                            de: 'Ändere `prinf` in `printf`. Der Vorschlag nach `did you mean` stimmt oft.',
+                            en: 'Change `prinf` to `printf`. The suggestion after `did you mean` is often right.',
+                        },
+                    } },
+                    { type: 'p', text: {
+                        fa: 'و این یکی با gcc اجرا هم می‌شود، ولی warning می‌دهد. compiler این صفحه آن را نمی‌پذیرد.',
+                        de: 'Und dieses Programm läuft mit gcc sogar, aber mit Warnung. Der Compiler dieser Seite nimmt es nicht an.',
+                        en: 'And this one even runs with gcc, but with a warning. The compiler on this page does not accept it.',
+                    } },
+                    { type: 'diagnostic', ref: 'C.L02.K10', explain: {
+                        where: {
+                            fa: 'خط 2، اولین جایی که `printf` آمده. ولی ایراد در خطی است که **نیست**: خط `#include <stdio.h>` در بالای فایل.',
+                            de: 'Zeile 2, die erste Stelle mit `printf`. Der Fehler liegt aber in einer Zeile, die **fehlt**: `#include <stdio.h>` oben in der Datei.',
+                            en: 'Line 2, the first place `printf` appears. But the problem is a line that is **missing**: `#include <stdio.h>` at the top of the file.',
+                        },
+                        what: {
+                            fa: 'gcc می‌گوید `printf` را نمی‌شناسد و خودش در `note` راه‌حل را می‌گوید: `include \'<stdio.h>\'`.',
+                            de: 'gcc sagt, dass es `printf` nicht kennt, und nennt in der `note` selbst die Lösung: `include \'<stdio.h>\'`.',
+                            en: 'gcc says it does not know `printf` and gives the fix itself in the `note`: `include \'<stdio.h>\'`.',
+                        },
+                        why: {
+                            fa: '`printf` در کتابخانه است و `#include <stdio.h>` آن را به compiler معرفی می‌کند. gcc با حدس زدن ادامه می‌دهد؛ XCC حدس نمی‌زند.',
+                            de: '`printf` steht in der Bibliothek, und `#include <stdio.h>` macht es dem Compiler bekannt. gcc macht mit einer Vermutung weiter; XCC vermutet nicht.',
+                            en: '`printf` lives in the library, and `#include <stdio.h>` introduces it to the compiler. gcc carries on with a guess; XCC does not guess.',
+                        },
+                        fix: {
+                            fa: '`#include <stdio.h>` و یک خط خالی را بالای فایل اضافه کن.',
+                            de: 'Füg `#include <stdio.h>` und eine Leerzeile oben in die Datei ein.',
+                            en: 'Add `#include <stdio.h>` and an empty line at the top of the file.',
+                        },
+                    } },
+                ] },
+
+                { block: 'notyet', content: [
+                    { type: 'list', items: [
+                        { fa: 'linker و ساختن برنامه از چند فایل: [[lesson:C.L44]].', de: 'Der Linker und Programme aus mehreren Dateien: [[lesson:C.L44]].', en: 'The linker and building a program from several files: [[lesson:C.L44]].' },
+                        { fa: '`#include` واقعاً چه می‌کند: [[lesson:C.L42]].', de: 'Was `#include` wirklich macht: [[lesson:C.L42]].', en: 'What `#include` really does: [[lesson:C.L42]].' },
+                        { fa: 'خطاهایی که فقط هنگام اجرا پیدا می‌شوند، و debugger: [[lesson:C.L46]].', de: 'Fehler, die erst beim Ausführen auftreten, und der Debugger: [[lesson:C.L46]].', en: 'Errors that only show up while running, and the debugger: [[lesson:C.L46]].' },
+                    ] },
+                ] },
+
+                { block: 'practice', content: [
+                    { type: 'band', ref: 'C.L02.X01' }, { type: 'band', ref: 'C.L02.X02' },
+                    { type: 'band', ref: 'C.L02.X03' }, { type: 'band', ref: 'C.L02.X04' },
+                ] },
+
+                { block: 'make', content: [
+                    { type: 'p', text: {
+                        fa: 'چک‌لیست خودت را بساز: برنامه‌ای که دقیقاً این چهار خط را چاپ کند. بعد آن را کنار کارت نگه دار.',
+                        de: 'Bau deine eigene Checkliste: ein Programm, das genau diese vier Zeilen ausgibt. Behalte sie dann neben deiner Arbeit.',
+                        en: 'Build your own checklist: a program that prints exactly these four lines. Then keep it next to your work.',
+                    } },
+                    { type: 'band', ref: 'C.L02.X05' },
+                ] },
+
+                { block: 'ai', content: [
+                    { type: 'p', text: {
+                        fa: 'با این پرامپت، دستیار برنامه‌ای با یک اشتباه می‌سازد و تو پیام compiler را پیش از دیدنش حدس می‌زنی. اگر برنامهٔ خودت کامپایل نشد، از پرامپت «خواندن خطا» استفاده کن.',
+                        de: 'Mit diesem Prompt baut der Assistent ein Programm mit einem Fehler, und du sagst die Compiler-Meldung voraus, bevor du sie siehst. Wenn dein eigenes Programm nicht kompiliert, nimm den Prompt „Fehler lesen“.',
+                        en: 'With this prompt, the assistant builds a program with one mistake and you predict the compiler message before you see it. If your own program does not compile, use the "Read my error" prompt.',
+                    } },
+                    { type: 'prompt', ref: 'AI-2' },
+                    { type: 'prompt', ref: 'AI-1' },
+                ] },
+
+                { block: 'terms', content: [] },
+                { block: 'selfcheck', content: [] },
+                { block: 'key', content: [] },
+            ],
+
+            bands: [
+                {
+                    id: 'C.L02.X01', type: 'B.parsons',
+                    title: { fa: 'کل برنامه را مرتب کن', de: 'Bring das ganze Programm in Ordnung', en: 'Put the whole program in order' },
+                    items: [
+                        { id: 'C.L02.X01.01',
+                          prompt: { fa: 'این بار قاب برنامه هم جابه‌جا شده. خط‌ها را مرتب کن تا برنامه `Hi` را چاپ کند. اگر ترتیب غلط باشد، پیام خطا را بخوان: می‌گوید کدام خط سر جایش نیست.', de: 'Diesmal ist auch der Rahmen des Programms durcheinander. Ordne die Zeilen so, dass das Programm `Hi` ausgibt. Stimmt die Reihenfolge nicht, lies die Fehlermeldung: Sie sagt dir, welche Zeile nicht an ihrem Platz ist.', en: 'This time the frame of the program is mixed up too. Order the lines so the program prints `Hi`. If the order is wrong, read the error message: it tells you which line is out of place.' },
+                          before: [],
+                          lines: ['}', '    printf("Hi\\n");', '#include <stdio.h>', '    return 0;', 'int main(void) {'],
+                          after: [],
+                          tests: [{ id: 'C.L02.X01.01.T01', purpose: 'normal' }],
+                          solution: [2, 4, 1, 3, 0],
+                          why: { fa: 'اول `#include`، بعد `int main(void) {`، بعد statementها، و در پایان `}`.', de: 'Zuerst `#include`, dann `int main(void) {`, dann die Statements und am Ende `}`.', en: 'First `#include`, then `int main(void) {`, then the statements, and `}` at the end.' } },
+                    ],
+                },
+                {
+                    id: 'C.L02.X02', type: 'B.fix',
+                    title: { fa: 'پیام را بخوان، درستش کن', de: 'Lies die Meldung und repariere', en: 'Read the message, fix it' },
+                    items: [
+                        { id: 'C.L02.X02.01', broken: 'C.L02.K11', activates: ['E-03'],
+                          prompt: { fa: 'کسی که Python بلد است این را نوشته. پیام خطا را بخوان و درستش کن.', de: 'Das hat jemand geschrieben, der Python kann. Lies die Fehlermeldung und repariere es.', en: 'Someone who knows Python wrote this. Read the error message and fix it.' },
+                          solution: String.raw`#include <stdio.h>
+
+int main(void) {
+    printf("Good luck\n");
+    return 0;
+}
+`,
+                          tests: [{ id: 'C.L02.X02.01.T01', purpose: 'normal' },
+                                  { id: 'C.L02.X02.01.T02', purpose: 'mistake', mistake: 'E-03' }],
+                          why: { fa: 'در C تابع چاپ `printf` است، نه `print` (`E-03`).', de: 'In C heißt die Ausgabefunktion `printf`, nicht `print` (`E-03`).', en: 'In C the print function is `printf`, not `print` (`E-03`).' } },
+                        { id: 'C.L02.X02.02', broken: 'C.L02.K12', activates: ['E-04'],
+                          prompt: { fa: 'پیام به خط آخر اشاره می‌کند. چه چیزی کم است؟', de: 'Die Meldung zeigt auf die letzte Zeile. Was fehlt?', en: 'The message points to the last line. What is missing?' },
+                          solution: String.raw`#include <stdio.h>
+
+int main(void) {
+    printf("Step one\n");
+    printf("Step two\n");
+    printf("Step three\n");
+    return 0;
+}
+`,
+                          tests: [{ id: 'C.L02.X02.02.T01', purpose: 'normal' },
+                                  { id: 'C.L02.X02.02.T02', purpose: 'mistake', mistake: 'E-04' }],
+                          why: { fa: '`}` پایانی `main` جا افتاده بود (`E-04`).', de: 'Die schließende `}` von `main` fehlte (`E-04`).', en: 'The closing `}` of `main` was missing (`E-04`).' } },
+                        { id: 'C.L02.X02.03', broken: 'C.L02.K13', activates: ['W-01'],
+                          prompt: { fa: 'خطا در خطی است که وجود ندارد. پیدایش کن.', de: 'Der Fehler steckt in einer Zeile, die es nicht gibt. Finde sie.', en: 'The mistake is in a line that is not there. Find it.' },
+                          solution: String.raw`#include <stdio.h>
+
+int main(void) {
+    printf("Keep calm\n");
+    printf("and read the message\n");
+    return 0;
+}
+`,
+                          tests: [{ id: 'C.L02.X02.03.T01', purpose: 'normal' },
+                                  { id: 'C.L02.X02.03.T02', purpose: 'mistake', mistake: 'W-01' }],
+                          why: { fa: '`#include <stdio.h>` در بالای فایل نبود (`W-01`).', de: '`#include <stdio.h>` fehlte oben in der Datei (`W-01`).', en: '`#include <stdio.h>` was missing at the top of the file (`W-01`).' } },
+                    ],
+                },
+                {
+                    id: 'C.L02.X03', type: 'B.write',
+                    title: { fa: 'از صفر بنویس', de: 'Schreib es von null', en: 'Write it from zero' },
+                    items: [
+                        { id: 'C.L02.X03.01', activates: ['W-01', 'E-04'],
+                          prompt: { fa: 'این بار ویرایشگر خالی است. کل برنامه را خودت بنویس، با قاب کامل، طوری که دقیقاً این دو خط را چاپ کند:\n`I can read`\n`error messages.`', de: 'Diesmal ist der Editor leer. Schreib das ganze Programm selbst, mit vollständigem Rahmen, sodass es genau diese zwei Zeilen ausgibt:\n`I can read`\n`error messages.`', en: 'This time the editor is empty. Write the whole program yourself, with the complete frame, so it prints exactly these two lines:\n`I can read`\n`error messages.`' },
+                          starter: '',
+                          solution: String.raw`#include <stdio.h>
+
+int main(void) {
+    printf("I can read\n");
+    printf("error messages.\n");
+    return 0;
+}
+`,
+                          tests: [{ id: 'C.L02.X03.01.T01', purpose: 'normal' },
+                                  { id: 'C.L02.X03.01.T02', purpose: 'mistake', mistake: 'W-01', variant: String.raw`int main(void) {
+    printf("I can read\n");
+    printf("error messages.\n");
+    return 0;
+}
+` },
+                                  { id: 'C.L02.X03.01.T03', purpose: 'mistake', mistake: 'E-04', variant: String.raw`#include <stdio.h>
+
+int main(void) {
+    printf("I can read\n");
+    printf("error messages.\n");
+    return 0;
+` }],
+                          why: { fa: 'قاب کامل: `#include <stdio.h>`، `int main(void) {`، statementها، `return 0;` و `}`.', de: 'Der vollständige Rahmen: `#include <stdio.h>`, `int main(void) {`, die Statements, `return 0;` und `}`.', en: 'The complete frame: `#include <stdio.h>`, `int main(void) {`, the statements, `return 0;` and `}`.' } },
+                    ],
+                },
+                {
+                    id: 'C.L02.X04', type: 'B.explain',
+                    title: { fa: 'توضیح بده', de: 'Erkläre', en: 'Explain' },
+                    items: [
+                        { id: 'C.L02.X04.01',
+                          prompt: { fa: 'دوستت می‌گوید: «برنامه‌ام 12 پیام خطا داد. یعنی 12 اشتباه دارم.» در دو یا سه جمله جوابش را بده.', de: 'Ein Freund sagt: „Mein Programm hat 12 Fehlermeldungen ausgegeben. Also habe ich 12 Fehler.“ Antworte ihm in zwei oder drei Sätzen.', en: 'A friend says: "My program gave 12 error messages. So I have 12 mistakes." Answer in two or three sentences.' },
+                          model: { fa: 'نه لزوماً. پس از اولین خطا، compiler دیگر مطمئن نیست کد را درست فهمیده، پس یک اشتباه می‌تواند چند پیام بسازد. اولین پیام را درست کن و دوباره compile کن؛ شاید بیشتر پیام‌ها با هم بروند.', de: 'Nicht unbedingt. Nach dem ersten Fehler ist der Compiler nicht mehr sicher, ob er den Code richtig verstanden hat, also kann ein Fehler mehrere Meldungen erzeugen. Behebe die erste Meldung und kompiliere neu; vielleicht verschwinden die meisten Meldungen mit.', en: 'Not necessarily. After the first error the compiler is no longer sure it understood the code, so one mistake can produce several messages. Fix the first message and compile again; most of the messages may disappear with it.' },
+                          why: { fa: 'یک اشتباه می‌تواند چند پیام بسازد؛ اولین پیام را درست کن.', de: 'Ein Fehler kann mehrere Meldungen erzeugen; behebe die erste.', en: 'One mistake can produce several messages; fix the first one.' } },
+                    ],
+                },
+                {
+                    id: 'C.L02.X05', type: 'B.write',
+                    title: { fa: 'چک‌لیست خطا', de: 'Fehler-Checkliste', en: 'Error checklist' },
+                    items: [
+                        { id: 'C.L02.X05.01',
+                          prompt: { fa: 'دقیقاً این چهار خط:\n`1. Read the first message.`\n`2. Go to its line and the line before.`\n`3. Ask: what did it expect?`\n`4. Fix one thing, compile again.`', de: 'Genau diese vier Zeilen:\n`1. Read the first message.`\n`2. Go to its line and the line before.`\n`3. Ask: what did it expect?`\n`4. Fix one thing, compile again.`', en: 'Exactly these four lines:\n`1. Read the first message.`\n`2. Go to its line and the line before.`\n`3. Ask: what did it expect?`\n`4. Fix one thing, compile again.`' },
+                          starter: String.raw`#include <stdio.h>
+
+int main(void) {
+    return 0;
+}
+`,
+                          solution: String.raw`#include <stdio.h>
+
+int main(void) {
+    printf("1. Read the first message.\n");
+    printf("2. Go to its line and the line before.\n");
+    printf("3. Ask: what did it expect?\n");
+    printf("4. Fix one thing, compile again.\n");
+    return 0;
+}
+`,
+                          tests: [{ id: 'C.L02.X05.01.T01', purpose: 'normal' }],
+                          why: { fa: 'چهار `printf`، هر کدام با `\\n`.', de: 'Vier `printf`, jedes mit `\\n`.', en: 'Four `printf`, each with `\\n`.' } },
+                    ],
+                },
+            ],
+        },
+        {
+            type: 'lesson', id: 'C.L03',
+            blocks: [
+                { block: 'why', content: [
+                    { type: 'p', text: {
+                        fa: 'تا اینجا `printf` فقط متنی را که خودت نوشته بودی تکرار می‌کرد. ولی برنامه‌ها برای حساب کردن ساخته شده‌اند: قیمت کل، ثانیه‌های یک روز، نمرهٔ میانگین. در این درس `printf` یاد می‌گیرد عدد چاپ کند و حاصل حساب را نشانت دهد.',
+                        de: 'Bisher hat `printf` nur Text wiederholt, den du selbst geschrieben hast. Programme sind aber zum Rechnen da: Gesamtpreis, Sekunden eines Tages, Durchschnittsnote. In dieser Lektion lernt `printf`, Zahlen auszugeben und dir das Ergebnis einer Rechnung zu zeigen.',
+                        en: 'So far `printf` only repeated text you wrote yourself. But programs are made for calculating: a total price, the seconds in a day, an average grade. In this lesson `printf` learns to print numbers and show you the result of a calculation.',
+                    } },
+                    { type: 'p', text: {
+                        fa: 'و چند نویسه هم هست که نمی‌شود مستقیم درون `"` نوشت: tab، خود `"` و `\\`. راه نوشتنشان را هم می‌بینی.',
+                        de: 'Außerdem gibt es ein paar Zeichen, die man nicht direkt zwischen `"` schreiben kann: Tab, das `"` selbst und `\\`. Du siehst auch, wie man sie schreibt.',
+                        en: 'And there are a few characters you cannot write directly inside `"`: a tab, the `"` itself and `\\`. You see how to write them too.',
+                    } },
+                ] },
+
+                { block: 'cando', content: [] },
+
+                { block: 'prior', content: [
+                    { type: 'p', text: {
+                        fa: 'از [[lesson:C.L01]]: `printf` نویسه‌های بین دو `"` را عیناً چاپ می‌کند و `\\n` سر خط می‌رود. از [[lesson:C.L02]]: اگر کامپایل نشد، اولین پیام را بخوان.',
+                        de: 'Aus [[lesson:C.L01]]: `printf` gibt die Zeichen zwischen den `"` genau so aus, und `\\n` beginnt eine neue Zeile. Aus [[lesson:C.L02]]: Wenn es nicht kompiliert, lies die erste Meldung.',
+                        en: 'From [[lesson:C.L01]]: `printf` prints the characters between the `"` exactly as they are, and `\\n` starts a new line. From [[lesson:C.L02]]: if it does not compile, read the first message.',
+                    } },
+                ] },
+
+                { block: 'predict', content: [
+                    { type: 'p', text: {
+                        fa: 'سه خط، سه شکل از `2 + 3`. پیش از اجرا بنویس هر خط چه چاپ می‌کند.',
+                        de: 'Drei Zeilen, dreimal `2 + 3` in anderer Form. Schreib vor dem Ausführen auf, was jede Zeile ausgibt.',
+                        en: 'Three lines, three forms of `2 + 3`. Before you run it, write what each line prints.',
+                    } },
+                    { type: 'code', ref: 'C.L03.K01', mode: 'predict' },
+                    { type: 'p', text: {
+                        fa: 'خط اول `2 + 3` را عیناً چاپ می‌کند، چون درون `"` فقط متن است. در خط دوم، `%d` جای عددی را نگه می‌دارد که بعد از ویرگول آمده، و آن عدد حاصل `2 + 3` است.',
+                        de: 'Die erste Zeile gibt `2 + 3` genau so aus, denn zwischen den `"` steht nur Text. In der zweiten Zeile hält `%d` den Platz für die Zahl frei, die nach dem Komma kommt, und diese Zahl ist das Ergebnis von `2 + 3`.',
+                        en: 'The first line prints `2 + 3` as it is, because inside `"` there is only text. In the second line, `%d` holds the place of the number after the comma, and that number is the result of `2 + 3`.',
+                    } },
+                ] },
+
+                { block: 'example', content: [
+                    { type: 'p', text: {
+                        fa: 'رسید یک بوفه. اجرایش کن، بعد گام‌ها را بخوان.',
+                        de: 'Der Kassenbon eines Imbisses. Führ ihn aus und lies dann die Schritte.',
+                        en: 'The receipt of a snack bar. Run it, then read the steps.',
+                    } },
+                    { type: 'code', ref: 'C.L03.K02', mode: 'run' },
+                    { type: 'list', items: [
+                        { fa: 'متن اول `printf` [[term:T.format-string]] است. `%d` درون آن یک [[term:T.format-specifier]] است: جای یک عدد صحیح را نگه می‌دارد.',
+                          de: 'Der erste Text von `printf` ist der [[term:T.format-string]]. `%d` darin ist ein [[term:T.format-specifier]]: Er hält den Platz für eine ganze Zahl frei.',
+                          en: 'The first text of `printf` is the [[term:T.format-string]]. `%d` inside it is a [[term:T.format-specifier]]: it holds the place of a whole number.' },
+                        { fa: 'بعد از format string، با `,` جدا، هر [[term:T.argument]] می‌آید: اینجا `4`، `2 * 3` و `4 + 2 * 3`. هر argument جای یک `%d` می‌نشیند.',
+                          de: 'Nach dem Format-String folgt, durch `,` getrennt, jedes [[term:T.argument]]: hier `4`, `2 * 3` und `4 + 2 * 3`. Jedes Argument kommt an die Stelle eines `%d`.',
+                          en: 'After the format string, separated by `,`, comes each [[term:T.argument]]: here `4`, `2 * 3` and `4 + 2 * 3`. Each argument takes the place of one `%d`.' },
+                        { fa: '`+`، `-` و `*` جمع، تفریق و ضرب‌اند. مثل ریاضی، `*` پیش از `+` حساب می‌شود: `4 + 2 * 3` می‌شود 10.',
+                          de: '`+`, `-` und `*` sind Addition, Subtraktion und Multiplikation. Wie in der Mathematik wird `*` vor `+` gerechnet: `4 + 2 * 3` ergibt 10.',
+                          en: '`+`, `-` and `*` are addition, subtraction and multiplication. As in math, `*` is worked out before `+`: `4 + 2 * 3` is 10.' },
+                        { fa: '`\\t` یک tab است: مکان‌نما را تا ستون بعدی (هر 8 نویسه) جلو می‌برد، برای همین عددها زیر هم می‌ایستند.',
+                          de: '`\\t` ist ein Tab: Er schiebt den Cursor bis zur nächsten Spalte (alle 8 Zeichen) vor, deshalb stehen die Zahlen untereinander.',
+                          en: '`\\t` is a tab: it moves the cursor to the next column (every 8 characters), which is why the numbers line up.' },
+                    ] },
+                    { type: 'p', text: {
+                        fa: 'و این هم سه escape sequence دیگر، و یک comment که چند خط دارد:',
+                        de: 'Und hier noch drei Escape-Sequenzen und ein Kommentar über mehrere Zeilen:',
+                        en: 'And here are three more escape sequences, and a comment over several lines:',
+                    } },
+                    { type: 'code', ref: 'C.L03.K03', mode: 'run' },
+                    { type: 'table',
+                      head: [{ fa: 'می‌نویسی', de: 'Du schreibst', en: 'You write' }, { fa: 'چاپ می‌شود', de: 'Ausgegeben wird', en: 'Printed' }],
+                      rows: [
+                        [{ code: '\\n' }, { fa: 'سر خط', de: 'neue Zeile', en: 'new line' }],
+                        [{ code: '\\t' }, { fa: 'tab', de: 'Tab', en: 'tab' }],
+                        [{ code: '\\"' }, { code: '"' }],
+                        [{ code: '\\\\' }, { code: '\\' }],
+                      ] },
+                    { type: 'p', text: {
+                        fa: 'هر چیزی بین `/*` و `*/` یک comment است، حتی اگر چند خط باشد.',
+                        de: 'Alles zwischen `/*` und `*/` ist ein Kommentar, auch über mehrere Zeilen.',
+                        en: 'Everything between `/*` and `*/` is a comment, even across several lines.',
+                    } },
+                ] },
+
+                { block: 'machine', content: [
+                    { type: 'p', text: {
+                        fa: '`printf` format string را نویسه به نویسه از چپ به راست چاپ می‌کند. هر بار که به `%d` می‌رسد، به‌جای آن argument بعدی را، که عدد است، به رقم تبدیل می‌کند و چاپ می‌کند. پس اولین `%d` مال اولین argument است، دومی مال دومی، و همین‌طور.',
+                        de: '`printf` gibt den Format-String Zeichen für Zeichen von links nach rechts aus. Jedes Mal, wenn es auf `%d` trifft, wandelt es stattdessen das nächste Argument, eine Zahl, in Ziffern um und gibt diese aus. Das erste `%d` gehört also zum ersten Argument, das zweite zum zweiten und so weiter.',
+                        en: '`printf` prints the format string character by character from left to right. Every time it reaches `%d`, it takes the next argument, a number, turns it into digits and prints those instead. So the first `%d` belongs to the first argument, the second to the second, and so on.',
+                    } },
+                    { type: 'p', text: {
+                        fa: 'حساب پیش از `printf` انجام می‌شود: برنامه اول `2 * 3` را حساب می‌کند و فقط حاصل، یعنی 6، به `printf` می‌رسد. `printf` هیچ‌وقت `2 * 3` را نمی‌بیند.',
+                        de: 'Gerechnet wird vor `printf`: Das Programm rechnet zuerst `2 * 3` aus, und nur das Ergebnis, 6, kommt bei `printf` an. `printf` sieht `2 * 3` nie.',
+                        en: 'The calculation happens before `printf`: the program first works out `2 * 3`, and only the result, 6, reaches `printf`. `printf` never sees `2 * 3`.',
+                    } },
+                    { type: 'p', text: {
+                        fa: '`\\` درون `"` به compiler می‌گوید «نویسهٔ بعدی معنای ویژه دارد». `\\n` و `\\t` دو نویسه‌اند که در برنامهٔ ساخته‌شده یک نویسه می‌شوند.',
+                        de: 'Ein `\\` innerhalb der `"` sagt dem Compiler: „Das nächste Zeichen hat eine besondere Bedeutung.“ `\\n` und `\\t` sind zwei Zeichen, die im fertigen Programm zu einem einzigen Zeichen werden.',
+                        en: 'A `\\` inside `"` tells the compiler "the next character has a special meaning". `\\n` and `\\t` are two characters that become a single character in the built program.',
+                    } },
+                    { type: 'note', kind: 'ub', text: {
+                        fa: 'اگر `%d` بیشتر از argumentها باشد، `printf` عددی را از حافظه برمی‌دارد که هیچ‌کس آنجا نگذاشته. نتیجه تعریف‌نشده است: هر چیزی ممکن است چاپ شود. gcc برایش warning می‌دهد.',
+                        de: 'Gibt es mehr `%d` als Argumente, nimmt `printf` eine Zahl aus dem Speicher, die niemand dort hingelegt hat. Das Ergebnis ist undefiniert: Alles kann ausgegeben werden. gcc warnt davor.',
+                        en: 'If there are more `%d` than arguments, `printf` takes a number from memory that nobody put there. The result is undefined: anything may be printed. gcc warns about it.',
+                    } },
+                ] },
+
+                { block: 'rule', content: [
+                    { type: 'list', items: [
+                        { fa: '`printf("format", argument, argument, …);` — argumentها با `,` جدا می‌شوند.', de: '`printf("format", argument, argument, …);` — Argumente werden durch `,` getrennt.', en: '`printf("format", argument, argument, …);` — arguments are separated by `,`.' },
+                        { fa: '**به ازای هر `%d` دقیقاً یک argument، به همان ترتیب.**', de: '**Für jedes `%d` genau ein Argument, in derselben Reihenfolge.**', en: '**Exactly one argument for every `%d`, in the same order.**' },
+                        { fa: 'حساب درون `"` حساب نمی‌شود؛ آن را argument کن.', de: 'Eine Rechnung innerhalb der `"` wird nicht ausgerechnet; mach sie zum Argument.', en: 'A calculation inside `"` is not worked out; make it an argument.' },
+                        { fa: '`*` پیش از `+` و `-`، مثل ریاضی.', de: '`*` vor `+` und `-`, wie in der Mathematik.', en: '`*` before `+` and `-`, as in math.' },
+                        { fa: '`\\t` tab، `\\"` برای `"`، `\\\\` برای `\\`.', de: '`\\t` Tab, `\\"` für `"`, `\\\\` für `\\`.', en: '`\\t` tab, `\\"` for `"`, `\\\\` for `\\`.' },
+                        { fa: '`/* … */` comment چندخطی است.', de: '`/* … */` ist ein Kommentar über mehrere Zeilen.', en: '`/* … */` is a comment over several lines.' },
+                    ] },
+                ] },
+
+                { block: 'mistakes', content: [
+                    { type: 'mistakes', refs: ['M-02', 'M-03', 'E-05', 'E-06', 'U-01'] },
+                ] },
+
+                { block: 'errors', content: [
+                    { type: 'p', text: {
+                        fa: 'در این برنامه یک ویرگول جا افتاده. پیام gcc کوتاه و دقیق است؛ compiler این صفحه پیش از اینکه دست بکشد، چند پیام می‌دهد.',
+                        de: 'In diesem Programm fehlt ein Komma. Die Meldung von gcc ist kurz und genau; der Compiler dieser Seite gibt mehrere Meldungen aus, bevor er aufgibt.',
+                        en: 'This program is missing a comma. The gcc message is short and precise; the compiler on this page gives several messages before it gives up.',
+                    } },
+                    { type: 'diagnostic', ref: 'C.L03.K13', explain: {
+                        where: {
+                            fa: 'خط 5، ستون 18: درست بعد از `"` پایانی و پیش از عدد `24`.',
+                            de: 'Zeile 5, Spalte 18: direkt nach dem schließenden `"` und vor der Zahl `24`.',
+                            en: 'Line 5, column 18: right after the closing `"` and before the number `24`.',
+                        },
+                        what: {
+                            fa: '`expected \')\' before numeric constant` یعنی «پیش از این عدد انتظار `)` را داشتم». compiler فکر می‌کند `printf` بعد از متن تمام شده.',
+                            de: '`expected \')\' before numeric constant` heißt „vor dieser Zahl habe ich `)` erwartet“. Der Compiler glaubt, dass `printf` nach dem Text zu Ende ist.',
+                            en: '`expected \')\' before numeric constant` means "I expected `)` before this number". The compiler thinks `printf` ended after the text.',
+                        },
+                        why: {
+                            fa: 'بی ویرگول، چیزی متن را از argument جدا نمی‌کند. پیام درباره‌ی `)` است، ولی چیزی که واقعاً کم است `,` است: پیام می‌گوید compiler چه انتظاری داشت، نه اینکه تو چه چیزی را فراموش کردی.',
+                            de: 'Ohne Komma trennt nichts den Text vom Argument. Die Meldung spricht von `)`, aber was wirklich fehlt, ist `,`: Die Meldung sagt, was der Compiler erwartet hat, nicht, was du vergessen hast.',
+                            en: 'Without the comma, nothing separates the text from the argument. The message talks about `)`, but what is really missing is `,`: the message says what the compiler expected, not what you forgot.',
+                        },
+                        fix: {
+                            fa: 'بعد از `"` و پیش از `24` یک `,` بگذار.',
+                            de: 'Setz nach dem `"` und vor `24` ein `,`.',
+                            en: 'Put a `,` after the `"` and before `24`.',
+                        },
+                    } },
+                ] },
+
+                { block: 'notyet', content: [
+                    { type: 'list', items: [
+                        { fa: 'نگه داشتن عدد در یک نام، یعنی متغیر: [[lesson:C.L04]].', de: 'Eine Zahl unter einem Namen speichern, also Variablen: [[lesson:C.L04]].', en: 'Keeping a number under a name, that is, variables: [[lesson:C.L04]].' },
+                        { fa: 'تقسیم، باقی‌مانده و پرانتز در حساب: [[lesson:C.L06]].', de: 'Division, Rest und Klammern beim Rechnen: [[lesson:C.L06]].', en: 'Division, remainder and parentheses in calculations: [[lesson:C.L06]].' },
+                        { fa: 'عدد اعشاری با `%f` و عرض ستون‌ها: [[lesson:C.L05]] و [[lesson:C.L08]].', de: 'Kommazahlen mit `%f` und Spaltenbreiten: [[lesson:C.L05]] und [[lesson:C.L08]].', en: 'Decimal numbers with `%f` and column widths: [[lesson:C.L05]] and [[lesson:C.L08]].' },
+                    ] },
+                ] },
+
+                { block: 'practice', content: [
+                    { type: 'band', ref: 'C.L03.X01' }, { type: 'band', ref: 'C.L03.X02' }, { type: 'band', ref: 'C.L03.X03' },
+                    { type: 'band', ref: 'C.L03.X04' },
+                ] },
+
+                { block: 'make', content: [
+                    { type: 'p', text: {
+                        fa: 'جدول ضرب 7 را بساز، از 1 تا 5. compiler حساب کند، نه تو: هر حاصل باید با `*` حساب شود.',
+                        de: 'Bau die Siebenerreihe von 1 bis 5. Der Compiler soll rechnen, nicht du: Jedes Ergebnis wird mit `*` berechnet.',
+                        en: 'Build the 7 times table from 1 to 5. Let the program calculate, not you: work out each result with `*`.',
+                    } },
+                    { type: 'band', ref: 'C.L03.X05' },
+                ] },
+
+                { block: 'ai', content: [
+                    { type: 'p', text: {
+                        fa: 'خروجی `printf` را باید بی‌اجرا هم بتوانی حدس بزنی. این پرامپت پنج statement نشانت می‌دهد و خروجی دقیق را از تو می‌خواهد.',
+                        de: 'Die Ausgabe von `printf` solltest du auch ohne Ausführen vorhersagen können. Dieser Prompt zeigt dir fünf Statements und fragt nach der genauen Ausgabe.',
+                        en: 'You should be able to predict the output of `printf` without running it. This prompt shows you five statements and asks you for the exact output.',
+                    } },
+                    { type: 'prompt', ref: 'AI-3' },
+                ] },
+
+                { block: 'terms', content: [] },
+                { block: 'selfcheck', content: [] },
+                { block: 'key', content: [] },
+            ],
+
+            bands: [
+                {
+                    id: 'C.L03.X01', type: 'B.predict',
+                    title: { fa: 'خروجی را پیش‌بینی کن', de: 'Sag die Ausgabe voraus', en: 'Predict the output' },
+                    items: [
+                        { id: 'C.L03.X01.01', code: 'C.L03.K14',
+                          why: { fa: '`printf` فقط همان چیزی را چاپ می‌کند که در format string است؛ بین دو `%d` فاصله‌ای نیست، پس `42`.', de: '`printf` gibt nur aus, was im Format-String steht; zwischen den beiden `%d` steht kein Leerzeichen, also `42`.', en: '`printf` prints only what is in the format string; there is no space between the two `%d`, so `42`.' } },
+                        { id: 'C.L03.X01.02', code: 'C.L03.K15', activates: ['M-02'],
+                          why: { fa: 'در خط اول، `10 - 4 = ` متن است و فقط `%d` با حاصل، 6، پر می‌شود. در خط دوم هیچ حسابی نیست: دو عدد با یک `-` متنی میانشان.', de: 'In der ersten Zeile ist `10 - 4 = ` Text, und nur `%d` wird mit dem Ergebnis 6 gefüllt. In der zweiten Zeile wird nichts gerechnet: zwei Zahlen mit einem `-` als Text dazwischen.', en: 'In the first line, `10 - 4 = ` is text and only `%d` is filled with the result, 6. The second line calculates nothing: two numbers with a `-` as text between them.' } },
+                        { id: 'C.L03.X01.03', code: 'C.L03.K16', activates: ['M-03'],
+                          why: { fa: 'در خط اول `\\\\` یک `\\` چاپ می‌کند. در خط دوم `\\n` سر خط است، پس `C:` و بعد در خط تازه `ew`.', de: 'In der ersten Zeile gibt `\\\\` ein `\\` aus. In der zweiten Zeile ist `\\n` ein Zeilenumbruch, also `C:` und dann in einer neuen Zeile `ew`.', en: 'In the first line `\\\\` prints one `\\`. In the second line `\\n` is a new line, so `C:` and then `ew` on a new line.' } },
+                    ],
+                },
+                {
+                    id: 'C.L03.X02', type: 'B.fix',
+                    title: { fa: 'درستش کن', de: 'Repariere es', en: 'Fix it' },
+                    items: [
+                        { id: 'C.L03.X02.01', broken: 'C.L03.K17', activates: ['E-05'],
+                          prompt: { fa: 'کامپایل نمی‌شود. پیام را بخوان؛ چیزی که کم است شاید همان نباشد که پیام نام می‌برد.', de: 'Es kompiliert nicht. Lies die Meldung; was fehlt, ist vielleicht nicht das, was die Meldung nennt.', en: 'It does not compile. Read the message; what is missing may not be what the message names.' },
+                          solution: String.raw`#include <stdio.h>
+
+int main(void) {
+    printf("Hours in a week: %d\n", 7 * 24);
+    return 0;
+}
+`,
+                          tests: [{ id: 'C.L03.X02.01.T01', purpose: 'normal' },
+                                  { id: 'C.L03.X02.01.T02', purpose: 'mistake', mistake: 'E-05' }],
+                          why: { fa: 'بین format string و argument ویرگول نبود (`E-05`).', de: 'Zwischen Format-String und Argument fehlte das Komma (`E-05`).', en: 'The comma between the format string and the argument was missing (`E-05`).' } },
+                        { id: 'C.L03.X02.02', broken: 'C.L03.K18', activates: ['E-06'],
+                          prompt: { fa: 'می‌خواهیم `Press "Enter" to start` با همین `"`ها چاپ شود.', de: 'Wir wollen `Press "Enter" to start` mit genau diesen `"` ausgeben.', en: 'We want to print `Press "Enter" to start` with these exact `"`.' },
+                          solution: String.raw`#include <stdio.h>
+
+int main(void) {
+    printf("Press \"Enter\" to start\n");
+    return 0;
+}
+`,
+                          tests: [{ id: 'C.L03.X02.02.T01', purpose: 'normal' },
+                                  { id: 'C.L03.X02.02.T02', purpose: 'mistake', mistake: 'E-06' }],
+                          why: { fa: 'هر `"` درون متن به `\\"` نیاز دارد (`E-06`).', de: 'Jedes `"` im Text braucht ein `\\"` (`E-06`).', en: 'Every `"` inside the text needs to be `\\"` (`E-06`).' } },
+                        { id: 'C.L03.X02.03', broken: 'C.L03.K19', activates: ['U-01'],
+                          prompt: { fa: 'این برنامه کامپایل می‌شود، ولی خروجی‌اش `6 x 7 = 42` نیست. چرا؟ درستش کن.', de: 'Dieses Programm kompiliert, aber es gibt nicht `6 x 7 = 42` aus. Warum? Repariere es.', en: 'This program compiles, but it does not print `6 x 7 = 42`. Why? Fix it.' },
+                          solution: String.raw`#include <stdio.h>
+
+int main(void) {
+    printf("%d x %d = %d\n", 6, 7, 6 * 7);
+    return 0;
+}
+`,
+                          tests: [{ id: 'C.L03.X02.03.T01', purpose: 'normal' },
+                                  { id: 'C.L03.X02.03.T02', purpose: 'mistake', mistake: 'U-01' }],
+                          why: { fa: 'سه `%d` بود و فقط دو argument (`U-01`). argument سوم، `6 * 7`، کم بود.', de: 'Es gab drei `%d`, aber nur zwei Argumente (`U-01`). Das dritte Argument, `6 * 7`, fehlte.', en: 'There were three `%d` but only two arguments (`U-01`). The third argument, `6 * 7`, was missing.' } },
+                    ],
+                },
+                {
+                    id: 'C.L03.X03', type: 'B.write',
+                    title: { fa: 'بنویس', de: 'Schreibe', en: 'Write' },
+                    items: [
+                        { id: 'C.L03.X03.01', activates: ['M-03'],
+                          prompt: { fa: 'برنامه‌ای بنویس که دقیقاً این خط را چاپ کند:\n`Saved to C:\\notes\\today.txt`', de: 'Schreib ein Programm, das genau diese Zeile ausgibt:\n`Saved to C:\\notes\\today.txt`', en: 'Write a program that prints exactly this line:\n`Saved to C:\\notes\\today.txt`' },
+                          starter: String.raw`#include <stdio.h>
+
+int main(void) {
+    return 0;
+}
+`,
+                          solution: String.raw`#include <stdio.h>
+
+int main(void) {
+    printf("Saved to C:\\notes\\today.txt\n");
+    return 0;
+}
+`,
+                          tests: [{ id: 'C.L03.X03.01.T01', purpose: 'normal' },
+                                  { id: 'C.L03.X03.01.T02', purpose: 'mistake', mistake: 'M-03', variant: String.raw`#include <stdio.h>
+
+int main(void) {
+    printf("Saved to C:\notes\today.txt\n");
+    return 0;
+}
+` }],
+                          why: { fa: 'هر `\\` در مسیر باید `\\\\` نوشته شود؛ وگرنه `\\n` و `\\t` سر خط و tab می‌شوند.', de: 'Jedes `\\` im Pfad muss als `\\\\` geschrieben werden; sonst werden `\\n` und `\\t` zu Zeilenumbruch und Tab.', en: 'Every `\\` in the path must be written as `\\\\`; otherwise `\\n` and `\\t` become a new line and a tab.' } },
+                        { id: 'C.L03.X03.02', activates: ['M-02'],
+                          prompt: { fa: 'یک شبانه‌روز چند ثانیه است؟ برنامه‌ای بنویس که این را چاپ کند، ولی عدد را خودت حساب نکن: بگذار برنامه `24 * 60 * 60` را حساب کند.\n`A day has 86400 seconds.`', de: 'Wie viele Sekunden hat ein Tag? Schreib ein Programm, das Folgendes ausgibt, aber rechne die Zahl nicht selbst aus: Lass das Programm `24 * 60 * 60` ausrechnen.\n`A day has 86400 seconds.`', en: 'How many seconds are in a day? Write a program that prints this, but do not work out the number yourself: let the program calculate `24 * 60 * 60`.\n`A day has 86400 seconds.`' },
+                          starter: String.raw`#include <stdio.h>
+
+int main(void) {
+    return 0;
+}
+`,
+                          solution: String.raw`#include <stdio.h>
+
+int main(void) {
+    printf("A day has %d seconds.\n", 24 * 60 * 60);
+    return 0;
+}
+`,
+                          tests: [{ id: 'C.L03.X03.02.T01', purpose: 'normal' },
+                                  { id: 'C.L03.X03.02.T02', purpose: 'mistake', mistake: 'M-02', variant: String.raw`#include <stdio.h>
+
+int main(void) {
+    printf("A day has 24 * 60 * 60 seconds.\n");
+    return 0;
+}
+` }],
+                          why: { fa: 'حساب باید argument باشد و `%d` جای حاصلش را در متن نگه دارد.', de: 'Die Rechnung muss ein Argument sein, und `%d` hält im Text den Platz für das Ergebnis frei.', en: 'The calculation must be an argument, and `%d` holds the place of its result in the text.' } },
+                    ],
+                },
+                {
+                    id: 'C.L03.X04', type: 'B.explain',
+                    title: { fa: 'توضیح بده', de: 'Erkläre', en: 'Explain' },
+                    items: [
+                        { id: 'C.L03.X04.01',
+                          prompt: { fa: 'چرا `printf("%d\\n", 2 + 3);` عدد `5` را چاپ می‌کند ولی `printf("2 + 3\\n");` متن `2 + 3` را؟ در دو یا سه جمله.', de: 'Warum gibt `printf("%d\\n", 2 + 3);` die Zahl `5` aus, aber `printf("2 + 3\\n");` den Text `2 + 3`? In zwei oder drei Sätzen.', en: 'Why does `printf("%d\\n", 2 + 3);` print the number `5`, but `printf("2 + 3\\n");` the text `2 + 3`? In two or three sentences.' },
+                          model: { fa: 'هر چیزی درون `"` متن است و عیناً چاپ می‌شود. در اولی، `2 + 3` بیرون از `"` و یک argument است؛ برنامه آن را حساب می‌کند و حاصل، 5، جای `%d` چاپ می‌شود.', de: 'Alles innerhalb der `"` ist Text und wird genau so ausgegeben. In der ersten Zeile steht `2 + 3` außerhalb der `"` als Argument; das Programm rechnet es aus, und das Ergebnis 5 wird an der Stelle von `%d` ausgegeben.', en: 'Everything inside `"` is text and is printed as it is. In the first one, `2 + 3` is outside the `"` as an argument; the program works it out, and the result, 5, is printed in the place of `%d`.' },
+                          why: { fa: 'درون `"` متن است؛ بیرون از آن argument که حساب می‌شود.', de: 'Innerhalb der `"` steht Text; außerhalb ein Argument, das ausgerechnet wird.', en: 'Inside `"` is text; outside is an argument that is worked out.' } },
+                    ],
+                },
+                {
+                    id: 'C.L03.X05', type: 'B.write',
+                    title: { fa: 'جدول ضرب 7', de: 'Die Siebenerreihe', en: 'The 7 times table' },
+                    items: [
+                        { id: 'C.L03.X05.01', activates: ['E-05'],
+                          prompt: { fa: 'دقیقاً این پنج خط، و هر حاصل با `*` حساب شود:\n`7 x 1 = 7`\n`7 x 2 = 14`\n`7 x 3 = 21`\n`7 x 4 = 28`\n`7 x 5 = 35`', de: 'Genau diese fünf Zeilen, und jedes Ergebnis wird mit `*` berechnet:\n`7 x 1 = 7`\n`7 x 2 = 14`\n`7 x 3 = 21`\n`7 x 4 = 28`\n`7 x 5 = 35`', en: 'Exactly these five lines, with each result worked out with `*`:\n`7 x 1 = 7`\n`7 x 2 = 14`\n`7 x 3 = 21`\n`7 x 4 = 28`\n`7 x 5 = 35`' },
+                          starter: String.raw`#include <stdio.h>
+
+int main(void) {
+    printf("%d x %d = %d\n", 7, 1, 7 * 1);
+    return 0;
+}
+`,
+                          solution: String.raw`#include <stdio.h>
+
+int main(void) {
+    printf("%d x %d = %d\n", 7, 1, 7 * 1);
+    printf("%d x %d = %d\n", 7, 2, 7 * 2);
+    printf("%d x %d = %d\n", 7, 3, 7 * 3);
+    printf("%d x %d = %d\n", 7, 4, 7 * 4);
+    printf("%d x %d = %d\n", 7, 5, 7 * 5);
+    return 0;
+}
+`,
+                          tests: [{ id: 'C.L03.X05.01.T01', purpose: 'normal' },
+                                  { id: 'C.L03.X05.01.T02', purpose: 'mistake', mistake: 'E-05', variant: String.raw`#include <stdio.h>
+
+int main(void) {
+    printf("%d x %d = %d\n", 7, 1, 7 * 1);
+    printf("%d x %d = %d\n" 7, 2, 7 * 2);
+    printf("%d x %d = %d\n", 7, 3, 7 * 3);
+    printf("%d x %d = %d\n", 7, 4, 7 * 4);
+    printf("%d x %d = %d\n", 7, 5, 7 * 5);
+    return 0;
+}
+` }],
+                          why: { fa: 'یک خط را بنویس، درستی‌اش را ببین، بعد کپی کن و فقط عددها را عوض کن.', de: 'Schreib eine Zeile, prüf sie, kopier sie dann und ändere nur die Zahlen.', en: 'Write one line, check it, then copy it and change only the numbers.' } },
+                    ],
+                },
+            ],
+        }
+        ],
     };
 })(typeof window !== 'undefined' ? window : globalThis);

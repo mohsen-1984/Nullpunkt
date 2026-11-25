@@ -254,6 +254,8 @@
         return cb.box;
     }
 
+    const fmtDiag = d => d.line == null ? 'ld: ' + d.severity + ': ' + d.message : 'main.c:' + d.line + ':' + d.col + ': ' + d.severity + ': ' + d.message;
+
     function genLog(e, which) {
         const r = e && e[which];
         if (!r) return '';
@@ -267,7 +269,9 @@
         runControls(cb, code.source);
         wrap.appendChild(cb.box);
         const msgs = el('div', 'np-msgs');
-        msgs.innerHTML = '<div class="np-msg"><div class="np-msg-title">' + icon('octagon-x') + esc(U.gccSays) + '</div><pre dir="ltr">' + esc(genLog(e, 'gcc')) + '</pre></div>' +
+        // gcc built the program: the message is a warning, not an error
+        const gccIcon = e && e.gcc.compiled ? 'triangle-exclamation-point' : 'octagon-x';
+        msgs.innerHTML = '<div class="np-msg"><div class="np-msg-title">' + icon(gccIcon) + esc(U.gccSays) + '</div><pre dir="ltr">' + esc(genLog(e, 'gcc')) + '</pre></div>' +
             '<div class="np-msg"><div class="np-msg-title">' + icon('octagon-x') + esc(U.xccSays) + '</div><pre dir="ltr">' + esc(genLog(e, 'xcc')) + '</pre></div>';
         wrap.appendChild(msgs);
         const dl = el('dl', 'np-explain');
@@ -294,7 +298,9 @@
             if (ew && !ew.gcc.compiled) {
                 // the first error only: later lines of gcc's message are often follow-up errors of the same mistake
                 const d = ew.gcc.diagnostics.find(x => x.severity === 'error') || ew.gcc.diagnostics[0];
-                symptom = d ? 'main.c:' + d.line + ':' + d.col + ': ' + d.severity + ': ' + d.message : genLog(ew, 'gcc');
+                symptom = d ? fmtDiag(d) : genLog(ew, 'gcc');
+            } else if (ew && ew.gcc.diagnostics.some(x => x.severity === 'warning')) {
+                symptom = fmtDiag(ew.gcc.diagnostics.find(x => x.severity === 'warning'));
             }
             else if (ew) symptom = U.output + ':\n' + (ew.gcc.stdout || U.noOutput);
             const pair = el('div', 'np-pair');
