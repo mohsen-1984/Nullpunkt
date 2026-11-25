@@ -22,8 +22,14 @@ jobs:
         run: node tools/gen-expect.js --check
       - name: Checker — zero errors, zero warnings
         run: node tools/check.js
+      - name: Version agrees everywhere (site/config.js)
+        run: node tools/check-version.js
+      - name: Full-text search finds what it should
+        run: node tests/search.test.js
       - name: Every lesson in headless Chrome, every language, from file://
         run: node tools/headless-lesson.js
+      - name: Site shell — 15 widths × 3 languages × 2 pages, drawer and search
+        run: node tools/headless-shell.js
 
   lab:
     name: Runner lab (Node + Chrome)

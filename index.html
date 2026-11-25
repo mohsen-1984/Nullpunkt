@@ -1,52 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nullpunkt — C from zero</title>
-<meta name="description" content="A free, trilingual self-study C course with a C compiler that runs in your browser. In development.">
+<title>Nullpunkt — C from zero · C von Null an · C از صفر</title>
+<meta name="description" content="Nullpunkt: a free self-study C course (ISO C17) for first-year computer science students, in English, German and Persian. Every example runs in your browser — a real C compiler compiled to WebAssembly, offline, nothing uploaded. Lessons with predictions, worked examples, common mistakes and exercises checked by tests.">
+<meta name="keywords" content="C programming, learn C, C course, C17, C tutorial, C for beginners, computer science, first year, self-study, programming course, run C in browser, WebAssembly C compiler, XCC, gcc, C lernen, Programmieren lernen, Informatik Studium, آموزش C, آموزش برنامه نویسی, زبان C">
+<meta name="author" content="mohsen-1984 (mhn.com@gmail.com)">
+<meta name="contributor" content="Anthropic Claude Opus 5.5">
+<meta name="theme-color" content="#3B5BDB">
+<link rel="canonical" href="https://mohsen-1984.github.io/Nullpunkt/">
+<!-- link previews: Open Graph (Telegram, WhatsApp, LinkedIn, Mastodon, Facebook …) and X / Twitter; the picture: tools/og-image.html -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nullpunkt">
+<meta property="og:title" content="Nullpunkt — C from zero · C von Null an · C از صفر">
+<meta property="og:description" content="A free self-study C course in English, German and Persian. Every example runs in your browser — a real C compiler, offline, nothing uploaded.">
+<meta property="og:url" content="https://mohsen-1984.github.io/Nullpunkt/">
+<meta property="og:image" content="https://mohsen-1984.github.io/Nullpunkt/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Nullpunkt — C from zero: a C course with a compiler that runs in your browser">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="fa_IR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nullpunkt — C from zero">
+<meta name="twitter:description" content="A free self-study C course in English, German and Persian, with a C compiler that runs in your browser.">
+<meta name="twitter:image" content="https://mohsen-1984.github.io/Nullpunkt/assets/og-image.png">
+<meta name="twitter:image:alt" content="Nullpunkt — C from zero: a C course with a compiler that runs in your browser">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233B5BDB'/%3E%3Cellipse cx='16' cy='16' rx='7' ry='10' fill='none' stroke='%23fff' stroke-width='3.2'/%3E%3Ccircle cx='16' cy='16' r='2.6' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<!-- before the stylesheets: theme, language and direction from the stored choice, before the first paint -->
+<script src="site/config.js"></script>
+<script src="site/boot.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Vazirmatn:wght@400;600&display=swap">
-<style>
-    :root { --np-bg: #FFFFFF; --np-ink: #1A1B1E; --np-muted: #5C5F66; --np-accent: #3B5BDB; }
-    @media (prefers-color-scheme: dark) { :root { --np-bg: #1A1B1E; --np-ink: #E9ECEF; --np-muted: #A6A7AB; --np-accent: #91A7FF; } }
-    * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: var(--np-bg); color: var(--np-ink);
-           font: 16px/1.6 Inter, system-ui, sans-serif; }
-    main { max-width: 36rem; padding: 2rem; text-align: center; }
-    svg { width: 72px; height: 72px; color: var(--np-accent); }
-    h1 { font-size: 2rem; font-weight: 600; margin: .5rem 0 0; letter-spacing: -.01em; }
-    .tag { color: var(--np-muted); margin: .25rem 0 2rem; }
-    .tag span { display: block; }
-    .fa { font-family: Vazirmatn, system-ui, sans-serif; direction: rtl; }
-    p { margin: 0 0 1rem; }
-    a { color: var(--np-accent); }
-</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;600&family=Vazirmatn:wght@400;600&display=swap">
+<link rel="stylesheet" href="site/shell.css">
 </head>
 <body>
-<main>
-    <svg viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="26" fill="none" stroke="currentColor" stroke-width="7"/><circle cx="36" cy="36" r="7" fill="currentColor"/></svg>
-    <h1>Nullpunkt</h1>
-    <p class="tag">
-        <span lang="de">C von Null an</span>
-        <span lang="en">C from zero</span>
-        <span lang="fa" class="fa">C از صفر</span>
-    </p>
-    <p lang="en">A free, self-study C course in German, English and Persian, with a C compiler that runs in your browser. <strong>In development.</strong></p>
-    <p lang="en">Lesson 1 — What a Program Is:
-        <a href="lesson.html?lesson=C.L01&amp;lang=de" lang="de">Deutsch</a> ·
-        <a href="lesson.html?lesson=C.L01&amp;lang=en">English</a> ·
-        <a href="lesson.html?lesson=C.L01&amp;lang=fa" lang="fa" class="fa">فارسی</a></p>
-    <p lang="en">Lesson 2 — Reading Error Messages:
-        <a href="lesson.html?lesson=C.L02&amp;lang=de" lang="de">Deutsch</a> ·
-        <a href="lesson.html?lesson=C.L02&amp;lang=en">English</a> ·
-        <a href="lesson.html?lesson=C.L02&amp;lang=fa" lang="fa" class="fa">فارسی</a></p>
-    <p lang="en">Lesson 3 — Output with printf:
-        <a href="lesson.html?lesson=C.L03&amp;lang=de" lang="de">Deutsch</a> ·
-        <a href="lesson.html?lesson=C.L03&amp;lang=en">English</a> ·
-        <a href="lesson.html?lesson=C.L03&amp;lang=fa" lang="fa" class="fa">فارسی</a></p>
-    <p><a href="https://github.com/mohsen-1984/Nullpunkt">github.com/mohsen-1984/Nullpunkt</a></p>
-</main>
+<!-- the chrome (header, drawer, footer, search) is added by site/chrome.js; the page by site/home.js -->
+<div class="np-layout"><aside id="ncRail" class="np-rail" hidden></aside><main id="main" tabindex="-1"></main></div>
+<script src="vendor/lucide/icons_1.80.0.js"></script>
+<script src="vendor/codemirror/codemirror_6.41.0.js"></script>
+<script src="lib/Data.js"></script>
+<script src="lib/Search.js"></script>
+<script src="data/registry.js"></script>
+<script src="data/S00-registry.js"></script>
+<script src="data/S00-glossary.js"></script>
+<script src="data/S00-prompts.js"></script>
+<script src="data/C00-conventions.js"></script>
+<script src="data/C00-mistakes.js"></script>
+<script src="data/C01-getting-started.js"></script>
+<script src="data/generated/expect.js"></script>
+<script src="site/ui.js"></script>
+<script src="site/ui-site.js"></script>
+<script src="site/course.js"></script>
+<script src="site/chrome.js"></script>
+<script src="site/search.js"></script>
+<script src="site/home.js"></script>
 </body>
 </html>

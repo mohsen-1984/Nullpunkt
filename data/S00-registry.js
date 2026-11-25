@@ -6,29 +6,30 @@
     N.files.S00R = {
         id: 'S00R', kind: 'registry', version: '0.1.0',
 
+        // short: the label in the lesson's section navigation (header row, dot-nav)
         blocks: {
-            why:       { icon: 'compass', title: { fa: 'چرا این درس', de: 'Warum diese Lektion', en: 'Why This Lesson' } },
-            cando:     { icon: 'target', title: { fa: 'توانایی تازه', de: 'Das kannst du danach', en: 'Can-do' } },
-            prior:     { icon: 'milestone', title: { fa: 'پیش‌نیاز', de: 'Bevor du anfängst', en: 'Before You Start' } },
-            predict:   { icon: 'eye', title: { fa: 'پیش‌بینی کن', de: 'Sag voraus', en: 'Predict' } },
-            example:   { icon: 'play', title: { fa: 'مثال کامل', de: 'Durchgerechnetes Beispiel', en: 'Worked Example' } },
-            machine:   { icon: 'cpu', title: { fa: 'درون ماشین', de: 'In der Maschine', en: 'Inside the Machine' } },
-            rule:      { icon: 'ruler', title: { fa: 'قاعده', de: 'Die Regel', en: 'The Rule' } },
-            trace:     { icon: 'table-2', title: { fa: 'ردیابی', de: 'Tracing', en: 'Trace Table' } },
-            memory:    { icon: 'memory-stick', title: { fa: 'نقشهٔ حافظه', de: 'Speicherbild', en: 'Memory Map' } },
-            mistakes:  { icon: 'triangle-exclamation-point', title: { fa: 'اشتباه‌های رایج', de: 'Typische Fehler', en: 'Common Mistakes' } },
-            errors:    { icon: 'octagon-x', title: { fa: 'درمانگاه خطا', de: 'Fehlersprechstunde', en: 'Error Clinic' } },
-            fuller:    { icon: 'trending-up', title: { fa: 'قاعدهٔ کامل‌تر', de: 'Die genauere Regel', en: 'The Fuller Rule' } },
-            standard:  { icon: 'scroll-text', title: { fa: 'استاندارد و سکو', de: 'Standard und Plattform', en: 'Standard & Platform' } },
-            notyet:    { icon: 'footprints', title: { fa: 'هنوز نگفته‌ایم', de: 'Noch nicht gesagt', en: 'Not Yet Said' } },
-            practice:  { icon: 'pencil', title: { fa: 'تمرین', de: 'Übung', en: 'Practice' } },
-            make:      { icon: 'hammer', title: { fa: 'بساز', de: 'Bau es', en: 'Make' } },
-            onpc:      { icon: 'laptop', title: { fa: 'روی کامپیوتر خودت', de: 'Auf deinem Rechner', en: 'On Your PC' } },
-            exam:      { icon: 'graduation-cap', title: { fa: 'سبک امتحان', de: 'Prüfungsstil', en: 'Exam Style' } },
-            ai:        { icon: 'bot', title: { fa: 'تمرین با هوش مصنوعی', de: 'Üben mit KI', en: 'AI Practice' } },
-            terms:     { icon: 'book-a', title: { fa: 'اصطلاح‌های درس', de: 'Begriffe', en: 'Terms' } },
-            selfcheck: { icon: 'square-check', title: { fa: 'خودسنجی', de: 'Selbstcheck', en: 'Self-check' } },
-            key:       { icon: 'key-round', title: { fa: 'پاسخ‌نامه', de: 'Lösungen', en: 'Answer Key' } },
+            why:       { icon: 'compass', title: { fa: 'چرا این درس', de: 'Warum diese Lektion', en: 'Why This Lesson' }, short: { fa: 'چرا', de: 'Warum', en: 'Why' } },
+            cando:     { icon: 'target', title: { fa: 'توانایی تازه', de: 'Das kannst du danach', en: 'Can-do' }, short: { fa: 'هدف', de: 'Ziele', en: 'Can-do' } },
+            prior:     { icon: 'milestone', title: { fa: 'پیش‌نیاز', de: 'Bevor du anfängst', en: 'Before You Start' }, short: { fa: 'پیش‌نیاز', de: 'Vorwissen', en: 'Before' } },
+            predict:   { icon: 'eye', title: { fa: 'پیش‌بینی کن', de: 'Sag voraus', en: 'Predict' }, short: { fa: 'پیش‌بینی', de: 'Vorhersage', en: 'Predict' } },
+            example:   { icon: 'play', title: { fa: 'مثال کامل', de: 'Durchgerechnetes Beispiel', en: 'Worked Example' }, short: { fa: 'مثال', de: 'Beispiel', en: 'Example' } },
+            machine:   { icon: 'cpu', title: { fa: 'درون ماشین', de: 'In der Maschine', en: 'Inside the Machine' }, short: { fa: 'ماشین', de: 'Maschine', en: 'Machine' } },
+            rule:      { icon: 'ruler', title: { fa: 'قاعده', de: 'Die Regel', en: 'The Rule' }, short: { fa: 'قاعده', de: 'Regel', en: 'Rule' } },
+            trace:     { icon: 'table-2', title: { fa: 'ردیابی', de: 'Tracing', en: 'Trace Table' }, short: { fa: 'ردیابی', de: 'Tracing', en: 'Trace' } },
+            memory:    { icon: 'memory-stick', title: { fa: 'نقشهٔ حافظه', de: 'Speicherbild', en: 'Memory Map' }, short: { fa: 'حافظه', de: 'Speicher', en: 'Memory' } },
+            mistakes:  { icon: 'triangle-exclamation-point', title: { fa: 'اشتباه‌های رایج', de: 'Typische Fehler', en: 'Common Mistakes' }, short: { fa: 'اشتباه‌ها', de: 'Stolperfallen', en: 'Mistakes' } },
+            errors:    { icon: 'octagon-x', title: { fa: 'درمانگاه خطا', de: 'Fehlersprechstunde', en: 'Error Clinic' }, short: { fa: 'خطاها', de: 'Meldungen', en: 'Errors' } },
+            fuller:    { icon: 'trending-up', title: { fa: 'قاعدهٔ کامل‌تر', de: 'Die genauere Regel', en: 'The Fuller Rule' }, short: { fa: 'دقیق‌تر', de: 'Genauer', en: 'Fuller' } },
+            standard:  { icon: 'scroll-text', title: { fa: 'استاندارد و سکو', de: 'Standard und Plattform', en: 'Standard & Platform' }, short: { fa: 'استاندارد', de: 'Standard', en: 'Standard' } },
+            notyet:    { icon: 'footprints', title: { fa: 'هنوز نگفته‌ایم', de: 'Noch nicht gesagt', en: 'Not Yet Said' }, short: { fa: 'بعداً', de: 'Später', en: 'Later' } },
+            practice:  { icon: 'pencil', title: { fa: 'تمرین', de: 'Übung', en: 'Practice' }, short: { fa: 'تمرین', de: 'Übung', en: 'Practice' } },
+            make:      { icon: 'hammer', title: { fa: 'بساز', de: 'Bau es', en: 'Make' }, short: { fa: 'بساز', de: 'Bauen', en: 'Make' } },
+            onpc:      { icon: 'laptop', title: { fa: 'روی کامپیوتر خودت', de: 'Auf deinem Rechner', en: 'On Your PC' }, short: { fa: 'روی PC', de: 'Am PC', en: 'On PC' } },
+            exam:      { icon: 'graduation-cap', title: { fa: 'سبک امتحان', de: 'Prüfungsstil', en: 'Exam Style' }, short: { fa: 'امتحان', de: 'Prüfung', en: 'Exam' } },
+            ai:        { icon: 'bot', title: { fa: 'تمرین با هوش مصنوعی', de: 'Üben mit KI', en: 'AI Practice' }, short: { fa: 'AI', de: 'KI', en: 'AI' } },
+            terms:     { icon: 'book-a', title: { fa: 'اصطلاح‌های درس', de: 'Begriffe', en: 'Terms' }, short: { fa: 'اصطلاح‌ها', de: 'Begriffe', en: 'Terms' } },
+            selfcheck: { icon: 'square-check', title: { fa: 'خودسنجی', de: 'Selbstcheck', en: 'Self-check' }, short: { fa: 'خودسنجی', de: 'Selbstcheck', en: 'Check' } },
+            key:       { icon: 'key-round', title: { fa: 'پاسخ‌نامه', de: 'Lösungen', en: 'Answer Key' }, short: { fa: 'پاسخ‌ها', de: 'Lösungen', en: 'Key' } },
         },
 
         // rank orders the bands of a lesson (S.BND.01); auto = checked by running tests
@@ -88,7 +89,10 @@
         // icons used by the page itself (buttons, status); the rest come from the registries above
         uiIcons: ['play', 'square', 'undo-2', 'copy', 'keyboard', 'timer', 'circle-check', 'circle-x', 'languages',
             'sun-moon', 'chevron-left', 'chevron-right', 'chevron-up', 'chevron-down', 'lightbulb', 'key-round', 'x', 'menu',
-            'octagon-x', 'triangle-exclamation-point'],
+            'octagon-x', 'triangle-exclamation-point',
+            // the site shell (site/chrome.js, course.js, search.js, home.js)
+            'search', 'sun', 'moon', 'code-xml', 'house', 'circle', 'circle-dot', 'circle-dashed', 'book-open', 'clock',
+            'wifi-off', 'monitor-smartphone'],
 
         // the alphabet for exercise letters, per language (S.TYP.11); taken from position, never stored
         letters: {

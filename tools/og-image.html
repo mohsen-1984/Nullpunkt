@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!--
+  Nullpunkt — the source of assets/og-image.png (the link preview: Open Graph, X / Twitter) and of
+  assets/apple-touch-icon.png (open with ?icon).
+
+  The picture is this page at exactly 1200 × 630 CSS pixels (the icon: 180 × 180). To make the PNG again after a change:
+    • any Chromium browser, from the project root:
+        google-chrome --headless --disable-gpu --hide-scrollbars --window-size=1200,630 \
+                      --screenshot=assets/og-image.png tools/og-image.html
+        google-chrome --headless --disable-gpu --hide-scrollbars --window-size=180,180 \
+                      --screenshot=assets/apple-touch-icon.png "tools/og-image.html?icon"
+      (Edge: msedge with the same flags)
+    • or open it in a browser, set the device size to 1200 × 630 at 100 % zoom in the developer tools, and use
+      "Capture screenshot".
+  Colors are the light theme's tokens (docs/rules/S00-assets.md); the mark is the dotted zero of site/chrome.js and
+  assets/favicon.svg; the code colors are VS Code Light+, as in the lessons.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Nullpunkt — og-image</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Vazirmatn:wght@400;600&display=swap">
+<style>
+  :root { --accent: #3B5BDB; --accent-soft: #EDF2FF; --ink: #1A1B1E; --muted: #5C5F66; --line: #DEE2E6; --page: #F8F9FB; --ok: #237032; --error: #C92A2A;
+          --kw: #0000FF; --ctl: #AF00DB; --str: #A31515; --num: #098658; --fn: #795E26; --ty: #267F99; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body { font-family: Inter, sans-serif; color: var(--ink); position: relative;
+         background: radial-gradient(circle at 88% 12%, #E3E9FF 0, transparent 46%), radial-gradient(circle at 8% 100%, #EEF1F6 0, transparent 40%), var(--page); }
+  body::before { content: ''; position: absolute; inset: 0 0 auto; height: 12px; background: var(--accent); }
+  /* faint dotted grid: the coordinate plane whose origin is the Nullpunkt */
+  body::after { content: ''; position: absolute; inset: 12px 0 0; background-image: radial-gradient(circle, #CBD3E1 1.2px, transparent 1.4px); background-size: 28px 28px; opacity: .45; z-index: -1; }
+  .mark { width: 128px; height: 128px; flex: none; filter: drop-shadow(0 14px 22px rgba(59, 91, 219, .35)); }
+  .side { position: absolute; left: 72px; top: 84px; width: 560px; }
+  .brand { display: flex; align-items: center; gap: 26px; }
+  h1 { font-size: 88px; font-weight: 700; line-height: 1; letter-spacing: -3px; }
+  .ipa { margin-top: 10px; font-size: 20px; color: var(--muted); }
+  .ipa b { color: var(--accent); font-weight: 600; }
+  .tags { margin-top: 40px; display: grid; gap: 6px; }
+  .tags p { font-size: 30px; font-weight: 600; line-height: 1.3; }
+  .tags p span { color: var(--muted); font-weight: 400; font-size: 20px; margin-left: 10px; }
+  .tags .fa, .tags span:lang(fa) { font-family: Vazirmatn, sans-serif; }
+  .chips { margin-top: 38px; display: flex; gap: 10px; }
+  .chip { padding: 8px 14px; border-radius: 10px; font-size: 18px; font-weight: 600; color: var(--accent); background: #fff; border: 2px solid var(--line); white-space: nowrap; }
+  .chip.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .editor { position: absolute; right: 64px; top: 92px; width: 470px; background: #fff; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 30px 60px -28px rgba(20, 30, 60, .45), 0 0 0 1px var(--line); transform: rotate(1.5deg); }
+  .bar { display: flex; align-items: center; gap: 7px; padding: 12px 16px; background: #F4F6F9; border-bottom: 1px solid var(--line); font: 500 15px 'JetBrains Mono', monospace; color: var(--muted); }
+  .bar i { width: 11px; height: 11px; border-radius: 50%; background: var(--line); display: block; }
+  .bar span { margin-left: 8px; }
+  .bar .run { margin-left: auto; background: var(--accent); color: #fff; font: 600 14px Inter, sans-serif; padding: 5px 12px; border-radius: 7px; }
+  pre { padding: 16px 20px 14px; font: 17px/1.62 'JetBrains Mono', monospace; }
+  .ln { color: #9AA0A9; display: inline-block; width: 22px; }
+  .kw { color: var(--kw); } .ctl { color: var(--ctl); } .str { color: var(--str); } .esc { color: var(--str); font-weight: 600; } .num { color: var(--num); } .fn { color: var(--fn); } .ty { color: var(--ty); }
+  .out { border-top: 1px dashed var(--line); padding: 12px 20px 16px; font: 17px/1.5 'JetBrains Mono', monospace; }
+  .out b { display: block; font: 700 12px Inter, sans-serif; letter-spacing: .08em; color: var(--ok); margin-bottom: 4px; }
+  .msg { position: absolute; right: 300px; top: 468px; width: 430px; background: #fff; border-radius: 12px; padding: 12px 16px;
+         box-shadow: 0 24px 44px -24px rgba(20, 30, 60, .5), 0 0 0 1px var(--line); transform: rotate(-2deg); font: 14.5px/1.45 'JetBrains Mono', monospace; }
+  .msg .t { font: 600 13px Inter, sans-serif; color: var(--muted); margin-bottom: 4px; display: flex; gap: 6px; align-items: center; }
+  .msg .t::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--error); }
+  .msg .e { color: var(--error); font-weight: 600; }
+  .url { position: absolute; left: 72px; bottom: 34px; font: 500 18px 'JetBrains Mono', monospace; color: var(--muted); }
+
+  /* ?icon: the apple-touch-icon, 180 × 180 */
+  html.icon, html.icon body { width: 180px; height: 180px; background: var(--accent); }
+  html.icon body::before, html.icon body::after, html.icon .side, html.icon .editor, html.icon .msg, html.icon .url { display: none; }
+  html.icon .big { display: block; }
+  .big { display: none; width: 180px; height: 180px; }
+</style>
+<script>if (location.search.indexOf('icon') >= 0) document.documentElement.className = 'icon';</script>
+</head>
+<body>
+<svg class="big" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#3B5BDB"/><ellipse cx="16" cy="16" rx="7.6" ry="10.8" fill="none" stroke="#fff" stroke-width="3.4"/><circle cx="16" cy="16" r="2.8" fill="#fff"/></svg>
+
+<div class="side">
+  <div class="brand">
+    <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#3B5BDB"/><ellipse cx="16" cy="16" rx="7" ry="10" fill="none" stroke="#fff" stroke-width="3.2"/><circle cx="16" cy="16" r="2.6" fill="#fff"/></svg>
+    <div><h1>Nullpunkt</h1><p class="ipa">[ˈnʊlˌpʊŋkt] — <b>zero point</b>, the origin</p></div>
+  </div>
+  <div class="tags">
+    <p>C from zero <span>English</span></p>
+    <p>C von Null an <span>Deutsch</span></p>
+    <p><bdi class="fa" dir="rtl" lang="fa">C از صفر</bdi> <span lang="fa">فارسی</span></p>
+  </div>
+  <div class="chips"><span class="chip on">Runs C in your browser</span><span class="chip">ISO C17</span><span class="chip">Free</span></div>
+</div>
+
+<div class="editor">
+  <div class="bar"><i></i><i></i><i></i><span>main.c</span><span class="run">▶ Run</span></div>
+<pre><span class="ln">1</span><span class="ctl">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+<span class="ln">2</span>
+<span class="ln">3</span><span class="ty">int</span> <span class="fn">main</span>(<span class="ty">void</span>) {
+<span class="ln">4</span>    <span class="fn">printf</span>(<span class="str">"Hello, C</span><span class="esc">\n</span><span class="str">"</span>);
+<span class="ln">5</span>    <span class="fn">printf</span>(<span class="str">"%d</span><span class="esc">\n</span><span class="str">"</span>, <span class="num">6</span> * <span class="num">7</span>);
+<span class="ln">6</span>    <span class="ctl">return</span> <span class="num">0</span>;
+<span class="ln">7</span>}</pre>
+  <div class="out"><b>OUTPUT</b>Hello, C<br>42</div>
+</div>
+
+<div class="msg"><p class="t">Real compiler messages, explained in every lesson</p>main.c:5:22: <span class="e">error:</span> expected ';'<br>before 'printf'</div>
+
+<p class="url">mohsen-1984.github.io/Nullpunkt</p>
+</body>
+</html>

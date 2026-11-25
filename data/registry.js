@@ -1,9 +1,8 @@
-/* The registry: release, languages, files to load, and the catalog — the learning path (docs/rules/C00-conventions.md).
+/* The registry: languages, files to load, and the catalog — the learning path (docs/rules/C00-conventions.md).
    Titles and positions of chapters and lessons are defined only here (S00-schema: catalog). */
 (function (g) {
     var N = g.Nullpunkt = g.Nullpunkt || { files: {} };
     N.registry = {
-        release: { version: "0.1.0", date: "2026-11-25" },
         languages: ["fa", "de", "en"],
         languageNames: { fa: "فارسی", de: "Deutsch", en: "English" },
         files: ["S00R", "S00G", "S00P", "C00", "C00M", "C01"],
