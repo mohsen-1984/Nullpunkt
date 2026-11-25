@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lab:
+    name: Runner lab (Node + Chrome)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Expected outputs match gcc
+        run: node tools/build-tests.js --check
+      - name: Lab in Node
+        run: node tests/run-node.js
+      - name: Lab in headless Chrome, from file://
+        run: node tools/headless-lab.js
+      - name: Interactive input (JSPI) in headless Chrome
+        run: INTERACTIVE=1 node tools/headless-lab.js
+
+  vendor:
+    name: vendor/wcc is reproducible
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install llvm-ar
+        run: sudo apt-get update && sudo apt-get install -y llvm
+      - name: Build XCC at the vendored commit
+        run: |
+          commit=$(node -e 'const fs=require("fs");const f=fs.readdirSync("vendor/wcc").find(n=>/^wcc_.*\.js$/.test(n));console.log(require("./vendor/wcc/"+f).commit)')
+          git clone https://github.com/tyfkda/xcc /tmp/xcc
+          git -C /tmp/xcc checkout "$commit"
+          make -C /tmp/xcc wcc
+          make -C /tmp/xcc wcc-gen2
+      - name: Rebuild the bundle and compare
+        run: |
+          node tools/build-wcc.js /tmp/xcc
+          git diff --exit-code vendor/wcc/

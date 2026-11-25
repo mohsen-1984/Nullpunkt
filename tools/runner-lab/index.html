@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Runner lab — Nullpunkt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;600&family=Vazirmatn:wght@400;600&display=swap">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header>
+  <h1>Nullpunkt <span class="tag">runner lab</span></h1>
+  <div id="env" class="chips" aria-live="polite"><span class="chip">loading compiler…</span></div>
+  <label class="lang">Messages
+    <select id="lang">
+      <option value="en">English</option>
+      <option value="de">Deutsch</option>
+      <option value="fa">فارسی</option>
+    </select>
+  </label>
+</header>
+
+<main>
+  <section class="editor-pane">
+    <div class="bar">
+      <label>Sample <select id="sample"></select></label>
+      <span class="grow"></span>
+      <button id="run" class="primary" disabled title="Ctrl+Enter">Run ▶</button>
+      <button id="stop" disabled>Stop ■</button>
+    </div>
+    <div class="editor">
+      <pre id="gutter" aria-hidden="true"></pre>
+      <textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="C source code"></textarea>
+    </div>
+    <fieldset class="stdin">
+      <legend>Input (stdin)</legend>
+      <label><input type="radio" name="stdinMode" value="prepared" checked> Prepared</label>
+      <label><input type="radio" name="stdinMode" value="interactive" id="modeInteractive"> Interactive <small id="jspiNote"></small></label>
+      <textarea id="stdin" rows="3" spellcheck="false" placeholder="Input typed here is given to scanf / getchar, line by line"></textarea>
+    </fieldset>
+  </section>
+
+  <section class="output-pane">
+    <div class="bar"><strong>Output</strong><span class="grow"></span><span id="status" class="status"></span></div>
+    <div id="console" class="console" tabindex="0" aria-live="polite"></div>
+    <ul id="diags" class="diags"></ul>
+  </section>
+</main>
+
+<section class="lab">
+  <div class="bar">
+    <strong>Lab</strong> <span class="muted">— every sample, checked against gcc's output on a PC</span>
+    <span class="grow"></span>
+    <button id="runLab" disabled>Run lab</button>
+    <button id="copyLab" disabled>Copy report</button>
+  </div>
+  <table id="labTable"><thead><tr><th>#</th><th>Program</th><th>Result</th><th>What happened</th><th>ms</th></tr></thead><tbody></tbody></table>
+  <pre id="labJson" hidden></pre>
+</section>
+
+<footer class="muted">
+  Compiler: <a href="https://github.com/tyfkda/xcc">XCC / wcc</a> by tyfkda (MIT), compiled to WebAssembly, runs here in your browser — nothing is sent anywhere.
+</footer>
+
+<script src="../../lib/WasiShim.js"></script>
+<script src="../../vendor/wcc/wcc_659a177.js"></script>
+<script src="../../lib/CRunner.js"></script>
+<script src="../../tests/lab.js"></script>
+<script src="../../tests/check.js"></script>
+<script src="messages.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

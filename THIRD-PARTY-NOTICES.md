@@ -1,0 +1,24 @@
+# Third-Party Notices
+
+Nullpunkt's own code is MIT (`LICENSE`) and its content CC BY-SA 4.0 (`LICENSE-CONTENT.md`). These components keep their own licenses.
+
+## Shipped in this repository
+
+| Component | Where | License | Source |
+|---|---|---|---|
+| XCC (wcc) — C compiler, libc and headers, compiled to WebAssembly | `vendor/wcc/` | MIT, © tyfkda — `vendor/wcc/LICENSE` | https://github.com/tyfkda/xcc |
+
+## Loaded by the pages
+
+| Component | License | Source |
+|---|---|---|
+| Inter | SIL Open Font License 1.1 | Google Fonts |
+| Vazirmatn | SIL Open Font License 1.1 | Google Fonts |
+| JetBrains Mono | SIL Open Font License 1.1 | Google Fonts |
+
+## Used only to build or test
+
+| Component | Use |
+|---|---|
+| gcc | Expected outputs of the lab programs (`tools/build-tests.js`) |
+| Google Chrome (headless) | Browser lab in CI (`tools/headless-lab.js`) |
