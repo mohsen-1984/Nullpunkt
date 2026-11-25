@@ -41,13 +41,13 @@ const PROBE = `(async () => {
             const itemEl = [...document.querySelectorAll('#' + CSS.escape(b.id) + ' .np-item')][b.items.indexOf(it)];
             const check = [...itemEl.querySelectorAll('.np-btn')].find(x => x.querySelector('.np-icon') && x.textContent.trim() && !x.disabled && x.classList.contains('primary') && !/^(Run|Ausführen|اجرا)$/.test(x.textContent.trim()));
             if (b.type === 'B.write' || b.type === 'B.fix') {
-                const ed = itemEl.querySelector('.np-editor');
+                const ed = itemEl.querySelector('.np-editor').npEditor;
                 // a wrong answer first: the starter or the broken code must not pass
-                ed.value = b.type === 'B.fix' ? ix.code[it.broken].source : it.starter; ed.dispatchEvent(new Event('input'));
+                ed.value = b.type === 'B.fix' ? ix.code[it.broken].source : it.starter;
                 check.click();
                 const v1 = await wait(() => itemEl.querySelector('.np-result .np-verdict'), 20000);
                 (v1 && !v1.classList.contains('ok') ? rep.ok : rep.bad).push(it.id + ' rejects the start code');
-                ed.value = it.solution; ed.dispatchEvent(new Event('input'));
+                ed.value = it.solution;
                 itemEl.querySelector('.np-result').innerHTML = '';
                 check.click();
                 const v2 = await wait(() => itemEl.querySelector('.np-result .np-verdict'), 20000);
@@ -80,6 +80,8 @@ const PROBE = `(async () => {
         }
     }
     rep.key = document.querySelectorAll('#key tbody tr').length;
+    rep.cm = !!window.NullpunktCM && document.querySelectorAll('.cm-editor').length;
+    if (window.NullpunktCM) { const toks = new Set([...document.querySelectorAll('[class*="np-tok-"]')].map(e => e.className)); rep.toks = [...toks].sort().join(' '); if (!toks.size) rep.bad.push('no syntax highlighting'); }
     const de = document.documentElement;
     if (de.scrollWidth > de.clientWidth + 1) {
         const wide = [...document.querySelectorAll('body *')].filter(e => e.getBoundingClientRect().width > de.clientWidth + 1).slice(-3).map(e => e.tagName + '.' + e.className);
@@ -122,8 +124,9 @@ const PROBE = `(async () => {
             try { rep = JSON.parse(res.result.value); } catch (e) { rep = { bad: ['probe failed: ' + JSON.stringify(res.exceptionDetails || res).slice(0, 400)], ok: [] }; }
             const bad = rep.bad.concat(errors.map(e => 'page error: ' + e));
             console.log((bad.length ? 'FAIL ' : 'PASS ') + lesson + ' ' + lang + ' — ' + rep.ok.length + ' checks passed, ' + rep.blocks + ' blocks, ' +
-                rep.key + ' answer-key rows, ' + rep.terms + ' terms · ' + rep.h1);
+                rep.key + ' answer-key rows, ' + rep.terms + ' terms, ' + (rep.cm || 0) + ' editors · ' + rep.h1);
             bad.forEach(b => console.log('     ' + b));
+            if (rep.toks) console.log('     tokens: ' + rep.toks);
             if (bad.length) failed = true;
             if (shots) {
                 fs.mkdirSync(shots, { recursive: true });

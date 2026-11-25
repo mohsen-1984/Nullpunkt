@@ -69,23 +69,59 @@
         return [U.exit.replace('{code}', r.exitCode), r.exitCode === 0 ? 'ok' : 'warn'];
     }
 
+    // ---------- editor: CodeMirror when vendor/codemirror is loaded, a plain textarea otherwise ----------
+    // Both give the same small interface: value (get/set), readOnly, onInput(fn), setDiagnostics(list), el.
+    function makeEditor(source, opts) {
+        const listeners = [];
+        if (window.NullpunktCM) {
+            const host = el('div', 'np-editor');
+            const cm = NullpunktCM.create(host, { doc: source, readOnly: !!opts.readOnly, label: 'C source code',
+                onChange: v => listeners.forEach(f => f(v)), onRun: () => opts.onRunKey && opts.onRunKey() });
+            const ed = {
+                el: host, readOnly: !!opts.readOnly,
+                get value() { return cm.getValue(); }, set value(v) { cm.setValue(v); },
+                onInput: f => listeners.push(f), setDiagnostics: list => cm.setDiagnostics(list),
+            };
+            host.npEditor = ed;
+            return ed;
+        }
+        const ta = el('textarea', 'np-editor');
+        ta.value = source;
+        ta.spellcheck = false;
+        ta.setAttribute('dir', 'ltr');
+        ta.setAttribute('aria-label', 'C source code');
+        ta.readOnly = !!opts.readOnly;
+        const fit = () => { ta.rows = Math.max(3, ta.value.split('\n').length + 1); };
+        fit();
+        ta.addEventListener('input', () => { fit(); listeners.forEach(f => f(ta.value)); });
+        ta.addEventListener('keydown', e => {
+            if (e.key === 'Tab' && !e.shiftKey && !ta.readOnly) { e.preventDefault(); ta.setRangeText('    ', ta.selectionStart, ta.selectionEnd, 'end'); }
+            if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && opts.onRunKey) { e.preventDefault(); opts.onRunKey(); }
+        });
+        const ed = {
+            el: ta, readOnly: !!opts.readOnly,
+            get value() { return ta.value; }, set value(v) { ta.value = v; fit(); listeners.forEach(f => f(v)); },
+            onInput: f => listeners.push(f), setDiagnostics: () => {},
+        };
+        ta.npEditor = ed;
+        return ed;
+    }
+
+    /** Read-only code shown in the text (mistake cards, exercises, answer key): same colors as the editor. */
+    function staticCode(code, cls) {
+        const pre = el('pre', cls || 'np-static');
+        pre.setAttribute('dir', 'ltr');
+        pre.innerHTML = window.NullpunktCM ? NullpunktCM.highlight(code) : esc(code);
+        return pre;
+    }
+    const staticHtml = (code, cls) => staticCode(code, cls).outerHTML;
+
     // ---------- code box: editor + run + output ----------
     function codeBox(source, opts) {
         opts = opts || {};
         const box = el('div', 'np-code');
-        const editor = el('textarea', 'np-editor');
-        editor.value = source;
-        editor.spellcheck = false;
-        editor.setAttribute('dir', 'ltr');
-        editor.setAttribute('aria-label', 'C source code');
-        editor.readOnly = !!opts.readOnly;
-        editor.rows = Math.max(3, source.split('\n').length + 1);
-        editor.addEventListener('input', () => { editor.rows = Math.max(3, editor.value.split('\n').length); });
-        editor.addEventListener('keydown', e => {
-            if (e.key === 'Tab' && !e.shiftKey && !editor.readOnly) { e.preventDefault(); editor.setRangeText('    ', editor.selectionStart, editor.selectionEnd, 'end'); }
-            if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && opts.onRunKey) { e.preventDefault(); opts.onRunKey(); }
-        });
-        box.appendChild(editor);
+        const editor = makeEditor(source, opts);
+        box.appendChild(editor.el);
         const bar = el('div', 'np-bar');
         box.appendChild(bar);
         const out = el('pre', 'np-out');
@@ -113,6 +149,7 @@
                 stdin: stdinBox ? stdinBox.value : '', timeoutMs: TIMEOUT_MS,
                 onOutput: (t, isErr) => { const s = el('span', isErr ? 'np-stderr' : ''); s.textContent = t; out.appendChild(s); },
             });
+            if (editor.setDiagnostics) editor.setDiagnostics(r.stage === 'compile' && !r.ok ? r.diagnostics : []);
             if (r.stage === 'compile' && !r.ok) {
                 const s = el('span', 'np-stderr'); s.textContent = r.compileLog; out.appendChild(s);
                 status.textContent = U.compileFailed; status.className = 'np-status error';
@@ -143,7 +180,7 @@
         cb.bar.append(runB, stopB);
         if (!cb.editor.readOnly) {
             const resetB = button(U.reset, 'undo-2');
-            resetB.onclick = () => { cb.editor.value = original; cb.editor.rows = Math.max(3, original.split('\n').length - 1); };
+            resetB.onclick = () => { cb.editor.value = original; cb.editor.setDiagnostics([]); };
             cb.bar.append(resetB);
         }
         cb.bar.append(cb.status);
@@ -254,12 +291,16 @@
             const w = ix.code[m.wrong], r = ix.code[m.right];
             const ew = G && G.code[w.id], er = G && G.code[r.id];
             let symptom = '';
-            if (ew && !ew.gcc.compiled) symptom = genLog(ew, 'gcc');
+            if (ew && !ew.gcc.compiled) {
+                // the first error only: later lines of gcc's message are often follow-up errors of the same mistake
+                const d = ew.gcc.diagnostics.find(x => x.severity === 'error') || ew.gcc.diagnostics[0];
+                symptom = d ? 'main.c:' + d.line + ':' + d.col + ': ' + d.severity + ': ' + d.message : genLog(ew, 'gcc');
+            }
             else if (ew) symptom = U.output + ':\n' + (ew.gcc.stdout || U.noOutput);
             const pair = el('div', 'np-pair');
-            pair.innerHTML = '<div class="np-wrong"><div class="np-pair-title">' + icon('circle-x') + esc(U.wrong) + '</div><pre dir="ltr">' + esc(w.source) + '</pre>' +
+            pair.innerHTML = '<div class="np-wrong"><div class="np-pair-title">' + icon('circle-x') + esc(U.wrong) + '</div>' + staticHtml(w.source, 'np-code-pre') +
                 '<div class="np-pair-title">' + esc(U.symptom) + '</div><pre dir="ltr" class="np-symptom">' + esc(symptom) + '</pre></div>' +
-                '<div class="np-right"><div class="np-pair-title">' + icon('circle-check') + esc(U.right) + '</div><pre dir="ltr">' + esc(r.source) + '</pre>' +
+                '<div class="np-right"><div class="np-pair-title">' + icon('circle-check') + esc(U.right) + '</div>' + staticHtml(r.source, 'np-code-pre') +
                 (er ? '<div class="np-pair-title">' + esc(U.output) + '</div><pre dir="ltr">' + esc(er.gcc.stdout || U.noOutput) + '</pre>' : '') + '</div>';
             card.appendChild(pair);
             card.appendChild(el('p', 'np-why', '<strong>' + esc(U.why) + ':</strong> ' + h(m.why[lang])));
@@ -321,7 +362,7 @@
 
             if (b.type === 'B.predict') {
                 const code = ix.code[it.code];
-                const pre = el('pre', 'np-static'); pre.setAttribute('dir', 'ltr'); pre.textContent = code.source; body.appendChild(pre);
+                body.appendChild(staticCode(code.source));
                 const guess = el('textarea', 'np-guess'); guess.setAttribute('dir', 'ltr'); guess.rows = 3; guess.placeholder = U.yourPrediction;
                 body.appendChild(guess);
                 const chk = button(U.check, 'circle-check', 'primary');
@@ -337,14 +378,14 @@
                 };
                 body.append(el('div', 'np-bar').appendChild(chk).parentNode, panel);
             } else if (b.type === 'B.parsons') {
-                body.appendChild(Object.assign(el('pre', 'np-static'), { textContent: it.before.join('\n') })).setAttribute('dir', 'ltr');
+                body.appendChild(staticCode(it.before.join('\n')));
                 const list = el('ol', 'np-parsons');
                 list.setAttribute('dir', 'ltr');
                 let order = it.lines.map((_, k) => k);
                 const draw = () => {
                     list.innerHTML = '';
                     order.forEach((k, pos) => {
-                        const li = el('li', '', '<code>' + esc(it.lines[k]) + '</code>');
+                        const li = el('li', '', '<code>' + (window.NullpunktCM ? NullpunktCM.highlight(it.lines[k]) : esc(it.lines[k])) + '</code>');
                         const up = button('', 'chevron-up', 'icon-only'); up.setAttribute('aria-label', U.up); up.title = U.up;
                         const down = button('', 'chevron-down', 'icon-only'); down.setAttribute('aria-label', U.down); down.title = U.down;
                         up.classList.add('np-up'); down.classList.add('np-down');
@@ -357,7 +398,7 @@
                 };
                 draw();
                 body.appendChild(list);
-                body.appendChild(Object.assign(el('pre', 'np-static'), { textContent: it.after.join('\n') })).setAttribute('dir', 'ltr');
+                body.appendChild(staticCode(it.after.join('\n')));
                 const chk = button(U.check, 'circle-check', 'primary');
                 chk.onclick = async () => {
                     chk.disabled = true;
@@ -370,7 +411,7 @@
                 const start = b.type === 'B.fix' ? ix.code[it.broken].source : (it.starter || it.template || (it.start && ix.code[it.start].source) || '');
                 const key = 'code.' + it.id;
                 const cb = codeBox(store.get(key) || start, {});
-                cb.editor.addEventListener('input', () => store.set(key, cb.editor.value));
+                cb.editor.onInput(v => store.set(key, v));
                 runControls(cb, start);
                 const chk = button(U.check, 'circle-check', 'primary');
                 chk.onclick = async () => {
@@ -448,9 +489,9 @@
             (L.unit.bands || []).forEach(b => b.items.forEach((it, i) => {
                 let answer = '';
                 if (b.type === 'B.predict') answer = '<pre dir="ltr">' + esc(G.code[it.code].gcc.stdout) + '</pre>';
-                else if (b.type === 'B.parsons') answer = '<pre dir="ltr">' + esc(it.solution.map(k => it.lines[k]).join('\n')) + '</pre>';
+                else if (b.type === 'B.parsons') answer = staticHtml(it.solution.map(k => it.lines[k]).join('\n'), 'np-code-pre');
                 else if (b.type === 'B.explain') answer = h(it.model[lang]);
-                else answer = '<details><summary>' + esc(U.solution) + '</summary><pre dir="ltr">' + esc(it.solution) + '</pre></details>';
+                else answer = '<details><summary>' + esc(U.solution) + '</summary>' + staticHtml(it.solution, 'np-code-pre') + '</details>';
                 rows += '<tr><td>' + (i === 0 ? esc(bandLetter[b.id]) : '') + '</td><td>' + (i + 1) + '</td><td>' + answer + '</td><td>' + h(it.why[lang]) + '</td></tr>';
             }));
             t.innerHTML = '<thead><tr><th>' + esc(U.exercise) + '</th><th>' + esc(U.question) + '</th><th>' + esc(U.answer) + '</th><th>' + esc(U.why) + '</th></tr></thead><tbody>' + rows + '</tbody>';
