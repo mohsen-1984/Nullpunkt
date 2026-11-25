@@ -29,11 +29,14 @@
             ai:        { icon: 'bot', title: { fa: 'تمرین با هوش مصنوعی', de: 'Üben mit KI', en: 'AI Practice' }, short: { fa: 'AI', de: 'KI', en: 'AI' } },
             terms:     { icon: 'book-a', title: { fa: 'اصطلاح‌های درس', de: 'Begriffe', en: 'Terms' }, short: { fa: 'اصطلاح‌ها', de: 'Begriffe', en: 'Terms' } },
             selfcheck: { icon: 'square-check', title: { fa: 'خودسنجی', de: 'Selbstcheck', en: 'Self-check' }, short: { fa: 'خودسنجی', de: 'Selbstcheck', en: 'Check' } },
+            // section: a block whose heading, short label and icon come from the lesson's data (orientation lessons)
+            section:   { icon: 'book-open', title: { fa: 'بخش', de: 'Abschnitt', en: 'Section' }, short: { fa: 'بخش', de: 'Abschnitt', en: 'Section' } },
             key:       { icon: 'key-round', title: { fa: 'پاسخ‌نامه', de: 'Lösungen', en: 'Answer Key' }, short: { fa: 'پاسخ‌ها', de: 'Lösungen', en: 'Key' } },
         },
 
         // rank orders the bands of a lesson (S.BND.01); auto = checked by running tests
         bandTypes: {
+            'B.choice':   { rank: 1, auto: true, icon: 'list-checks', title: { fa: 'انتخاب کن', de: 'Wähle aus', en: 'Choose' } },
             'B.predict':  { rank: 1, auto: true, icon: 'eye', title: { fa: 'پیش‌بینی خروجی', de: 'Ausgabe vorhersagen', en: 'Predict the Output' } },
             'B.trace':    { rank: 1, auto: true, icon: 'list-ordered', title: { fa: 'ردیابی', de: 'Tracing', en: 'Trace' } },
             'B.parsons':  { rank: 1, auto: true, icon: 'arrow-down-wide-narrow', title: { fa: 'مرتب‌سازی خط‌ها', de: 'Zeilen ordnen', en: 'Put the Lines in Order' } },
@@ -92,7 +95,9 @@
             'octagon-x', 'triangle-exclamation-point',
             // the site shell (site/chrome.js, course.js, search.js, home.js)
             'search', 'sun', 'moon', 'code-xml', 'house', 'circle', 'circle-dot', 'circle-dashed', 'book-open', 'clock',
-            'wifi-off', 'monitor-smartphone'],
+            'wifi-off', 'monitor-smartphone',
+            // orientation lessons (site/lesson.js: myth, terminal, asm)
+            'circle-question-mark', 'terminal', 'file-code'],
 
         // the alphabet for exercise letters, per language (S.TYP.11); taken from position, never stored
         letters: {

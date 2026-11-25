@@ -34,7 +34,7 @@
 - **Exercises checked by tests,** in the page; your progress stays in your browser.
 - **Find anything:** press <kbd>/</kbd> or <kbd>Ctrl</kbd> <kbd>K</kbd> to search every lesson, term and mistake.
 
-**Status (0.1.0):** chapter 1 (lessons 1–3) is written; 13 chapters and 50 lessons are planned for 1.0. C++ comes after.
+**Status:** chapter 0 (orientation: where C lives, from program to processor, standards and tools, C on your own computer, how to learn) and chapter 1 (lessons 1–3) are written; 13 chapters and 50 lessons are planned for 1.0. C++ comes after.
 
 ## Deutsch
 
@@ -49,7 +49,7 @@
 - **Übungen, geprüft von Tests** auf der Seite; dein Fortschritt bleibt in deinem Browser.
 - **Alles finden:** <kbd>/</kbd> oder <kbd>Strg</kbd> <kbd>K</kbd> durchsucht jede Lektion, jeden Begriff und jeden Fehler.
 
-**Stand (0.1.0):** Kapitel 1 (Lektionen 1–3) ist geschrieben; für 1.0 sind 13 Kapitel und 50 Lektionen geplant. C++ folgt danach.
+**Stand:** Kapitel 0 (Orientierung: wo C steckt, vom Programm zum Prozessor, Standards und Werkzeuge, C auf deinem Rechner, wie man lernt) und Kapitel 1 (Lektionen 1–3) sind geschrieben; für 1.0 sind 13 Kapitel und 50 Lektionen geplant. C++ folgt danach.
 
 ## فارسی
 
@@ -66,7 +66,7 @@
 - **تمرین‌هایی که تست‌ها بررسی‌شان می‌کنند،** همان‌جا در صفحه؛ پیشرفتت در مرورگر خودت می‌ماند.
 - **پیدا کردن هر چیز:** <kbd>/</kbd> یا <kbd>Ctrl</kbd> <kbd>K</kbd> همهٔ درس‌ها، اصطلاح‌ها و اشتباه‌ها را جست‌وجو می‌کند.
 
-**وضعیت (نسخهٔ 0.1.0):** فصل 1 (درس‌های 1 تا 3) نوشته شده؛ برای نسخهٔ 1.0، 13 فصل و 50 درس برنامه‌ریزی شده است. C++ پس از آن می‌آید.
+**وضعیت:** فصل 0 (جهت‌یابی: C امروز کجاست، از برنامه تا پردازنده، استانداردها و ابزارها، C روی کامپیوتر خودت، چطور یاد بگیریم) و فصل 1 (درس‌های 1 تا 3) نوشته شده‌اند؛ برای نسخهٔ 1.0، 13 فصل و 50 درس برنامه‌ریزی شده است. C++ پس از آن می‌آید.
 
 </div>
 

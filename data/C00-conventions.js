@@ -21,6 +21,13 @@
             { block: 'key', fixed: true, generated: true },
         ],
 
+        // C.ORI.01 — orientation lessons (chapter 0): no construct is taught, so the code skeleton does not apply.
+        // Fixed: why first, cando, then any of the `allowed` blocks (section may repeat), practice, terms, selfcheck, key.
+        orientation: {
+            first: ['why', 'cando'], last: ['practice', 'ai', 'terms', 'selfcheck', 'key'], required: ['why', 'cando', 'practice', 'terms', 'selfcheck', 'key'],
+            allowed: ['section', 'prior', 'predict', 'example', 'machine', 'notyet'],
+        },
+
         constructs: [
             k('K.fn-printf', 1, { id: 'printf' }), k('K.esc-n', 1, { esc: 'n' }), k('K.comment-line', 1, { comment: '//' }),
             k('K.fmt-d', 3, { fmt: 'd' }), k('K.op-add', 3, { op: '+' }), k('K.op-sub', 3, { op: '-' }),

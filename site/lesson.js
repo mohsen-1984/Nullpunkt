@@ -206,6 +206,62 @@
                 nd.rows.map(r => '<tr>' + r.map(c => '<td>' + (c.code ? '<code dir="ltr">' + esc(c.code) + '</code>' : h(c[lang])) + '</td>').join('') + '</tr>').join('') + '</tbody>';
             return t;
         }
+        if (nd.type === 'myth') {
+            const a = el('aside', 'np-myth');
+            a.innerHTML = '<p class="np-myth-claim">' + icon('circle-question-mark') + '<span>' + h(nd.claim[lang]) + '</span></p>' +
+                '<p class="np-myth-fact">' + icon('circle-check') + '<span>' + h(nd.fact[lang]) + '</span></p>';
+            return a;
+        }
+        if (nd.type === 'terminal') {
+            // shown, not run: commands and their output on a real machine (C.ORI.01)
+            const f = el('figure', 'np-sh');
+            f.setAttribute('dir', 'ltr');
+            const prompt = nd.prompt || '$';
+            f.innerHTML = (nd.title ? '<figcaption>' + icon('terminal') + '<span>' + esc(nd.title) + '</span></figcaption>' : '') +
+                '<pre>' + nd.lines.map(l => l.cmd != null
+                    ? '<span class="np-sh-p">' + esc(prompt) + '</span> <span class="np-sh-c">' + esc(l.cmd).replace(/(#.*)$/, '<span class="np-sh-r">$1</span>') + '</span>'
+                    : '<span class="np-sh-o">' + esc(l.out) + '</span>').join('\n') + '</pre>';
+            return f;
+        }
+        if (nd.type === 'tabs') {
+            const wrap = el('div', 'np-tabs');
+            const bar = el('div', 'np-tabbar'); bar.setAttribute('role', 'tablist');
+            const uid = 'np-tab-' + Math.random().toString(36).slice(2, 8);
+            const panels = nd.tabs.map((t, i) => {
+                const label = typeof t.label === 'string' ? t.label : t.label[lang];
+                const btn = el('button', 'np-tab', esc(label));
+                btn.type = 'button'; btn.id = uid + '-t' + i; btn.setAttribute('role', 'tab'); btn.setAttribute('aria-controls', uid + '-p' + i);
+                const pnl = el('div', 'np-tabpanel'); pnl.id = uid + '-p' + i; pnl.setAttribute('role', 'tabpanel'); pnl.setAttribute('aria-labelledby', btn.id);
+                t.content.forEach(c => pnl.appendChild(renderNode(c, blockId)));
+                bar.appendChild(btn);
+                return { btn, pnl };
+            });
+            const pick = i => panels.forEach((p, j) => {
+                p.btn.setAttribute('aria-selected', String(i === j)); p.btn.tabIndex = i === j ? 0 : -1; p.pnl.hidden = i !== j;
+            });
+            // start on the reader's own system when it is one of the tabs
+            const ua = navigator.userAgent, guess = /Mac OS X/.test(ua) && !/iPhone|iPad/.test(ua) ? 'macOS' : /Windows/.test(ua) ? 'Windows' : /Linux/.test(ua) ? 'Linux' : '';
+            const first = Math.max(0, nd.tabs.findIndex(t => t.label === guess));
+            panels.forEach((p, i) => {
+                p.btn.addEventListener('click', () => pick(i));
+                p.btn.addEventListener('keydown', e => {
+                    const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+                    if (!d) return;
+                    const n = (i + (document.documentElement.dir === 'rtl' ? -d : d) + panels.length) % panels.length;
+                    pick(n); panels[n].btn.focus();
+                });
+            });
+            pick(first);
+            wrap.append(bar, ...panels.map(p => p.pnl));
+            return wrap;
+        }
+        if (nd.type === 'asm') {
+            const code = ix.code[nd.ref], e = G && G.code[code.id];
+            const wrap = el('div', 'np-asm');
+            wrap.innerHTML = '<div><div class="np-pair-title">' + icon('file-code') + '<span>C — main.c</span></div>' + staticHtml(code.source.replace(/\n$/, ''), 'np-code-pre') + '</div>' +
+                '<div><div class="np-pair-title">' + icon('cpu') + '<span>' + esc(U.asmTitle) + '</span></div><pre dir="ltr" class="np-code-pre np-asm-pre">' + esc(e && e.gcc.asm ? e.gcc.asm : '') + '</pre></div>';
+            return wrap;
+        }
         return el('div', 'np-unknown', esc(nd.type));
     }
 
@@ -422,6 +478,29 @@
                 };
                 cb.bar.insertBefore(chk, cb.bar.firstChild);
                 body.append(cb.box, panel);
+            } else if (b.type === 'B.choice') {
+                // one question, options with their own feedback; the choice is kept, a right answer marks the item done
+                const key = 'choice.' + it.id, name = 'np-' + it.id.replace(/\./g, '-');
+                const list = el('div', 'np-choice');
+                list.setAttribute('role', 'radiogroup');
+                list.setAttribute('aria-label', it.prompt ? it.prompt[lang].replace(/[`*]/g, '') : '');
+                const show = k => {
+                    const o = it.options[k];
+                    panel.innerHTML = '';
+                    panel.appendChild(el('p', 'np-verdict ' + (o.correct ? 'ok' : 'warn'), icon(o.correct ? 'circle-check' : 'circle-x') + '<span>' + h(o.feedback[lang]) + '</span>'));
+                    list.querySelectorAll('label').forEach((lb, j) => { lb.classList.toggle('is-right', o.correct && j === k); lb.classList.toggle('is-wrong', !o.correct && j === k); });
+                    markItem(itemEl, it.id, o.correct);
+                };
+                it.options.forEach((o, k) => {
+                    const lb = el('label', 'np-option');
+                    const r = el('input'); r.type = 'radio'; r.name = name; r.value = String(k);
+                    r.addEventListener('change', () => { store.set(key, k); show(k); });
+                    lb.append(r, el('span', '', h(o.text[lang])));
+                    list.appendChild(lb);
+                });
+                const saved = store.get(key);
+                body.append(list, panel);
+                if (typeof saved === 'number' && it.options[saved]) { list.querySelectorAll('input')[saved].checked = true; show(saved); }
             } else if (b.type === 'B.explain') {
                 const ans = el('textarea', 'np-answer'); ans.rows = 3; ans.placeholder = U.yourAnswer;
                 const key = 'explain.' + it.id;
@@ -438,7 +517,7 @@
 
     function renderPrompt(p) {
         const wrap = el('div', 'np-prompt-box');
-        const text = p.text.replace('{lang}', { fa: 'Persian', de: 'German', en: 'English' }[lang]).replace('{lesson}', String(L.n));
+        const text = p.text.replace('{lang}', { fa: 'Persian', de: 'German', en: 'English' }[lang]).replace('{lesson}', L.label);
         wrap.innerHTML = '<div class="np-prompt-title">' + icon(p.icon) + '<strong>' + esc(p.name.en) + '</strong>' + (lang !== 'en' ? ' — ' + esc(p.name[lang]) : '') + ' <code>' + esc(p.id) + '</code></div>';
         const pre = el('pre', 'np-prompt-text'); pre.setAttribute('dir', 'ltr'); pre.textContent = text;
         const copy = button(U.copy, 'copy');
@@ -491,6 +570,7 @@
                 if (b.type === 'B.predict') answer = '<pre dir="ltr">' + esc(G.code[it.code].gcc.stdout) + '</pre>';
                 else if (b.type === 'B.parsons') answer = staticHtml(it.solution.map(k => it.lines[k]).join('\n'), 'np-code-pre');
                 else if (b.type === 'B.explain') answer = h(it.model[lang]);
+                else if (b.type === 'B.choice') answer = h(it.options.find(o => o.correct).text[lang]);
                 else answer = '<details><summary>' + esc(U.solution) + '</summary>' + staticHtml(it.solution, 'np-code-pre') + '</details>';
                 rows += '<tr><td>' + (i === 0 ? esc(bandLetter[b.id]) : '') + '</td><td>' + (i + 1) + '</td><td>' + answer + '</td><td>' + h(it.why[lang]) + '</td></tr>';
             }));
@@ -505,23 +585,23 @@
         const root = document.getElementById('lesson');
         const C = NullpunktCourse, S = U.site;
         if (!L || !L.unit) {
-            root.appendChild(el('h1', '', esc(L ? U.lesson + ' ' + L.n + ': ' + L.catalog.title[lang] : 'Nullpunkt')));
+            root.appendChild(el('h1', '', esc(L ? U.lesson + ' ' + L.label + ': ' + L.catalog.title[lang] : 'Nullpunkt')));
             root.appendChild(el('p', '', esc(U.planned) + ' — <a href="' + esc(C.homeHref(lang, 'path')) + '">' + esc(S.path) + '</a>'));
             NullpunktChrome.mount({ page: 'lesson', nav: [], tree: C.tree(ix, lang, lessonId) });
             return;
         }
         const cat = L.catalog, ch = ix.chapter[L.chapter];
         const title = cat.title[lang] + (lang !== 'en' ? ' — ' + cat.title.en : '');
-        document.title = U.lesson + ' ' + L.n + ': ' + cat.title[lang] + ' — Nullpunkt';
+        document.title = U.lesson + ' ' + L.label + ': ' + cat.title[lang] + ' — Nullpunkt';
         const status = ch.catalog.langStatus[lang];
         // the leading path: home › chapter › lesson
         const crumbs = el('ol', 'np-crumbs');
         crumbs.setAttribute('aria-label', S.aria.crumbs);
         crumbs.innerHTML = '<li><a href="' + esc(C.homeHref(lang)) + '">' + esc(S.home) + '</a></li>' +
             '<li><a href="' + esc(C.homeHref(lang, 'chapter-' + ch.id)) + '">' + esc(U.chapter) + ' ' + ch.n + ': ' + esc(ch.catalog.title[lang]) + '</a></li>' +
-            '<li aria-current="page">' + esc(U.lesson) + ' ' + L.n + '</li>';
+            '<li aria-current="page">' + esc(U.lesson) + ' ' + L.label + '</li>';
         root.appendChild(crumbs);
-        root.appendChild(el('h1', '', esc(U.lesson) + ' ' + L.n + ': ' + esc(title)));
+        root.appendChild(el('h1', '', esc(U.lesson) + ' ' + L.label + ': ' + esc(title)));
         root.appendChild(el('p', 'np-lesson-meta', icon('clock') + '<span>' + cat.minutes + ' ' + esc(U.minutes) + '</span>' +
             (status !== 'reviewed' ? '<span class="np-badge">' + esc(U.inDevelopment) + '</span>' : '')));
         store.set('visited.' + L.id, true);
@@ -530,8 +610,10 @@
         L.unit.blocks.forEach(b => {
             const def = reg.blocks[b.block];
             const sec = el('section', 'np-block np-block-' + b.block);
-            sec.id = b.block;
-            sec.appendChild(el('h2', '', icon(def.icon) + '<span>' + esc(def.title[lang]) + (b.subtitle ? ': ' + h(b.subtitle[lang]) : '') + '</span>'));
+            sec.id = b.id || b.block;
+            // a section block brings its own title and icon (orientation lessons, C.ORI.01)
+            const title = b.title ? h(b.title[lang]) : esc(def.title[lang]) + (b.subtitle ? ': ' + h(b.subtitle[lang]) : '');
+            sec.appendChild(el('h2', '', icon(b.icon || def.icon) + '<span>' + title + '</span>'));
             const gen = ['cando', 'terms', 'selfcheck', 'key'].indexOf(b.block) >= 0;
             (gen ? [] : b.content.map(nd => renderNode(nd, b.block))).forEach(n => sec.appendChild(n));
             root.appendChild(sec);
@@ -553,7 +635,9 @@
         root.appendChild(nav);
 
         // the chrome: the lesson's blocks are the page's sections; the learning path is the rail
-        const navItems = L.unit.blocks.map(b => ({ id: b.block, label: reg.blocks[b.block].title[lang], short: reg.blocks[b.block].short[lang] }));
+        const plainText = t => String(t).replace(/[`*]/g, '');
+        const navItems = L.unit.blocks.map(b => ({ id: b.id || b.block,
+            label: plainText(b.title ? b.title[lang] : reg.blocks[b.block].title[lang]), short: plainText(b.short ? b.short[lang] : reg.blocks[b.block].short[lang]) }));
         NullpunktChrome.mount({ page: 'lesson', nav: navItems, tree: C.tree(ix, lang, L.id) });
         const q = params.get('q');
         if (q && window.NullpunktSearch) NullpunktSearch.highlight(q);

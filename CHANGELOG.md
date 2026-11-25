@@ -4,6 +4,35 @@ All notable changes to Nullpunkt. Versions follow [Semantic Versioning](https://
 version may change the data format. Dates are those of the release tags. The single source of the version is
 `site/config.js` (`tools/check-version.js` checks this file and `README.md` against it).
 
+## [Unreleased]
+
+### Course
+
+- **Chapter 0 — Orientation**, five short lessons before lesson 1, in three languages, numbered 0.1–0.5 so lesson 1
+  stays lesson 1:
+  - **0.1 Where C Lives Today:** operating systems, embedded and robotics, AI, the web, databases, the languages
+    themselves; three common beliefs answered; C at university and for a software engineer.
+  - **0.2 From Program to Processor:** machine code, assembly and high-level languages; compiler, interpreter and
+    bytecode (C, Java, Python, JavaScript); the four build steps; the real x86-64 assembly of a small program.
+  - **0.3 Standards and Tools:** C89 to C23, why C17, `__STDC_VERSION__` in gcc and in the browser, gcc, clang, MSVC,
+    POSIX, MISRA C, CERT C, C and C++.
+  - **0.4 C on Your Own Computer:** five terminal commands, installing on Windows (WSL, MSYS2), macOS and Linux,
+    building with `gcc -std=c17 -Wall -Wextra -pedantic`, VS Code.
+  - **0.5 How to Learn C:** six habits, how the course helps, AI as a tutor, what Python knowledge helps or misleads,
+    a weekly plan.
+- 8 new glossary terms; a new exercise type, **Choose** (`B.choice`), with feedback for every option.
+
+### Site
+
+- Lessons can hold sections with their own title, myths answered, terminal transcripts, tabs per operating system
+  (opening on the reader's own system) and assembly beside its C.
+
+### Tooling
+
+- `tools/gen-expect.js` records readable x86-64 assembly (`gcc -S -O1`) for code marked `asm`.
+- Checker: orientation lessons (`C.ORI.01`) have their own light skeleton and no construct ladder; choice items need
+  exactly one right option and feedback on every option.
+
 ## [0.1.0] — 2026-11-25
 
 The first public preview: chapter 1 in three languages, on a complete site.

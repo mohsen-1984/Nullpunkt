@@ -21,7 +21,7 @@
                 'divide-by-zero': 'Runtime error: تقسیم بر صفر.', 'memory-out-of-bounds': 'Runtime error: دسترسی بیرون از حافظه (مانند segmentation fault).',
                 'stack-overflow': 'Runtime error: پر شدن stack — احتمالاً recursion بدون پایان.', 'null-write': 'Runtime error: نوشتن از طریق NULL pointer (روی PC یک segmentation fault).',
                 'output-limit': 'متوقف شد: خروجی بیش از 1 MB بود.', 'runtime-error': 'Runtime error.' },
-            prev: 'درس قبل', next: 'درس بعد', inDevelopment: 'در دست ساخت', planned: 'هنوز نوشته نشده',
+            asmTitle: 'assembly برای x86-64 (gcc -O1)', prev: 'درس قبل', next: 'درس بعد', inDevelopment: 'در دست ساخت', planned: 'هنوز نوشته نشده',
         },
         de: {
             lesson: 'Lektion', chapter: 'Kapitel', minutes: 'Minuten', run: 'Ausführen', stop: 'Stopp', reset: 'Ursprünglicher Code', output: 'Ausgabe',
@@ -42,7 +42,7 @@
                 'divide-by-zero': 'Runtime error: Division durch null.', 'memory-out-of-bounds': 'Runtime error: Zugriff außerhalb des Speichers (wie ein segmentation fault).',
                 'stack-overflow': 'Runtime error: Stack voll — vermutlich eine Rekursion ohne Ende.', 'null-write': 'Runtime error: Schreiben über einen NULL Pointer (auf einem PC ein segmentation fault).',
                 'output-limit': 'Gestoppt: mehr als 1 MB Ausgabe.', 'runtime-error': 'Runtime error.' },
-            prev: 'Vorherige Lektion', next: 'Nächste Lektion', inDevelopment: 'In Arbeit', planned: 'Noch nicht geschrieben',
+            asmTitle: 'Assembly für x86-64 (gcc -O1)', prev: 'Vorherige Lektion', next: 'Nächste Lektion', inDevelopment: 'In Arbeit', planned: 'Noch nicht geschrieben',
         },
         en: {
             lesson: 'Lesson', chapter: 'Chapter', minutes: 'minutes', run: 'Run', stop: 'Stop', reset: 'Original code', output: 'Output',
@@ -63,7 +63,7 @@
                 'divide-by-zero': 'Runtime error: division by zero.', 'memory-out-of-bounds': 'Runtime error: memory access out of bounds (like a segmentation fault).',
                 'stack-overflow': 'Runtime error: stack overflow — probably a recursion that never ends.', 'null-write': 'Runtime error: writing through a NULL pointer (a segmentation fault on a PC).',
                 'output-limit': 'Stopped: more than 1 MB of output.', 'runtime-error': 'Runtime error.' },
-            prev: 'Previous lesson', next: 'Next lesson', inDevelopment: 'In development', planned: 'Not written yet',
+            asmTitle: 'Assembly for x86-64 (gcc -O1)', prev: 'Previous lesson', next: 'Next lesson', inDevelopment: 'In development', planned: 'Not written yet',
         },
     };
 })(typeof window !== 'undefined' ? window : globalThis);

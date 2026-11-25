@@ -49,13 +49,13 @@
         ix.chapterList.forEach(function (ch) {
             var lessons = ix.lessonList.filter(function (L) { return L.chapter === ch.id; });
             var written = lessons.filter(function (L) { return L.unit; }).length;
-            var isOpen = open === 'all' || (cur ? cur.chapter === ch.id : ch.n === 1);
+            var isOpen = open === 'all' || (cur ? cur.chapter === ch.id : ch.n <= 1);
             html += '<li class="np-tree-chapter' + (written ? '' : ' is-planned') + '"><details' + (isOpen ? ' open' : '') + '><summary>' +
                 '<span class="np-tree-n">' + ch.n + '</span><span class="np-tree-ch">' + esc(ch.catalog.title[lang]) + '</span>' +
                 svg('chevron-down', 'np-tree-caret') + '</summary><ol>';
             lessons.forEach(function (L) {
                 var st = state(L), here = L.id === current;
-                var inner = '<span class="np-tree-state is-' + st + '">' + svg(STATE_ICON[st]) + '</span><span class="np-tree-num">' + L.n + '</span>' +
+                var inner = '<span class="np-tree-state is-' + st + '">' + svg(STATE_ICON[st]) + '</span><span class="np-tree-num">' + L.label + '</span>' +
                     '<span class="np-tree-lt">' + esc(L.catalog.title[lang]) + '</span>';
                 if (L.unit) html += '<li><a class="np-tree-lesson' + (here ? ' is-current' : '') + '" href="' + esc(lessonHref(L.id, lang)) + '"' + (here ? ' aria-current="page"' : '') + '>' + inner + '</a></li>';
                 else html += '<li><span class="np-tree-lesson is-planned" title="' + esc(c.soon) + '">' + inner + '</span></li>';

@@ -5,6 +5,9 @@ Open work and backlog only — what is done lives in the code, the rule document
 
 ## Next — 0.2: chapter 2 and the review unit
 
+- [ ] Read chapter 0 with a learner from zero in each language; check the facts dated November 2026 again before
+      each release (TIOBE, compiler defaults).
+
 - [ ] Review unit `C01.REV` with an *On your PC* block (`onpc`): gcc or clang, VS Code or CLion, the same three
       lessons on a real machine.
 - [ ] Chapter 2 — Values & Variables (lessons 4–8): variables and identifiers, whole and decimal numbers, expressions,

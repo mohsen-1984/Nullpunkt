@@ -123,6 +123,78 @@
                     en: 'Each value you give to a function like `printf` inside the parentheses; arguments are separated by `,`.',
                 },
             },
+            {
+                id: 'T.embedded-system', en: 'embedded system', use: { fa: 'embedded system', de: 'eingebettetes System' },
+                gloss: { fa: 'سامانهٔ نهفته', de: 'embedded system' }, deArticle: 'das', series: ['C'],
+                def: {
+                    fa: 'کامپیوتر کوچکی درون یک دستگاه دیگر، مثل خودرو یا ماشین لباسشویی، که فقط یک کار را انجام می‌دهد.',
+                    de: 'Ein kleiner Computer in einem anderen Gerät, etwa einem Auto oder einer Waschmaschine, der nur eine Aufgabe erledigt.',
+                    en: 'A small computer inside another device, such as a car or a washing machine, that does one job.',
+                },
+            },
+            {
+                id: 'T.machine-code', en: 'machine code', use: { fa: 'machine code', de: 'Maschinencode' },
+                gloss: { fa: 'کد ماشین', de: 'machine code' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: 'دستورهایی به شکل عدد که پردازنده مستقیم اجرا می‌کند.',
+                    de: 'Befehle in Form von Zahlen, die der Prozessor direkt ausführt.',
+                    en: 'Instructions in the form of numbers that the processor runs directly.',
+                },
+            },
+            {
+                id: 'T.assembly-language', en: 'assembly language', use: { fa: 'assembly', de: 'Assembly' },
+                gloss: { fa: 'زبان اسمبلی', de: 'Assemblersprache' }, deArticle: 'das', series: ['C'],
+                def: {
+                    fa: 'نوشتن machine code با نام‌های کوتاه مثل `mov` و `call`؛ هر خط تقریباً یک دستور پردازنده.',
+                    de: 'Maschinencode mit kurzen Namen wie `mov` und `call` geschrieben; jede Zeile ist ungefähr ein Prozessorbefehl.',
+                    en: 'Machine code written with short names like `mov` and `call`; each line is about one processor instruction.',
+                },
+            },
+            {
+                id: 'T.interpreter', en: 'interpreter', use: { fa: 'interpreter', de: 'Interpreter' },
+                gloss: { fa: 'مفسر', de: 'Übersetzer zur Laufzeit' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: 'برنامه‌ای که برنامهٔ دیگری را هنگام اجرا، گام به گام پیش می‌برد، بی‌آنکه پیش از آن یک executable بسازد.',
+                    de: 'Ein Programm, das ein anderes Programm beim Ausführen Schritt für Schritt abarbeitet, ohne vorher ein ausführbares Programm zu bauen.',
+                    en: 'A program that works through another program step by step while it runs, without building an executable first.',
+                },
+            },
+            {
+                id: 'T.bytecode', en: 'bytecode', use: { fa: 'bytecode', de: 'Bytecode' },
+                gloss: { fa: 'کد میانی', de: 'Zwischencode' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: 'شکل میانی یک برنامه، نزدیک به machine code، که یک ماشین مجازی یا interpreter آن را اجرا می‌کند.',
+                    de: 'Eine Zwischenform eines Programms, nah am Maschinencode, die eine virtuelle Maschine oder ein Interpreter ausführt.',
+                    en: 'An in-between form of a program, close to machine code, that a virtual machine or an interpreter runs.',
+                },
+            },
+            {
+                id: 'T.executable', en: 'executable', use: { fa: 'executable', de: 'ausführbares Programm' },
+                gloss: { fa: 'فایل اجرایی', de: 'executable' }, deArticle: 'das', series: ['C'],
+                def: {
+                    fa: 'فایلی که compiler و linker می‌سازند و سیستم‌عامل می‌تواند مستقیم اجرا کند.',
+                    de: 'Die Datei, die Compiler und Linker bauen und die das Betriebssystem direkt starten kann.',
+                    en: 'The file that the compiler and linker build and that the operating system can start directly.',
+                },
+            },
+            {
+                id: 'T.terminal', en: 'terminal', use: { fa: 'terminal', de: 'Terminal' },
+                gloss: { fa: 'پایانه، خط فرمان', de: 'Kommandozeile' }, deArticle: 'das', series: ['C'],
+                def: {
+                    fa: 'پنجره‌ای که در آن به‌جای کلیک کردن دستور می‌نویسی.',
+                    de: 'Ein Fenster, in dem du Befehle tippst, statt zu klicken.',
+                    en: 'A window where you type commands instead of clicking.',
+                },
+            },
+            {
+                id: 'T.ide', en: 'IDE', use: { fa: 'IDE', de: 'IDE' },
+                gloss: { fa: 'محیط یکپارچهٔ توسعه', de: 'Entwicklungsumgebung' }, deArticle: 'die', series: ['C'],
+                def: {
+                    fa: 'برنامه‌ای که ویرایشگر، اجرای compiler و debugger را کنار هم می‌گذارد، مثل VS Code یا CLion.',
+                    de: 'Ein Programm, das Editor, Compileraufruf und Debugger bündelt, etwa VS Code oder CLion.',
+                    en: 'A program that puts an editor, the compiler and a debugger together, such as VS Code or CLion.',
+                },
+            },
         ],
     };
 })(typeof window !== 'undefined' ? window : globalThis);
