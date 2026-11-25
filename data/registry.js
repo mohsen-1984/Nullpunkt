@@ -182,6 +182,14 @@
                     { id: "C.L49", status: "planned", title: {"fa": "تست برنامهٔ خودت", "de": "Den eigenen Code testen", "en": "Testing Your Code"} },
                     { id: "C.L50", status: "planned", title: {"fa": "function pointer و qsort", "de": "Function Pointer und qsort", "en": "Function Pointers & qsort"} },
                 ] },
+            // C14: what standard C sees of devices (streams), the terminal beyond plain text, graphics, and hardware registers
+            { id: "C14", title: {"fa": "فراتر از کنسول", "de": "Jenseits der Konsole", "en": "Beyond the Console"}, review: "C14.REV", langStatus: { fa: "draft", de: "draft", en: "draft" },
+                lessons: [
+                    { id: "C.L51", status: "planned", title: {"fa": "stream و دستگاه: stdin، stdout، stderr", "de": "Streams und Geräte: stdin, stdout, stderr", "en": "Streams & Devices: stdin, stdout, stderr"} },
+                    { id: "C.L52", status: "planned", title: {"fa": "terminal: رنگ، مکان‌نما، کلید", "de": "Das Terminal: Farben, Cursor, Tasten", "en": "The Terminal: Colors, Cursor, Keys"} },
+                    { id: "C.L53", status: "planned", title: {"fa": "گرافیک در C: از graphics.h تا کتابخانه‌های امروزی", "de": "Grafik in C: von graphics.h zu heutigen Bibliotheken", "en": "Graphics in C: from graphics.h to Modern Libraries"} },
+                    { id: "C.L54", status: "planned", title: {"fa": "گفت‌وگو با سخت‌افزار: register و volatile", "de": "Mit Hardware sprechen: Register und volatile", "en": "Talking to Hardware: Registers & volatile"} },
+                ] },
             ],
         }],
     };

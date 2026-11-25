@@ -3,6 +3,18 @@
 Open work and backlog only — what is done lives in the code, the rule documents (`docs/rules/`) and the release notes
 (`CHANGELOG.md`). Rounds are listed in the order planned; the target of 1.0 is the whole C course.
 
+## Review first (start of the next session)
+
+- [ ] Logo: choose among the Claude Design samples; update `assets/favicon.svg`, the mark in `site/chrome.js`,
+      `tools/og-image.html` and the PNGs.
+- [ ] Read chapters 0 and 1 in all three languages as a learner: German by a native speaker, Persian term
+      consistency (English term beside the Persian one), facts dated November 2026.
+- [ ] Catalog review before writing further: placement of chapter 14 (`C.DEV.01`); where `math.h`, `rand`/`time`,
+      `static` and storage duration, `union`, bit-fields and the security mistakes (`S-`) are taught; review units.
+- [ ] UX on real devices: phone (editor, drawer, tabs), RTL, dark theme, keyboard only, a screen reader; load time of
+      the compiler (600 KB) on a slow connection.
+- [ ] CI: move `actions/checkout` and `actions/setup-node` off Node 20 (deprecation warning).
+
 ## Next — 0.2: chapter 2 and the review unit
 
 - [ ] Read chapter 0 with a learner from zero in each language; check the facts dated November 2026 again before
@@ -29,11 +41,13 @@ Open work and backlog only — what is done lives in the code, the rule document
 - [ ] Send the XCC contributions prepared in `docs/upstream/` (a tested patch for `limits.h` and `%td` / `%jd`;
       issues for `_Static_assert` and the repeating error recovery), then drop each workaround in `C.XCC.01`.
 - [ ] Several files per program (chapter 12: `.c` and `.h`, `extern`, `#include "…"`).
+- [ ] Chapter 14 in the browser: show ANSI colors and cursor moves in the output pane; show an image file (PPM)
+      a program writes; `stderr` in its own color.
 - [ ] An error explainer: the first compiler message mapped to its mistake code (`E-01` …) when one fits.
 
 ## Before 1.0
 
-- [ ] All 13 chapters and 50 lessons; every chapter's review unit.
+- [ ] All 14 chapters and 54 lessons; every chapter's review unit.
 - [ ] Every lesson read by a learner from zero in each language, and corrected.
 - [ ] Accessibility pass (keyboard only, screen reader in each language, contrast in both themes).
 - [ ] Performance budget: first paint of a lesson under 1 s on a mid-range laptop; the compiler loads on first run only.

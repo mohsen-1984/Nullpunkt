@@ -19,7 +19,7 @@
                 eyebrow: 'Free · ISO C17 · three languages',
                 lead: 'A self-study C course for first-year computer science students who start from zero. Every example runs in your browser — a real C compiler, on your own machine, with nothing sent anywhere.',
             },
-            pathLead: 'A short orientation, then 13 chapters and 50 lessons, from your first printf to pointers, memory and files. Lessons appear here as they are written.',
+            pathLead: 'A short orientation, then 14 chapters and 54 lessons, from your first printf to pointers, memory, files and the hardware. Lessons appear here as they are written.',
             method: {
                 lead: 'Every lesson follows the same path, so you always know where you are.',
                 steps: [
@@ -65,7 +65,7 @@
                 eyebrow: 'Kostenlos · ISO C17 · drei Sprachen',
                 lead: 'Ein C-Kurs zum Selbstlernen für Informatik-Erstsemester, die bei null anfangen. Jedes Beispiel läuft in deinem Browser — ein echter C-Compiler auf deinem eigenen Rechner, ohne dass etwas verschickt wird.',
             },
-            pathLead: 'Eine kurze Orientierung, dann 13 Kapitel und 50 Lektionen, vom ersten printf bis zu Pointern, Speicher und Dateien. Lektionen erscheinen hier, sobald sie geschrieben sind.',
+            pathLead: 'Eine kurze Orientierung, dann 14 Kapitel und 54 Lektionen, vom ersten printf bis zu Pointern, Speicher, Dateien und der Hardware. Lektionen erscheinen hier, sobald sie geschrieben sind.',
             method: {
                 lead: 'Jede Lektion folgt demselben Weg, damit du immer weißt, wo du bist.',
                 steps: [
@@ -111,7 +111,7 @@
                 eyebrow: 'رایگان · ISO C17 · سه زبان',
                 lead: 'دورهٔ خودآموز C برای دانشجوی سال اول علوم کامپیوتر که از صفر شروع می‌کند. هر مثال در مرورگر خودت اجرا می‌شود — یک compiler واقعی C، روی کامپیوتر خودت، بی‌آنکه چیزی جایی فرستاده شود.',
             },
-            pathLead: 'یک جهت‌یابی کوتاه، سپس 13 فصل و 50 درس، از اولین printf تا pointer، حافظه و فایل. هر درس که نوشته شود، اینجا می‌آید.',
+            pathLead: 'یک جهت‌یابی کوتاه، سپس 14 فصل و 54 درس، از اولین printf تا pointer، حافظه، فایل و سخت‌افزار. هر درس که نوشته شود، اینجا می‌آید.',
             method: {
                 lead: 'همهٔ درس‌ها یک مسیر را می‌روند تا همیشه بدانی کجای کاری.',
                 steps: [
