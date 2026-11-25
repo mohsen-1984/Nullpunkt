@@ -27,6 +27,8 @@ const getJson = u => new Promise((res, rej) => http.get(u, r => { let s = ''; r.
 // runs inside the page: returns a report of what worked
 const PROBE = `(async () => {
     const wait = async (f, ms) => { for (let i = 0; i < ms / 50; i++) { const v = f(); if (v) return v; await new Promise(r => setTimeout(r, 50)); } return null; };
+    // the first page in a fresh browser can take longer than the fixed pause: wait until the page has mounted
+    await wait(() => window.NullpunktChrome && NullpunktChrome.ready, 20000);
     const N = window.Nullpunkt, ix = NullpunktData.index(N);
     const L = ix.lesson[new URLSearchParams(location.search).get('lesson')];
     const rep = { h1: document.querySelector('h1').textContent, blocks: document.querySelectorAll('.np-block').length, ok: [], bad: [] };

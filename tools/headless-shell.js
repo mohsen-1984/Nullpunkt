@@ -48,7 +48,11 @@ const getJson = u => new Promise((res, rej) => http.get(u, r => { let s = ''; r.
     const size = (w, h) => send('Emulation.setDeviceMetricsOverride', { width: w, height: h || 800, deviceScaleFactor: 1, mobile: w < 600 });
     await send('Runtime.enable');
     await send('Page.enable');
-    const go = async url => { await send('Page.navigate', { url: 'file://' + path.join(root, url) }); await sleep(1300); };
+    const go = async url => {
+        await send('Page.navigate', { url: 'file://' + path.join(root, url) });
+        await sleep(600);
+        for (let i = 0; i < 60 && !(await ev('!!(window.NullpunktChrome && NullpunktChrome.ready)')); i++) await sleep(250);
+    };
     let failed = 0, runs = 0;
 
     for (const [name, url] of PAGES) for (const lang of LANGS) {
