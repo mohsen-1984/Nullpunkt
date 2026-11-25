@@ -26,6 +26,18 @@ The course is written against a small set of rule documents (drafts, in Persian 
 | [`S00-assets`](docs/rules/S00-assets.md) | Logo, colors, fonts, icons |
 | [`C00-conventions`](docs/rules/C00-conventions.md) | The C series: learning path (13 chapters, 50 lessons), lesson skeleton, construct ladder |
 
+## Repository
+
+| Folder | What it holds |
+|---|---|
+| `docs/rules/` | The rule documents above |
+| `lib/` | `CRunner.js` (compile and run C in the browser) and `WasiShim.js` (its small WASI host) |
+| `vendor/wcc/` | XCC, the C compiler, as one script — see its README |
+| `tests/` | Lab programs and their expected results, taken from gcc |
+| `tools/` | Build scripts, and `runner-lab/` — a page that runs the whole lab in any browser |
+
+Open `tools/runner-lab/index.html` (straight from disk is fine) and press **Run lab** to check the runner in your browser.
+
 ## License
 
 - **Content** (lessons, exercises, rule documents, logo): [CC BY-SA 4.0](LICENSE-CONTENT.md)
