@@ -106,7 +106,7 @@ const tag = G ? { gcc: G.compilers.gcc, xcc: G.compilers.xcc } : null;
 const hash = o => crypto.createHash('sha256').update(JSON.stringify(o)).digest('hex').slice(0, 16);
 const program = (source, rec) => ({ source, stdin: rec.stdin || '', args: rec.args || [], files: rec.files || {} });
 const bundleFile = fs.readdirSync(path.join(root, 'vendor/wcc')).find(f => /^wcc_.*\.js$/.test(f));
-const xccCommit = require(path.join(root, 'vendor/wcc', bundleFile)).commit;
+const xccBundle = require(path.join(root, 'vendor/wcc', bundleFile)), xccCommit = xccBundle.build || xccBundle.commit;
 if (!G) err(rule('S.CH.05'), 'data/generated', 'missing — run node tools/gen-expect.js');
 else if (G.compilers.xcc !== xccCommit) err('S.CH.05', 'data/generated', 'made with another XCC — run node tools/gen-expect.js');
 
@@ -342,6 +342,11 @@ Object.values(ix.prompt).forEach(p => {
         if (!/^https?:/.test(s) && !fs.existsSync(path.join(root, s))) err('S.DAT.06', pg, 'loads a missing file: ' + s);
     });
 });
+// the compiler the lesson page loads on the first run is the vendored one
+(function () {
+    const m = fs.readFileSync(path.join(root, 'lesson.html'), 'utf8').match(/data-wcc="([^"]+)"/);
+    if (!m || !fs.existsSync(path.join(root, m[1]))) err('S.DAT.06', 'lesson.html', 'data-wcc does not name the file in vendor/wcc/ (' + (m ? m[1] : 'missing') + ')');
+})();
 // every chapter folder is in the registry, holds its register, and only files of lessons its register names
 DATA_FILES.filter(f => f.indexOf('/') > 0).forEach(f => {
     const [folder, name] = f.split('/'), ch = ix.chapterList.find(c => c.folder === folder);

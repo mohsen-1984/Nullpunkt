@@ -5,16 +5,21 @@
  *
  *   node tools/build-wcc.js <xcc checkout>
  *
- * The checkout must be built first (Linux, gcc or clang, llvm-ar, Node):
- *   git clone https://github.com/tyfkda/xcc && cd xcc && make wcc && make wcc-gen2
+ * The checkout is XCC at the commit named in vendor/wcc/README.md, with the patches of vendor/wcc/patches/ applied
+ * (fixes not yet in XCC upstream; each one is also offered upstream, docs/upstream/), built first (Linux, gcc or
+ * clang, llvm-ar, Node):
+ *   git clone https://github.com/tyfkda/xcc && cd xcc && git checkout <commit>
+ *   for p in <nullpunkt>/vendor/wcc/patches/*.patch; do git apply "$p"; done
+ *   make wcc && make wcc-gen2
  * which gives cc.wasm (the compiler, itself compiled to wasm), lib/wcrt0.a and lib/wlibc.a (its libc).
  *
  * The file list is XCC's own src/wcc/www/lib_list.json (what its online demo ships): /usr/bin/cc,
  * /usr/include/*.h, /usr/lib/*.a. Bytes are not changed; binaries are written in base64, headers as text
  * (with the demo's one rewrite: `#include "../x/y.h"` → `#include "y.h"`, since all headers sit in one folder).
  *
- * Output: vendor/wcc/wcc_<commit>.js   defines window.WccBundle = { version, commit, files: { path: string } }
- *         where a binary's string starts with "base64:".
+ * Output: vendor/wcc/wcc_<build>.js   defines window.WccBundle = { version, commit, patches, build, files }
+ *         where a binary's string starts with "base64:". build is the commit's first 7 characters, and with patches
+ *         a dash and the first 7 characters of the SHA-256 of the patch files: it names what was really built.
  */
 'use strict';
 const fs = require('fs'), path = require('path'), crypto = require('crypto'), cp = require('child_process');
@@ -41,18 +46,24 @@ const files = {};
 
 let commit = 'unknown';
 try { commit = cp.execSync('git rev-parse HEAD', { cwd: xcc }).toString().trim(); } catch (e) { /* not a git checkout */ }
+const patchDir = path.join(__dirname, '..', 'vendor', 'wcc', 'patches');
+const patches = fs.existsSync(patchDir) ? fs.readdirSync(patchDir).filter(f => f.endsWith('.patch')).sort() : [];
+const patchSha = crypto.createHash('sha256');
+patches.forEach(f => patchSha.update(fs.readFileSync(path.join(patchDir, f))));
+const build = commit.slice(0, 7) + (patches.length ? '-' + patchSha.digest('hex').slice(0, 7) : '');
 const pkg = JSON.parse(fs.readFileSync(path.join(xcc, 'package.json'), 'utf8'));
 const cc = fs.readFileSync(path.join(xcc, 'cc.wasm'));
 const sha = crypto.createHash('sha256').update(cc).digest('hex');
 
 const outDir = path.join(__dirname, '..', 'vendor', 'wcc');
 fs.mkdirSync(outDir, { recursive: true });
-const out = path.join(outDir, 'wcc_' + commit.slice(0, 7) + '.js');
+const out = path.join(outDir, 'wcc_' + build + '.js');
+fs.readdirSync(outDir).filter(f => /^wcc_.*\.js$/.test(f) && path.join(outDir, f) !== out).forEach(f => fs.rmSync(path.join(outDir, f)));
 fs.writeFileSync(out,
     '/* XCC / wcc — C compiler for WebAssembly by tyfkda (https://github.com/tyfkda/xcc, commit ' + commit +
-    ', MIT, see LICENSE). Compiler (cc.wasm, SHA-256 ' + sha + '), libc and headers, bytes unchanged; ' +
-    'made by tools/build-wcc.js. */\n' +
-    '(function (g) { g.WccBundle = ' + JSON.stringify({ version: pkg.version, commit, files }) + ';\n' +
+    ', MIT, see LICENSE)' + (patches.length ? ' with the patches ' + patches.join(', ') + ' (vendor/wcc/patches/)' : '') +
+    '. Compiler (cc.wasm, SHA-256 ' + sha + '), libc and headers, bytes unchanged; made by tools/build-wcc.js. */\n' +
+    '(function (g) { g.WccBundle = ' + JSON.stringify({ version: pkg.version, commit, patches, build, files }) + ';\n' +
     '    if (typeof module !== \'undefined\' && module.exports) module.exports = g.WccBundle; })' +
     '(typeof window !== \'undefined\' ? window : globalThis);\n');
 fs.copyFileSync(path.join(xcc, 'LICENSE'), path.join(outDir, 'LICENSE'));

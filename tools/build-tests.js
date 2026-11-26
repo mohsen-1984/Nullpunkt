@@ -16,7 +16,7 @@
 const fs = require('fs'), path = require('path'), cp = require('child_process'), os = require('os');
 
 const dir = path.join(__dirname, '..', 'tests', 'programs');
-const STDIN = { '10-input.c': '3\n4\n5\n6\nMohsen\n' };
+const STDIN = { '10-input.c': '3\n4\n5\n6\nMohsen\n', '18-scanf.c': '12 4.5\n B\nrow by the window\n1 2\n' };
 // Known XCC gaps (C00-conventions, C.XCC.01): the program is correct C and gcc runs it, but XCC does not yet.
 // The lab expects these to fail; once XCC is fixed upstream, the check reports it so the gap can be removed.
 const KNOWN_GAP = {

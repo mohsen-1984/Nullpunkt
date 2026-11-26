@@ -1,0 +1,332 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Nullpunkt <mhn.com@gmail.com>
+Subject: [PATCH] libc: scanf: %c, %[, %*, h/hh/j/z/t, and EOF when the input
+ ends first
+
+---
+ libsrc/stdio/vfscanf.c | 260 +++++++++++++++++++++++++++--------------
+ 1 file changed, 175 insertions(+), 85 deletions(-)
+
+diff --git a/libsrc/stdio/vfscanf.c b/libsrc/stdio/vfscanf.c
+index b3259baa..f12cbd5b 100644
+--- a/libsrc/stdio/vfscanf.c
++++ b/libsrc/stdio/vfscanf.c
+@@ -62,12 +62,16 @@ static bool read_llong(FILE *fp, int base, long long *p) {
+   return result;
+ }
+ 
+-static bool read_store_llong(FILE *fp, int base, int long_count, VaList *va) {
++static bool read_store_llong(FILE *fp, int base, int long_count, bool store, VaList *va) {
+   long long x;
+   if (!read_llong(fp, base, &x))
+     return false;
++  if (!store)
++    return true;
+ 
+   switch (long_count) {
++  case -2: { signed char *p = va_arg(va->ap, signed char*); *p = x; } break;
++  case -1: { short *p = va_arg(va->ap, short*); *p = x; } break;
+   case 0:  { int *p = va_arg(va->ap, int*); *p = x; } break;
+   case 1:  { long *p = va_arg(va->ap, long*); *p = x; } break;
+   default:  { long long *p = va_arg(va->ap, long long*); *p = x; } break;
+@@ -166,10 +170,12 @@ static bool read_ldouble(FILE *fp, long double *p) {
+   return result;
+ }
+ 
+-static bool read_store_float(FILE *fp, int long_count, VaList *va) {
++static bool read_store_float(FILE *fp, int long_count, bool store, VaList *va) {
+   long double x;
+   if (!read_ldouble(fp, &x))
+     return false;
++  if (!store)
++    return true;
+ 
+   switch (long_count) {
+   case 0:  { float *p = va_arg(va->ap, float*); *p = x; } break;
+@@ -180,119 +186,203 @@ static bool read_store_float(FILE *fp, int long_count, VaList *va) {
+ }
+ #endif
+ 
+-static bool read_store_string(FILE *fp, int order, VaList *va) {
+-  char *p = va_arg(va->ap, char*);
++// %s: a run of non-space characters (leading spaces are skipped by the caller).
++static bool read_store_string(FILE *fp, int order, bool store, VaList *va) {
++  char *p = store ? va_arg(va->ap, char*) : NULL;
+   size_t n = order > 0 ? order : SIZE_MAX;
+-  for (size_t i = 0; i < n; ++i) {
++  size_t i;
++  for (i = 0; i < n; ++i) {
+     int c = fgetc(fp);
+-    if (c == '\0') {
+-      if (i == 0)
+-        return false;
++    if (c == EOF)
+       break;
+-    }
+     if (isspace(c)) {
+       ungetc(c, fp);
+       break;
+     }
+-    *p++ = c;
++    if (p != NULL)
++      *p++ = c;
++  }
++  if (i == 0)
++    return false;
++  if (p != NULL)
++    *p = '\0';
++  return true;
++}
++
++// %c: exactly `order` characters (1 if no width), white space included, no terminating '\0'.
++static bool read_store_chars(FILE *fp, int order, bool store, VaList *va) {
++  char *p = store ? va_arg(va->ap, char*) : NULL;
++  int n = order > 0 ? order : 1;
++  for (int i = 0; i < n; ++i) {
++    int c = fgetc(fp);
++    if (c == EOF)
++      return i > 0;  // as glibc: a shorter run at the end of the input still counts
++    if (p != NULL)
++      *p++ = c;
++  }
++  return true;
++}
++
++// %[...]: the longest run of characters in the scan set; `*pp` points at '[' and is left at the closing ']'.
++static bool read_store_scanset(FILE *fp, const unsigned char **pp, int order, bool store, VaList *va) {
++  const unsigned char *q = *pp + 1;
++  bool negate = false;
++  if (*q == '^') {
++    negate = true;
++    ++q;
++  }
++  bool set[256];
++  memset(set, 0, sizeof(set));
++  if (*q == ']')  // a ']' right after '[' or '[^' is part of the set
++    set[*q++] = true;
++  for (; *q != '\0' && *q != ']'; ++q) {
++    if (q[1] == '-' && q[2] != ']' && q[2] != '\0') {
++      for (int ch = q[0]; ch <= q[2]; ++ch)
++        set[ch] = true;
++      q += 2;
++    } else {
++      set[*q] = true;
++    }
++  }
++  if (*q != ']')
++    return false;
++  *pp = q;
++
++  char *p = store ? va_arg(va->ap, char*) : NULL;
++  size_t n = order > 0 ? order : SIZE_MAX;
++  size_t i;
++  for (i = 0; i < n; ++i) {
++    int c = fgetc(fp);
++    if (c == EOF)
++      break;
++    if (set[(unsigned char)c] == negate) {
++      ungetc(c, fp);
++      break;
++    }
++    if (p != NULL)
++      *p++ = c;
+   }
+-  *p = '\0';
++  if (i == 0)
++    return false;
++  if (p != NULL)
++    *p = '\0';
+   return true;
+ }
+ 
++static void skip_spaces(FILE *fp) {
++  int c;
++  while (c = fgetc(fp), isspace(c))
++    ;
++  if (c != EOF)
++    ungetc(c, fp);
++}
++
++// Returns the number of items assigned, or EOF if the input ends before the first conversion (C17 7.21.6.2p16).
+ int vfscanf(FILE *restrict fp, const char *restrict format, va_list ap) {
+   int count = 0;
++  bool converted = false;  // a conversion has completed: EOF is no longer returned
+   int c;
+   VaList va;
+   va_copy(va.ap, ap);
+   for (const unsigned char *p = (unsigned char*)format; (c = *p) != '\0'; ++p) {
+-    if ((c == '%' && (p[1] != '%' && p[1] != 'n')) || isspace(c)) {
+-      int c2;
+-      while (c2 = fgetc(fp), isspace(c2))
+-        ;
+-      ungetc(c2, fp);
+-      if (c != '%')
+-        continue;
++    if (isspace(c)) {
++      skip_spaces(fp);
++      continue;
+     }
+ 
+-    if (c == '%') {
++    if (c == '%' && p[1] != '%') {
+       c = *(++p);
+-      if (c != '%') {
+-        int order = 0;
+-        if (isdigit(c)) {
+-          order = c - '0';
+-          while (c = *(++p), isdigit(c))
+-            order = order * 10 + (c - '0');
+-        }
+-
+-        int long_count = 0;
+-        for (;; c = *(++p)) {
+-          if (c == 'l')
+-            ++long_count;
+-          else if (c == 'L')
+-            long_count += 2;
+-          else
+-            break;
+-        }
++      bool store = true;
++      if (c == '*') {
++        store = false;
++        c = *(++p);
++      }
++      int order = 0;
++      if (isdigit(c)) {
++        order = c - '0';
++        while (c = *(++p), isdigit(c))
++          order = order * 10 + (c - '0');
++      }
+ 
+-        switch (c) {
+-        case 'u':
+-          // No special handling for unsigned?
+-          // Fallthrough.
+-        case 'd': case 'i':
+-          if (read_store_llong(fp, 10, long_count, &va)) {
+-            ++count;
+-            continue;
+-          }
+-          break;
+-        case 'x':
+-          if (read_store_llong(fp, 16, long_count, &va)) {
+-            ++count;
+-            continue;
+-          }
+-          break;
+-        case 'o':
+-          if (read_store_llong(fp, 8, long_count, &va)) {
+-            ++count;
+-            continue;
+-          }
++      int long_count = 0;
++      for (;; c = *(++p)) {
++        if (c == 'l')
++          ++long_count;
++        else if (c == 'L' || c == 'j')
++          long_count += 2;
++        else if (c == 'z' || c == 't')
++          ++long_count;
++        else if (c == 'h')
++          --long_count;
++        else
+           break;
++      }
++
++      if (c != 'c' && c != '[' && c != 'n')
++        skip_spaces(fp);
++      if (c != 'n') {
++        int c2 = fgetc(fp);
++        if (c2 == EOF)
++          return converted ? count : EOF;
++        ungetc(c2, fp);
++      }
++
++      bool ok = false;
++      switch (c) {
++      case 'u':
++        // No special handling for unsigned?
++        // Fallthrough.
++      case 'd': case 'i':
++        ok = read_store_llong(fp, 10, long_count, store, &va);
++        break;
++      case 'x': case 'X':
++        ok = read_store_llong(fp, 16, long_count, store, &va);
++        break;
++      case 'o':
++        ok = read_store_llong(fp, 8, long_count, store, &va);
++        break;
+ #ifndef __NO_FLONUM
+-        case 'f':
+-          if (read_store_float(fp, long_count, &va)) {
+-            ++count;
+-            continue;
+-          }
+-          break;
++      case 'f': case 'F': case 'e': case 'E': case 'g': case 'G': case 'a': case 'A':
++        ok = read_store_float(fp, long_count, store, &va);
++        break;
+ #endif
+-        case 's':
+-          if (read_store_string(fp, order, &va)) {
+-            ++count;
+-            continue;
+-          }
+-          break;
+-        case 'n':
+-          {
+-            long pos = ftell(fp);
+-            if (pos == -1) {
+-              // error
+-            } else {
+-              int *p = va_arg(va.ap, int*);
+-              *p = pos;
+-              // No need to increment the `count`.
+-              continue;
+-            }
++      case 's':
++        ok = read_store_string(fp, order, store, &va);
++        break;
++      case 'c':
++        ok = read_store_chars(fp, order, store, &va);
++        break;
++      case '[':
++        ok = read_store_scanset(fp, &p, order, store, &va);
++        break;
++      case 'n':
++        {
++          long pos = ftell(fp);
++          if (pos != -1 && store) {
++            int *q = va_arg(va.ap, int*);
++            *q = pos;
+           }
+-          break;
+-        default:  // Unsupported.
+-          break;
++          // No need to increment the `count`.
++          continue;
+         }
+-        // Error.
+-        return count;
++      default:  // Unsupported.
++        break;
+       }
++      if (!ok)
++        return count;  // a matching failure
++      converted = true;
++      if (store)
++        ++count;
++      continue;
+     }
+ 
++    if (c == '%') {  // "%%" matches one '%', after white space
++      ++p;
++      skip_spaces(fp);
++    }
+     int in = fgetc(fp);
++    if (in == EOF)
++      return converted ? count : EOF;
+     if (c != in) {
+       ungetc(in, fp);
+       break;
