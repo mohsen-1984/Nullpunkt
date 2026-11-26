@@ -39,8 +39,25 @@
                     { fa: "بتوانی ورودی را در دو گام بسنجی: عدد رسید، و در بازهٔ مجاز است.", de: "Du kannst Eingaben in zwei Schritten prüfen: Eine Zahl kam an, und sie liegt im erlaubten Bereich.", en: "You can check input in two steps: a number arrived, and it is in the allowed range." },
                     { fa: "بتوانی با `?:` میان دو مقدار یکی را برگزینی.", de: "Du kannst mit `?:` einen von zwei Werten wählen.", en: "You can choose one of two values with `?:`." },
                 ] },
-            { id: "C.L14", status: "planned", title: {"fa": "switch", "de": "switch", "en": "switch"} },
+            { id: "C.L14", status: "written",
+                title: {"fa": "switch", "de": "switch", "en": "switch"},
+                minutes: 25, prereq: ["C.L13"], introduces: ["K.switch", "K.case", "K.default", "K.break"],
+                topics: [{ id: "control", stage: 4 }],
+                cando: [
+                    { fa: "بتوانی با `switch`، `case` و `default` یک متغیر را با چند مقدار ثابت مقایسه کنی.", de: "Du kannst mit `switch`, `case` und `default` eine Variable mit mehreren festen Werten vergleichen.", en: "You can compare one variable with several fixed values using `switch`, `case` and `default`." },
+                    { fa: "بتوانی پیش‌بینی کنی وقتی `break` نیست، کدام `case`‌ها اجرا می‌شوند.", de: "Du kannst vorhersagen, welche `case` laufen, wenn ein `break` fehlt.", en: "You can predict which `case`s run when a `break` is missing." },
+                    { fa: "بتوانی چند برچسب را برای یک بلوک مشترک پشت سر هم بنویسی، مثل حرف کوچک و بزرگ.", de: "Du kannst mehrere Marken für einen gemeinsamen Block hintereinander schreiben, etwa für Klein- und Großbuchstaben.", en: "You can put several labels in a row for one shared block, such as a small and a capital letter." },
+                    { fa: "بتوانی با `default` هر مقدار پیش‌بینی‌نشده را رد کنی.", de: "Du kannst mit `default` jeden nicht vorhergesehenen Wert zurückweisen.", en: "You can reject every unforeseen value with `default`." },
+                    { fa: "بتوانی بگویی کِی `switch` به کار می‌آید و کِی `if` لازم است.", de: "Du kannst sagen, wann `switch` passt und wann es `if` braucht.", en: "You can say when `switch` fits and when `if` is needed." },
+                ] },
         ],
-        review: { id: "C04.REV", status: "planned" },
+        review: { id: "C04.REV", status: "written", minutes: 30,
+            cando: [
+                { fa: "بتوانی برای هر مقایسه و شرط ترکیبی بی‌اجرا بگویی 1 است یا 0.", de: "Du kannst für jeden Vergleich und jede verknüpfte Bedingung ohne Ausführen sagen, ob sie 1 oder 0 ist.", en: "You can say, without running it, whether any comparison or combined condition is 1 or 0." },
+                { fa: "بتوانی برای یک تصمیم میان `if`، `else if` و `switch` درست انتخاب کنی.", de: "Du kannst für eine Entscheidung richtig zwischen `if`, `else if` und `switch` wählen.", en: "You can choose correctly between `if`, `else if` and `switch` for a decision." },
+                { fa: "بتوانی برنامه‌ای بنویسی که ورودی را بخواند، هم نبودن عدد و هم بیرون بودن از بازه را رد کند، و با بقیه کار کند.", de: "Du kannst ein Programm schreiben, das Eingaben liest, fehlende Zahlen und Zahlen außerhalb des Bereichs zurückweist und mit dem Rest arbeitet.", en: "You can write a program that reads input, rejects both a missing number and a number out of range, and works with the rest." },
+                { fa: "بتوانی برنامه را روی کامپیوتر خودت با `-Wall -Wextra` compile کنی و هر warning را مثل خطا بخوانی.", de: "Du kannst das Programm auf deinem eigenen Rechner mit `-Wall -Wextra` kompilieren und jede Warnung wie einen Fehler lesen.", en: "You can compile the program on your own computer with `-Wall -Wextra` and read every warning like an error." },
+                { fa: "بتوانی چهار دام این فصل را در کد پیدا کنی: `=` در شرط، `;` پس از `if`، `break` جاافتاده و بازهٔ ریاضی‌وار.", de: "Du kannst die vier Fallen dieses Kapitels im Code finden: `=` in einer Bedingung, `;` nach `if`, ein fehlendes `break` und einen Bereich wie in Mathe.", en: "You can find this chapter's four traps in code: `=` in a condition, `;` after `if`, a missing `break` and a range written as in maths." },
+            ] },
     };
 })(typeof window !== "undefined" ? window : globalThis);

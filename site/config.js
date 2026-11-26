@@ -9,7 +9,7 @@
 (function (g) {
     'use strict';
     g.NullpunktSite = {
-        version: '0.3.0',
+        version: '0.4.0',
         siteUrl: 'https://mohsen-1984.github.io/Nullpunkt/',
         repoUrl: 'https://github.com/mohsen-1984/Nullpunkt',
         contact: 'mhn.com@gmail.com',

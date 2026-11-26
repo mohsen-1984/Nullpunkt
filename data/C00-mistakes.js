@@ -625,6 +625,34 @@
                     en: '`scanf` only says that a number arrived, not that it makes sense. `-3` tickets make a negative price; in real programs, exactly such senseless numbers pay money back or damage memory. After every read, ask about the allowed range too.',
                 },
             },
+            {
+                id: 'W-08', dim: 'W', src: 'SRC.prior', contrast: 'CT.false',
+                title: {
+                    fa: '`break` جاافتاده در `switch`',
+                    de: 'Fehlendes `break` im `switch`',
+                    en: 'Missing `break` in a `switch`',
+                },
+                wrong: 'C.L14.K04', right: 'C.L14.K05',
+                why: {
+                    fa: 'در `match` در Python و در `switch` بسیاری از زبان‌های تازه، هر حالت خودبه‌خود تمام می‌شود. در C، `case` فقط یک برچسب است: بی `break`، اجرا در `case` بعدی ادامه پیدا می‌کند و کار آن را هم انجام می‌دهد. gcc با `-Wextra` می‌گوید `this statement may fall through`. هر `case` را با `break` تمام کن.',
+                    de: 'Bei `match` in Python und beim `switch` vieler neuerer Sprachen endet jeder Fall von selbst. In C ist ein `case` nur eine Marke: Ohne `break` läuft die Ausführung in den nächsten `case` weiter und erledigt dessen Arbeit gleich mit. gcc sagt mit `-Wextra` `this statement may fall through`. Beende jeden `case` mit `break`.',
+                    en: 'With `match` in Python and the `switch` of many newer languages, each case ends by itself. In C a `case` is only a label: without `break`, execution runs on into the next `case` and does its work too. With `-Wextra`, gcc says `this statement may fall through`. End every `case` with `break`.',
+                },
+            },
+            {
+                id: 'E-15', dim: 'E', src: 'SRC.developmental',
+                title: {
+                    fa: 'مقایسه به‌جای ثابت در `case`: `case points > 100:`',
+                    de: 'Ein Vergleich statt einer Konstanten im `case`: `case points > 100:`',
+                    en: 'A comparison instead of a constant in a `case`: `case points > 100:`',
+                },
+                wrong: 'C.L14.K06', right: 'C.L14.K07',
+                why: {
+                    fa: '`switch` فقط می‌پرسد «برابر با این ثابت؟». برچسب `case` باید عددی باشد که compiler پیش از اجرا می‌داند، پس متغیر و مقایسه در آن جا ندارند؛ gcc می‌گوید `case label does not reduce to an integer constant`. برای بازه‌ها و «بیش از» `if` بنویس.',
+                    de: '`switch` fragt nur „gleich dieser Konstanten?“. Eine `case`-Marke muss eine Zahl sein, die der Compiler schon vor dem Ausführen kennt; Variablen und Vergleiche haben dort keinen Platz. gcc sagt `case label does not reduce to an integer constant`. Für Bereiche und „mehr als“ schreib `if`.',
+                    en: '`switch` only asks "equal to this constant?". A `case` label must be a number the compiler knows before running, so variables and comparisons have no place there; gcc says `case label does not reduce to an integer constant`. For ranges and "more than", write `if`.',
+                },
+            },
         ],
     };
 })(typeof window !== 'undefined' ? window : globalThis);
