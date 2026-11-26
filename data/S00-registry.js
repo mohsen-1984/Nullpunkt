@@ -95,7 +95,7 @@
             'octagon-x', 'triangle-exclamation-point',
             // the site shell (site/chrome.js, course.js, search.js, home.js)
             'search', 'sun', 'moon', 'code-xml', 'house', 'circle', 'circle-dot', 'circle-dashed', 'book-open', 'clock',
-            'wifi-off', 'monitor-smartphone',
+            'wifi-off', 'monitor-smartphone', 'mail',
             // orientation lessons (site/lesson.js: myth, terminal, asm)
             'circle-question-mark', 'terminal', 'file-code'],
 
