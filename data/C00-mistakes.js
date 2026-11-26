@@ -555,6 +555,76 @@
                     en: 'An `else if` chain stops after the first true condition. Every mark `>= 17` is also `>= 10`; if `>= 10` comes first, `Excellent` is never printed, and no message tells you so. Write the narrower condition first, and try the boundaries with input.',
                 },
             },
+            {
+                id: 'W-07', dim: 'W', src: 'SRC.math', contrast: 'CT.false',
+                title: {
+                    fa: 'بازه مثل ریاضی: `18 <= t <= 25`',
+                    de: 'Ein Bereich wie in Mathe: `18 <= t <= 25`',
+                    en: 'A range as in maths: `18 <= t <= 25`',
+                },
+                wrong: 'C.L13.K04', right: 'C.L13.K05',
+                why: {
+                    fa: 'روی کاغذ `18 ≤ t ≤ 25` یک پرسش است. در C دو مقایسه است که پشت سر هم حساب می‌شوند: `18 <= t` اول 1 یا 0 می‌دهد، و بعد آن 1 یا 0 با 25 مقایسه می‌شود، که همیشه درست است. gcc می‌گوید `comparisons like \'X<=Y<=Z\' do not have their mathematical meaning`. بنویس `t >= 18 && t <= 25`.',
+                    de: 'Auf Papier ist `18 ≤ t ≤ 25` eine Frage. In C sind es zwei Vergleiche, die nacheinander ausgewertet werden: `18 <= t` liefert zuerst 1 oder 0, und diese 1 oder 0 wird dann mit 25 verglichen, was immer wahr ist. gcc sagt `comparisons like \'X<=Y<=Z\' do not have their mathematical meaning`. Schreib `t >= 18 && t <= 25`.',
+                    en: 'On paper, `18 ≤ t ≤ 25` is one question. In C it is two comparisons worked out one after the other: `18 <= t` first gives 1 or 0, and that 1 or 0 is then compared with 25, which is always true. gcc says `comparisons like \'X<=Y<=Z\' do not have their mathematical meaning`. Write `t >= 18 && t <= 25`.',
+                },
+            },
+            {
+                id: 'L-03', dim: 'L', src: 'SRC.language', contrast: 'CT.false',
+                title: {
+                    fa: '«اگر روز 6 یا 7 است»: `day == 6 || 7`',
+                    de: '„Wenn der Tag 6 oder 7 ist“: `day == 6 || 7`',
+                    en: '"If the day is 6 or 7": `day == 6 || 7`',
+                },
+                wrong: 'C.L13.K06', right: 'C.L13.K07',
+                why: {
+                    fa: 'در زبان روزمره «روز 6 یا 7 است» را کوتاه می‌گوییم. C آن را `(day == 6) || 7` می‌خواند، و 7 به‌تنهایی غیرصفر و همیشه درست است. حتی warning هم نمی‌آید. هر طرف `||` باید یک مقایسهٔ کامل باشد: `day == 6 || day == 7`.',
+                    de: 'In der Alltagssprache sagt man kurz „der Tag ist 6 oder 7“. C liest das als `(day == 6) || 7`, und 7 allein ist nicht null und damit immer wahr. Es kommt nicht einmal eine Warnung. Jede Seite von `||` muss ein vollständiger Vergleich sein: `day == 6 || day == 7`.',
+                    en: 'In everyday language we say "the day is 6 or 7" for short. C reads it as `(day == 6) || 7`, and 7 on its own is not zero and so always true. Not even a warning comes. Each side of `||` must be a complete comparison: `day == 6 || day == 7`.',
+                },
+            },
+            {
+                id: 'L-04', dim: 'L', src: 'SRC.developmental',
+                title: {
+                    fa: '`&&` به‌جای `||` برای «بیرون از بازه»',
+                    de: '`&&` statt `||` für „außerhalb des Bereichs“',
+                    en: '`&&` instead of `||` for "outside the range"',
+                },
+                wrong: 'C.L13.K08', right: 'C.L13.K09',
+                why: {
+                    fa: 'هیچ عددی همزمان کمتر از 1 و بیشتر از 5 نیست، پس `stars < 1 && stars > 5` همیشه نادرست است و هر عددی پذیرفته می‌شود. «درون بازه» با `&&` نوشته می‌شود و «بیرون از بازه» با `||`. با دو عدد مرزی و یک عدد بیرونی امتحان کن.',
+                    de: 'Keine Zahl ist zugleich kleiner als 1 und größer als 5, `stars < 1 && stars > 5` ist also immer falsch, und jede Zahl wird angenommen. „Im Bereich“ schreibt man mit `&&`, „außerhalb des Bereichs“ mit `||`. Probier es mit beiden Grenzen und einer Zahl außerhalb aus.',
+                    en: 'No number is less than 1 and greater than 5 at the same time, so `stars < 1 && stars > 5` is always false and every number is accepted. "Inside the range" is written with `&&` and "outside the range" with `||`. Try both boundaries and one number outside.',
+                },
+            },
+            {
+                id: 'E-14', dim: 'E', src: 'SRC.prior', contrast: 'CT.form',
+                title: {
+                    fa: '`and`، `or` و `not` از Python',
+                    de: '`and`, `or` und `not` aus Python',
+                    en: '`and`, `or` and `not` from Python',
+                },
+                wrong: 'C.L13.K12', right: 'C.L13.K13',
+                why: {
+                    fa: 'در Python شرط‌ها با واژه به هم بسته می‌شوند. در C همان سه کار با نشانه انجام می‌شود: `&&` برای and، `||` برای or و `!` برای not. compiler `and` را نامی ناشناخته می‌بیند و پیش از آن انتظار `)` دارد.',
+                    de: 'In Python verbindet man Bedingungen mit Wörtern. In C tun dieselben drei Dinge Zeichen: `&&` für and, `||` für or und `!` für not. Der Compiler sieht `and` als unbekannten Namen und erwartet davor eine `)`.',
+                    en: 'In Python, conditions are joined with words. In C the same three jobs are done by symbols: `&&` for and, `||` for or and `!` for not. The compiler sees `and` as an unknown name and expects a `)` before it.',
+                },
+            },
+            {
+                id: 'S-02', dim: 'S', src: 'SRC.developmental',
+                title: {
+                    fa: 'بررسی کنی که عدد رسید، ولی نه اینکه در بازه است',
+                    de: 'Prüfen, dass eine Zahl ankam, aber nicht, ob sie im Bereich liegt',
+                    en: 'Checking that a number arrived, but not that it is in range',
+                },
+                wrong: 'C.L13.K10', right: 'C.L13.K11',
+                why: {
+                    fa: '`scanf` فقط می‌گوید عددی رسید، نه اینکه آن عدد معنا دارد. `-3` بلیت یک قیمت منفی می‌سازد؛ در برنامه‌های واقعی همین عددهای بی‌معنا پول را برمی‌گردانند یا حافظه را خراب می‌کنند. پس از هر خواندن، بازهٔ مجاز را هم بپرس.',
+                    de: '`scanf` sagt nur, dass eine Zahl ankam, nicht, dass sie Sinn ergibt. `-3` Karten ergeben einen negativen Preis; in echten Programmen zahlen genau solche unsinnigen Zahlen Geld zurück oder beschädigen den Speicher. Frag nach jedem Lesen auch den erlaubten Bereich ab.',
+                    en: '`scanf` only says that a number arrived, not that it makes sense. `-3` tickets make a negative price; in real programs, exactly such senseless numbers pay money back or damage memory. After every read, ask about the allowed range too.',
+                },
+            },
         ],
     };
 })(typeof window !== 'undefined' ? window : globalThis);
