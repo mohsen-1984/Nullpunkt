@@ -3,6 +3,10 @@
 (function (g) {
     var N = g.Nullpunkt = g.Nullpunkt || { files: {} };
     var R = String.raw;
+    function T(fa, de, en) { return { fa: fa, de: de, en: en }; }
+    function P(fa, de, en) { return { type: 'p', text: T(fa, de, en) }; }
+    function NOTE(kind, fa, de, en) { return { type: 'note', kind: kind, text: T(fa, de, en) }; }
+    function BAND(ref) { return { type: 'band', ref: ref }; }
 
     N.files.C01 = {
         id: 'C01', kind: 'chapter', series: 'C', version: '0.1.0',
@@ -204,6 +208,24 @@ int main(void) {
 
 int mian(void) {
     printf("Ready\n");
+    return 0;
+}
+` },
+            // ---------- C01.REV ----------
+            { id: 'C01.REV.K01', intent: 'ok', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("Ready");
+    printf(", steady\n");
+    printf("%d\tgo!\n", 3 * 4 - 2);
+    return 0;
+}
+` },
+            { id: 'C01.REV.K02', intent: 'compile-error', source: R`#include <stdio.h>
+
+int main(void) {
+    printf("Line one\n")
+    printf("Line two\n");
     return 0;
 }
 ` },
@@ -1410,6 +1432,140 @@ int main(void) {
 }
 ` }],
                           why: { fa: 'یک خط را بنویس، درستی‌اش را ببین، بعد کپی کن و فقط عددها را عوض کن.', de: 'Schreib eine Zeile, prüf sie, kopier sie dann und ändere nur die Zahlen.', en: 'Write one line, check it, then copy it and change only the numbers.' } },
+                    ],
+                },
+            ],
+        },
+        {
+            type: 'review', id: 'C01.REV', minutes: 30,
+            cando: [
+                T('بتوانی برنامه‌ای کامل با قابش، از صفر و بی‌نگاه، بنویسی.', 'Du kannst ein vollständiges Programm samt Rahmen von null und ohne Vorlage schreiben.', 'You can write a complete program, frame and all, from zero without looking.'),
+                T('بتوانی خروجی دقیق چند `printf` را، با `\\n` و `\\t`، بی‌اجرا بگویی.', 'Du kannst die genaue Ausgabe mehrerer `printf` mit `\\n` und `\\t` ohne Ausführen sagen.', 'You can say the exact output of several `printf` calls, with `\\n` and `\\t`, without running them.'),
+                T('بتوانی اولین پیام gcc را بخوانی و اشتباه را در خط درست پیدا کنی.', 'Du kannst die erste gcc-Meldung lesen und den Fehler in der richtigen Zeile finden.', 'You can read the first gcc message and find the mistake on the right line.'),
+                T('بتوانی همان برنامه را روی کامپیوتر خودت با gcc بسازی و اجرا کنی.', 'Du kannst dasselbe Programm auf deinem eigenen Rechner mit gcc bauen und ausführen.', 'You can build and run the same program on your own computer with gcc.'),
+                T('بدانی compiler و linker هر کدام کدام اشتباه را می‌گیرند.', 'Du weißt, welche Fehler der Compiler und welche der Linker findet.', 'You know which mistakes the compiler catches and which the linker catches.'),
+            ],
+            blocks: [
+                { block: 'why', content: [
+                    P('فصل 1 قاب هر برنامه، `printf` و خواندن پیام خطا را ساخت. فصل 2 روی همین‌ها متغیر و حساب می‌سازد: هر برنامهٔ آن با همین قاب شروع می‌شود و هر اشتباهش با همین پیام‌ها خودش را نشان می‌دهد. این مرور را بی‌نگاه به درس‌ها انجام بده؛ هر جا گیر کردی، همان‌جا درسش را دوباره بخوان.',
+                      'Kapitel 1 hat den Rahmen jedes Programms, `printf` und das Lesen von Fehlermeldungen aufgebaut. Kapitel 2 baut darauf Variablen und Rechnen auf: Jedes seiner Programme beginnt mit diesem Rahmen, und jeder Fehler zeigt sich mit diesen Meldungen. Mach diese Wiederholung, ohne in die Lektionen zu schauen; wo du hängen bleibst, lies genau diese Lektion noch einmal.',
+                      'Chapter 1 built the frame of every program, `printf` and reading error messages. Chapter 2 builds variables and arithmetic on top: every program in it starts with this frame, and every mistake shows itself with these messages. Do this review without looking at the lessons; wherever you get stuck, read that lesson again.'),
+                ] },
+                { block: 'practice', content: [
+                    BAND('C01.REV.X01'), BAND('C01.REV.X02'), BAND('C01.REV.X03'),
+                ] },
+                { block: 'onpc', content: [
+                    P('در مرورگر یک دکمه همه‌چیز را انجام می‌دهد. روی کامپیوتر خودت همان دو مرحله را خودت می‌بینی: compile و اجرا. برنامه را در فایلی به نام `main.c` ذخیره کن و در terminal همان پوشه این‌ها را بنویس:',
+                      'Im Browser erledigt ein Knopf alles. Auf deinem eigenen Rechner siehst du die beiden Schritte selbst: Kompilieren und Ausführen. Speichere das Programm in einer Datei namens `main.c` und gib im Terminal im selben Ordner Folgendes ein:',
+                      'In the browser one button does everything. On your own computer you see the two steps yourself: compiling and running. Save the program in a file called `main.c` and type this in a terminal in the same folder:'),
+                    { type: 'terminal', title: 'Linux · macOS · Windows (WSL)', lines: [
+                        { cmd: 'gcc -std=c17 -Wall -Wextra -pedantic -o main main.c' },
+                        { cmd: './main' },
+                        { out: 'Ready, steady' },
+                        { out: '10\tgo!' },
+                    ] },
+                    P('`-std=c17` استاندارد را تعیین می‌کند، `-Wall -Wextra -pedantic` همهٔ warningهای مفید را روشن می‌کند و `-o main` نام برنامهٔ ساخته‌شده است. اگر چیزی چاپ نشد و برگشتی به خط فرمان، compile بی‌پیام موفق بوده.',
+                      '`-std=c17` legt den Standard fest, `-Wall -Wextra -pedantic` schaltet alle nützlichen Warnungen ein, und `-o main` ist der Name des fertigen Programms. Erscheint nichts und du bist wieder an der Eingabezeile, war das Kompilieren ohne Meldung erfolgreich.',
+                      '`-std=c17` sets the standard, `-Wall -Wextra -pedantic` turns on all the useful warnings, and `-o main` is the name of the built program. If nothing is printed and you are back at the prompt, compiling succeeded without a message.'),
+                    NOTE('platform', 'یک تفاوت مشخص: پیام‌های خطای gcc روی کامپیوتر تو بلندتر از پیام‌های compiler این صفحه‌اند و شمارهٔ ستون هم دارند (مثل `main.c:4:25:`). در درس‌ها پیام gcc همیشه کنار پیام XCC آمده تا هر دو را بشناسی. در VS Code یا CLion همین پیام‌ها در پنل Problems می‌آیند و با کلیک روی هر کدام به همان خط می‌روی.',
+                         'Ein konkreter Unterschied: Die Fehlermeldungen von gcc auf deinem Rechner sind länger als die des Compilers dieser Seite und haben auch eine Spaltennummer (etwa `main.c:4:25:`). In den Lektionen steht die gcc-Meldung immer neben der von XCC, damit du beide kennst. In VS Code oder CLion erscheinen dieselben Meldungen im Problems-Panel, und ein Klick führt dich zur Zeile.',
+                         'One concrete difference: the gcc error messages on your computer are longer than those of the compiler on this page and carry a column number too (such as `main.c:4:25:`). In the lessons the gcc message always stands next to the XCC one, so you know both. In VS Code or CLion the same messages appear in the Problems panel, and a click takes you to the line.'),
+                ] },
+                { block: 'exam', content: [
+                    P('بی‌اجرا و روی کاغذ پاسخ بده، بعد پاسخ نمونه را ببین.',
+                      'Antworte ohne Ausführen auf Papier, dann sieh dir die Musterlösung an.',
+                      'Answer on paper without running anything, then look at the model answer.'),
+                    BAND('C01.REV.X04'),
+                ] },
+                { block: 'ai', content: [
+                    P('مرور با فاصله بهتر از خواندن دوباره در خاطر می‌ماند. این پرامپت از درس‌های فصل پرسش‌های کوتاه می‌پرسد.',
+                      'Wiederholen mit Abstand bleibt besser hängen als nochmal lesen. Dieser Prompt stellt dir kurze Fragen zu den Lektionen des Kapitels.',
+                      'Spaced review sticks better than reading again. This prompt asks you short questions about the lessons of the chapter.'),
+                    { type: 'prompt', ref: 'AI-5' },
+                ] },
+                { block: 'selfcheck', content: [] },
+                { block: 'key', content: [] },
+            ],
+            bands: [
+                {
+                    id: 'C01.REV.X01', type: 'B.predict',
+                    title: T('خروجی را پیش‌بینی کن', 'Sag die Ausgabe voraus', 'Predict the output'),
+                    items: [
+                        { id: 'C01.REV.X01.01', code: 'C01.REV.K01', activates: ['M-01'],
+                          why: T('`printf` خودش سر خط نمی‌رود، پس دو تکهٔ اول در یک خط‌اند (`M-01`). `3 * 4 - 2` برابر 10 است و `\\t` یک tab.', '`printf` beginnt von selbst keine neue Zeile, also stehen die ersten beiden Teile in einer Zeile (`M-01`). `3 * 4 - 2` ist 10, und `\\t` ist ein Tab.', '`printf` does not start a new line by itself, so the first two parts are on one line (`M-01`). `3 * 4 - 2` is 10, and `\\t` is a tab.') },
+                    ],
+                },
+                {
+                    id: 'C01.REV.X02', type: 'B.fix',
+                    title: T('درستش کن', 'Repariere es', 'Fix it'),
+                    items: [
+                        { id: 'C01.REV.X02.01', broken: 'C01.REV.K02', activates: ['E-01'],
+                          prompt: T('gcc به خط 5 اشاره می‌کند. اشتباه کجاست؟', 'gcc zeigt auf Zeile 5. Wo ist der Fehler?', 'gcc points to line 5. Where is the mistake?'),
+                          solution: R`#include <stdio.h>
+
+int main(void) {
+    printf("Line one\n");
+    printf("Line two\n");
+    return 0;
+}
+`,
+                          tests: [{ id: 'C01.REV.X02.01.T01', purpose: 'normal' },
+                                  { id: 'C01.REV.X02.01.T02', purpose: 'mistake', mistake: 'E-01' }],
+                          why: T('`;` پایان خط 4 جا افتاده بود. compiler آن را وقتی می‌فهمد که به `printf` بعدی می‌رسد (`E-01`).', 'Am Ende von Zeile 4 fehlte das `;`. Der Compiler merkt es erst beim nächsten `printf` (`E-01`).', 'The `;` at the end of line 4 was missing. The compiler notices only when it reaches the next `printf` (`E-01`).') },
+                        { id: 'C01.REV.X02.02', broken: 'C.L02.K13', activates: ['E-07'],
+                          prompt: T('compile نمی‌شود، و پیام gcc خودش راه‌حل را می‌گوید.', 'Es kompiliert nicht, und die gcc-Meldung nennt die Lösung selbst.', 'It does not compile, and the gcc message names the fix itself.'),
+                          solution: R`#include <stdio.h>
+
+int main(void) {
+    printf("Keep calm\n");
+    printf("and read the message\n");
+    return 0;
+}
+`,
+                          tests: [{ id: 'C01.REV.X02.02.T01', purpose: 'normal' },
+                                  { id: 'C01.REV.X02.02.T02', purpose: 'mistake', mistake: 'E-07' }],
+                          why: T('بدون `#include <stdio.h>`، compiler نام `printf` را نمی‌شناسد (`E-07`).', 'Ohne `#include <stdio.h>` kennt der Compiler den Namen `printf` nicht (`E-07`).', 'Without `#include <stdio.h>`, the compiler does not know the name `printf` (`E-07`).') },
+                    ],
+                },
+                {
+                    id: 'C01.REV.X03', type: 'B.write',
+                    title: T('بنویس', 'Schreibe', 'Write'),
+                    items: [
+                        { id: 'C01.REV.X03.01', activates: ['M-02'],
+                          prompt: T('از صفر، بی‌نگاه: برنامه‌ای که دقیقاً این دو خط را چاپ کند و حاصل را خودش حساب کند:\n`Week: 7 days`\n`Hours: 168`', 'Von null, ohne Vorlage: ein Programm, das genau diese zwei Zeilen ausgibt und das Ergebnis selbst ausrechnet:\n`Week: 7 days`\n`Hours: 168`', 'From zero, without looking: a program that prints exactly these two lines and works out the result itself:\n`Week: 7 days`\n`Hours: 168`'),
+                          starter: '',
+                          solution: R`#include <stdio.h>
+
+int main(void) {
+    printf("Week: %d days\n", 7);
+    printf("Hours: %d\n", 7 * 24);
+    return 0;
+}
+`,
+                          tests: [{ id: 'C01.REV.X03.01.T01', purpose: 'normal' },
+                                  { id: 'C01.REV.X03.01.T02', purpose: 'mistake', mistake: 'M-02', variant: R`#include <stdio.h>
+
+int main(void) {
+    printf("Week: %d days\n", 7);
+    printf("Hours: 7 * 24\n");
+    return 0;
+}
+` }],
+                          why: T('قاب: `#include`، `int main(void)`، `return 0;`. حساب argument است، نه متن درون `"` (`M-02`).', 'Der Rahmen: `#include`, `int main(void)`, `return 0;`. Die Rechnung ist ein Argument, kein Text in `"` (`M-02`).', 'The frame: `#include`, `int main(void)`, `return 0;`. The calculation is an argument, not text inside `"` (`M-02`).') },
+                    ],
+                },
+                {
+                    id: 'C01.REV.X04', type: 'B.explain',
+                    title: T('پرسش امتحانی', 'Prüfungsfrage', 'Exam question'),
+                    items: [
+                        { id: 'C01.REV.X04.01',
+                          prompt: T('دو مرحلهٔ ساختن یک برنامهٔ C را نام ببر و برای هر کدام یک اشتباه مثال بزن که همان مرحله آن را می‌گیرد.', 'Nenne die zwei Schritte beim Bauen eines C-Programms und gib für jeden ein Beispiel für einen Fehler, den genau dieser Schritt findet.', 'Name the two steps of building a C program and give, for each, an example of a mistake that this step catches.'),
+                          model: T('compile: کد را بررسی و به machine code ترجمه می‌کند؛ مثلاً یک `;` جاافتاده یا نام ناشناخته‌ای مثل `prinf`. link: تکه‌ها را با کتابخانه سر هم می‌کند؛ مثلاً اگر `main` را `mian` بنویسی، پیام `undefined reference to main` از linker می‌آید.', 'Kompilieren: prüft den Code und übersetzt ihn in Maschinencode; zum Beispiel ein fehlendes `;` oder ein unbekannter Name wie `prinf`. Linken: setzt die Teile mit der Bibliothek zusammen; schreibst du zum Beispiel `mian` statt `main`, kommt `undefined reference to main` vom Linker.', 'Compiling checks the code and translates it into machine code; for example a missing `;` or an unknown name such as `prinf`. Linking puts the pieces together with the library; for example, if you write `mian` instead of `main`, `undefined reference to main` comes from the linker.'),
+                          why: T('پیام linker شمارهٔ خط ندارد؛ این نشانهٔ مرحلهٔ دوم است.', 'Eine Linker-Meldung hat keine Zeilennummer; daran erkennst du den zweiten Schritt.', 'A linker message has no line number; that is how you recognise the second step.') },
+                        { id: 'C01.REV.X04.02',
+                          prompt: T('خروجی دقیق `printf("A\\tB\\nC\\\\D\\"E\\"\\n");` را بنویس.', 'Schreib die genaue Ausgabe von `printf("A\\tB\\nC\\\\D\\"E\\"\\n");` auf.', 'Write the exact output of `printf("A\\tB\\nC\\\\D\\"E\\"\\n");`.'),
+                          model: T('دو خط: `A`، یک tab و `B`؛ سپس `C\\D"E"`. `\\\\` یک `\\` و `\\"` یک `"` چاپ می‌کند.', 'Zwei Zeilen: `A`, ein Tab und `B`; dann `C\\D"E"`. `\\\\` gibt ein `\\` aus und `\\"` ein `"`.', 'Two lines: `A`, a tab and `B`; then `C\\D"E"`. `\\\\` prints one `\\` and `\\"` one `"`.'),
+                          why: T('هر escape sequence یک نویسه می‌شود.', 'Jede Escape-Sequenz wird zu einem Zeichen.', 'Each escape sequence becomes one character.') },
                     ],
                 },
             ],

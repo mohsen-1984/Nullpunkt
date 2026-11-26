@@ -31,8 +31,9 @@ ix.problems.forEach(p => err(rule(p.rule), p.id, p.msg));
 
 // ---------- Ids (S.ID.02, patterns) ----------
 const PATTERNS = [
-    [ix.lesson, /^C\.[LO]\d{2}$/], [ix.code, /^C\.[LO]\d{2}\.K\d{2}$/], [ix.mistake, /^[MEWRULSPY]-\d{2,3}$/],
-    [ix.band, /^C\.[LO]\d{2}\.X\d{2}$/], [ix.item, /^C\.[LO]\d{2}\.X\d{2}\.\d{2}$/], [ix.term, /^T\.[a-z0-9-]+$/],
+    // a lesson C.L04 (orientation C.O01) or a chapter's review unit C02.REV, and the codes, bands and items under it
+    [ix.lesson, /^(C\.[LO]\d{2}|C\d{2}\.REV)$/], [ix.code, /^(C\.[LO]\d{2}|C\d{2}\.REV)\.K\d{2}$/], [ix.mistake, /^[MEWRULSPY]-\d{2,3}$/],
+    [ix.band, /^(C\.[LO]\d{2}|C\d{2}\.REV)\.X\d{2}$/], [ix.item, /^(C\.[LO]\d{2}|C\d{2}\.REV)\.X\d{2}\.\d{2}$/], [ix.term, /^T\.[a-z0-9-]+$/],
     [ix.construct, /^K\.[a-z0-9-]+$/], [ix.chunk, /^CH\.[a-z0-9-]+$/], [ix.prompt, /^AI(-\d|\.MASTER)$/],
 ];
 PATTERNS.forEach(([map, re]) => Object.keys(map).forEach(id => { if (!re.test(id)) err(rule('S.ID.02'), id, 'Id does not match ' + re); }));
@@ -179,7 +180,7 @@ Object.values(ix.band).forEach(b => {
         const where = it.id;
         // the answer key shows a reason for every item (S.BND.02)
         if (!it.why) err('S.BND.02', where, 'needs a why (shown in the answer key)');
-        if (b.type === 'B.predict') { if (!ix.code[it.code]) err('S.ID.03', where, 'code ' + it.code + ' missing'); return; }
+        if (b.type === 'B.predict' || b.type === 'B.trace') { if (!ix.code[it.code]) err('S.ID.03', where, 'code ' + it.code + ' missing'); return; }
         if (b.type === 'B.explain') { if (!it.model) err(rule('S.BND.02'), where, 'explain item needs a model answer'); return; }
         if (b.type === 'B.choice') {
             const opts = it.options || [];
@@ -246,6 +247,30 @@ Object.values(ix.lesson).forEach(L => {
     const u = L.unit;
     if (!cat.cando || cat.cando.length !== 5) err(rule('C.SLF.01'), L.id, 'cando must have exactly 5 items');
     if (L.orientation) { checkOrientation(L, u); return; }
+    if (L.review) checkReview(L, u);
+    else checkLessonSkeleton(L, u);
+    (u.bands || []).forEach(b => { if (!u.blocks.some(bl => (bl.content || []).some(nd => nd.type === 'band' && nd.ref === b.id))) err('S.ID.03', b.id, 'band is not placed in any block'); });
+    // ladder: every code of this lesson
+    checkLadder(L, u);
+});
+
+function checkReview(L, u) {
+    const want = conv.reviewSkeleton.map(s => s.block), got = u.blocks.map(b => b.block);
+    if (JSON.stringify(want) !== JSON.stringify(got)) err(rule('C.LES.01'), L.id, 'review unit blocks must be ' + want.join(', ') + ' (are ' + got.join(', ') + ')');
+    conv.reviewSkeleton.forEach(s => { const b = u.blocks.find(x => x.block === s.block); if (b && s.generated && b.content.length) err('C.LES.01', L.id, 'block ' + s.block + ' is generated and must be empty'); });
+    ['onpc', 'exam'].forEach(k => { const b = u.blocks.find(x => x.block === k); if (b && !b.content.length) err(k === 'onpc' ? rule('C.ONP.01') : rule('C.EXA.01'), L.id, 'block ' + k + ' is empty'); });
+    const exam = u.blocks.find(x => x.block === 'exam');
+    if (exam && exam.content.filter(nd => nd.type === 'band').reduce((n, nd) => n + ((ix.band[nd.ref] || { items: [] }).items.length), 0) < 2) err('C.EXA.01', L.id, 'exam needs at least two questions');
+    if (exam && exam.content.some(nd => nd.type === 'code' && nd.mode !== 'static')) err('C.EXA.01', L.id, 'exam code must be static (no run button)');
+    const practice = u.blocks.find(x => x.block === 'practice');
+    const lessonsOfChapter = ix.lessonList.filter(x => x.chapter === L.chapter && !x.review).map(x => x.id);
+    if (practice) {
+        const items = practice.content.filter(nd => nd.type === 'band').reduce((a, nd) => a.concat((ix.band[nd.ref] || { items: [] }).items), []);
+        if (items.length < lessonsOfChapter.length) err('S.CH.12', L.id, 'practice needs at least one item per lesson of the chapter');
+    }
+}
+
+function checkLessonSkeleton(L, u) {
     // skeleton order and presence
     const order = conv.skeleton.map(s => s.block);
     let last = -1;
@@ -268,8 +293,9 @@ Object.values(ix.lesson).forEach(L => {
     if (!types.some(t => reg.bandTypes[t] && reg.bandTypes[t].rank === 1)) err(rule('S.BND.03'), L.id, 'needs a rank-1 band');
     if (!types.includes('B.fix')) err('S.BND.03', L.id, 'needs a B.fix band');
     if (!types.includes('B.write')) err('S.BND.03', L.id, 'needs a B.write band');
-    (u.bands || []).forEach(b => { if (!u.blocks.some(bl => (bl.content || []).some(nd => nd.type === 'band' && nd.ref === b.id))) err('S.ID.03', b.id, 'band is not placed in any block'); });
-    // ladder: every code of this lesson
+}
+
+function checkLadder(L, u) {
     const chunkLines = Object.values(ix.chunk).filter(c => c.from <= L.n).reduce((a, c) => a.concat(c.match), []);
     const sources = [];
     ix.codeList.filter(c => ix.lessonOfCode[c.id] === L.id).forEach(c => sources.push([c.id, c.source, c.allow]));
@@ -288,7 +314,7 @@ Object.values(ix.lesson).forEach(L => {
         });
         conv.forbidden.forEach(f => { if (tokens.some(t => t.kind === 'id' && t.value === f.match.id)) err(rule('C.FRB.01'), where, 'forbidden: ' + f.id); });
     });
-});
+}
 
 // ---------- prompts (S.PRM.*) ----------
 Object.values(ix.prompt).forEach(p => {
@@ -317,6 +343,37 @@ const usedIcons = new Set(reg.uiIcons);
 Object.values(ix.prompt).forEach(p => usedIcons.add(p.icon));
 Object.values(ix.lesson).forEach(L => { if (L.unit) L.unit.blocks.forEach(b => { if (b.icon) usedIcons.add(b.icon); }); });
 usedIcons.forEach(n => { if (!icons[n]) err(rule('S.AST.01'), n, 'icon not in vendor/lucide — run tools/build-icons.js'); });
+
+// ---------- trace tables (node trace, band B.trace): generated from a real run, blanks inside the table ----------
+(function () {
+    if (!G) return;
+    const Trace = require(path.join(root, 'lib/Trace.js'));
+    const want = Data.traces(N);
+    want.forEach(t => {
+        const code = ix.code[t.ref], key = Trace.key(t.ref, t.vars), e = G.trace && G.trace[key];
+        if (!code) { err('S.CH.05', key, 'trace of an unknown code'); return; }
+        if (!e) { err('S.CH.05', key, 'no generated trace — run node tools/gen-expect.js'); return; }
+        if (e.hash !== hash([code.source, t.vars, code.stdin || '', tag])) { err('S.CH.05', key, 'generated trace is stale — run node tools/gen-expect.js'); return; }
+        if (e.error) { err('S.CH.05', key, 'trace: ' + e.error); return; }
+        const declared = new Set(); code.source.split('\n').forEach(l => Trace.declsOf(l).forEach(d => declared.add(d.name)));
+        t.vars.forEach(v => { if (!declared.has(v)) err('S.CH.05', key, 'traced variable ' + v + ' is not declared in main'); });
+        if (!e.rows.length) err('S.CH.05', key, 'trace has no rows');
+    });
+    Object.keys(ix.band).forEach(id => {
+        const b = ix.band[id];
+        if (b.type !== 'B.trace') return;
+        b.items.forEach(it => {
+            const e = G.trace && G.trace[Trace.key(it.code, it.vars)];
+            if (!e || !e.rows) return;
+            if (!(it.blanks || []).length) err('S.CH.05', it.id, 'B.trace needs blanks');
+            (it.blanks || []).forEach(bl => {
+                if (!e.rows[bl.step - 1]) err('S.CH.05', it.id, 'blank step ' + bl.step + ' is past the last row (' + e.rows.length + ')');
+                else if (it.vars.indexOf(bl.var) < 0) err('S.CH.05', it.id, 'blank names ' + bl.var + ', not a traced variable');
+                else if (['—', '?'].indexOf(e.rows[bl.step - 1].values[it.vars.indexOf(bl.var)]) >= 0) err('S.CH.05', it.id, 'blank at step ' + bl.step + ' has no value to find');
+            });
+        });
+    });
+})();
 
 // ---------- Persian running text uses the term's form, not its local gloss (S.LNG.02, S.LNG.06) ----------
 (function () {

@@ -147,3 +147,28 @@ div.np-editor .cm-tooltip { background: var(--np-bg); color: var(--np-ink); bord
 .np-option input { margin-top: .35rem; accent-color: var(--np-accent); }
 .np-option.is-right { border-color: var(--np-ok); background: color-mix(in srgb, var(--np-ok) 9%, transparent); }
 .np-option.is-wrong { border-color: var(--np-warn); background: color-mix(in srgb, var(--np-warn) 9%, transparent); }
+
+/* ---------- trace tables and memory maps ---------- */
+.np-trace, .np-memory { margin: 1.25rem 0; border: 1px solid var(--np-line); border-radius: var(--radius-sm, 8px); background: var(--np-surface); padding: .75rem .9rem; }
+.np-trace figcaption, .np-memory figcaption { display: flex; align-items: center; gap: .4rem; font-weight: 600; font-size: .9rem; margin-bottom: .6rem; }
+.np-trace figcaption .np-icon, .np-memory figcaption .np-icon { width: 16px; height: 16px; color: var(--np-accent); }
+.np-trace-scroll { overflow-x: auto; }
+.np-trace-table { border-collapse: collapse; font: .88rem/1.4 var(--np-mono); min-width: 100%; }
+.np-trace-table th, .np-trace-table td { border: 1px solid var(--np-line); padding: .3rem .6rem; text-align: center; white-space: nowrap; }
+.np-trace-table th { background: var(--np-soft); font-weight: 600; }
+.np-trace-table td.np-trace-ln { color: var(--np-muted); }
+.np-trace-table td.np-trace-out { text-align: start; }
+.np-trace-table td.np-trace-changed { font-weight: 700; color: var(--np-accent); }
+.np-trace-table tr.np-trace-now td { background: var(--np-accent-soft); }
+.np-trace-in { width: 6ch; font: inherit; text-align: center; border: 1px dashed var(--np-accent); border-radius: 4px; background: var(--np-bg); color: var(--np-ink); padding: .1rem .2rem; }
+.np-trace-in.ok { border-style: solid; border-color: var(--np-ok); }
+.np-trace-in.bad { border-style: solid; border-color: var(--np-error); }
+.np-trace-bar { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .6rem; }
+.np-trace-hint { font-size: .82rem; color: var(--np-muted); margin: .6rem 0 0; }
+.np-mem-row { display: flex; flex-wrap: wrap; gap: .75rem; }
+.np-mem-box { display: grid; grid-template-rows: auto auto auto; justify-items: center; gap: .2rem; min-width: 5.5rem; }
+.np-mem-val { display: block; min-width: 5rem; padding: .55rem .6rem; border: 2px solid var(--np-accent); border-radius: 6px; background: var(--np-bg);
+              font: 600 1rem var(--np-mono); text-align: center; }
+.np-mem-unset .np-mem-val { border-style: dashed; color: var(--np-muted); }
+.np-mem-type, .np-mem-addr { font-size: .78rem; color: var(--np-muted); }
+.np-mem-name { font-size: .9rem; }

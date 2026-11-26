@@ -3,30 +3,31 @@
 Open work and backlog only — what is done lives in the code, the rule documents (`docs/rules/`) and the release notes
 (`CHANGELOG.md`). Rounds are listed in the order planned; the target of 1.0 is the whole C course.
 
-## Open from the first review round (0.1.1)
+## Next — 0.3: chapters 3 and 4
+
+- [ ] Decide first (before chapter 4, as the pages grow): one data file per lesson page plus a prebuilt search index,
+      and CodeMirror only when an editor first scrolls into view. Every page now loads three chapter files (about
+      300 KB); by 1.0 it would be 1.5–2 MB.
+- [ ] Chapter 3 — Input (lessons 9–10): `scanf` with `&`, `getchar`, `EOF`; the first security mistakes (`S-`,
+      `C.TOP.01`): `scanf("%s")` without a width. Exercises with `stdin` need edge tests.
+- [ ] Chapter 4 — Decisions (lessons 11–14): comparisons, `bool`, `if`/`else`, `&&` `||` `!`, `switch`.
+- [ ] Review units `C03.REV` and `C04.REV`.
+- [ ] Trace tables: highlight the line of the current step in the code beside the table; loops (chapter 5) already
+      work, as long as each statement keeps to its own line (`lib/Trace.js`).
+
+## Open from earlier rounds
 
 - [ ] UX on real devices: phone (editor, drawer, tabs), a screen reader in each language (VoiceOver, NVDA, TalkBack);
       load time of the compiler (600 KB, about 210 KB compressed) on a slow connection. Headless checks pass at 15
-      widths × 3 languages; the logo's card works with a tap, the keyboard and Esc.
-- [ ] Lesson 2 now has no warning example (`W-01` became `E-07` under gcc 15): add `W-02` in lesson 3 —
-      `printf("%d\n")` without its argument (`-Wformat`), which XCC runs and prints garbage.
+      widths × 3 languages.
 - [ ] Record clang's messages beside gcc's (macOS learners), at least for the error clinic.
 - [ ] The runner: when XCC reports `Unresolved: env.__main_argc_argv`, say “no function called `main`”.
-- [ ] Performance: every page loads every chapter's data file (about 100 KB per chapter, so 1.5–2 MB by 1.0). Decide
-      before chapter 4: one data file per lesson page plus a prebuilt search index, and CodeMirror only when an editor
-      first scrolls into view.
-
-## Next — 0.2: chapter 2 and the review unit
-
-- [ ] Read chapter 0 with a learner from zero in each language; check the facts dated November 2026 again before
+- [ ] XCC's `printf` prints an unknown conversion such as `% d` as text, where glibc reads an argument; tests that
+      want to show a lone `%` (`U-04`) must use a conversion XCC knows (`%-o`, `%o`).
+- [ ] Read chapters 0–2 with a learner from zero in each language; check the facts dated November 2026 again before
       each release (TIOBE, compiler defaults, the reference gcc of `C.CMP.01`).
-
-- [ ] Review unit `C01.REV` with an *On your PC* block (`onpc`): gcc or clang, VS Code or CLion, the same three
-      lessons on a real machine.
-- [ ] Chapter 2 — Values & Variables (lessons 4–8): variables and identifiers, whole and decimal numbers, expressions,
-      characters and ASCII, formatted output.
-- [ ] A native-speaker review of the German text (`S.LNG.05`); mark the chapters reviewed in `langStatus`.
-- [ ] Trace tables and memory maps (blocks `trace`, `memory`): their renderers, from lesson 4 on.
+- [ ] A native-speaker review of the German and Persian text (`S.LNG.05`); mark the chapters reviewed in
+      `langStatus`.
 
 ## Site
 

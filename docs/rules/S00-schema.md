@@ -1,4 +1,4 @@
-**نول‌پونکت — Nullpunkt** · پیش‌نویس 0.1 — Draft 0.1 (2026-11-25)
+**نول‌پونکت — Nullpunkt** · پیش‌نویس 0.2 — Draft 0.2 (2026-11-26)
 
 *C از صفر — C von Null an — C from Zero*
 
@@ -121,9 +121,12 @@
 | `type` | `lesson` · `review` · `appendix` · `prose` |
 | `id` | `C.L12` · `C04.REV` · `C04.APX1` |
 | `title?` | t3 — برای درس از کاتالوگ خوانده می‌شود و اینجا نمی‌آید |
-| `blocks?` | [block] — فقط درس، به ترتیب اسکلت `C00` |
+| `blocks?` | [block] — درس به ترتیب اسکلت `C00`؛ واحد مرور به ترتیب `reviewSkeleton` همان فایل |
 | `content?` | [node] — واحدهای غیر درس |
 | `allow?` | [Id(rule)] — معافیت صریح (`S.ID.04`) |
+| `minutes`، `cando` | فقط واحد مرور: دقیقه و پنج «توانایی تازه» (t3)؛ درس این‌ها را از کاتالوگ می‌گیرد |
+
+**واحد مرور — Review Unit:** Id آن `Cnn.REV` است و در فایل همان فصل می‌آید؛ کدها، بندها و قلم‌هایش زیر همان Id نام می‌گیرند (`C02.REV.K01`، `C02.REV.X03.01`). `lib/Data.js` آن را درست پس از آخرین درس فصل در مسیر می‌گذارد، با عنوان «مرور: نام فصل» از رجیستری؛ پس درخت دوره، صفحهٔ بعد و قبل و جست‌وجو آن را مثل یک درس می‌بینند. نردبان سازه‌ها برایش همان آخرین درس فصل است.
 
 ## بلوک — block
 
@@ -146,7 +149,7 @@
 | `table` | `head` [t3]، `rows` [[cell]] | cell یا t3 است یا `{ code: "…" }` |
 | `note` | `kind`، `text` t3 | `kind`: `simplification` (`S.CH.03`) · `platform` · `c23` · `ub` · `exam` |
 | `code` | `ref` Id(code)، `mode` | `mode`: `run` (قابل ویرایش و اجرا) · `static` (فقط خواندنی) · `predict` (اجرا پس از ثبت پیش‌بینی) |
-| `trace` | `ref` Id(code)، `vars` [string]، `rows` ⚙ | جدول ردیابی؛ ردیف‌ها با اجرای ابزاری‌شدهٔ کد ساخته می‌شوند |
+| `trace` | `ref` Id(code)، `vars` [string]، `rows` ⚙ | جدول ردیابی؛ ردیف‌ها با اجرای ابزاری‌شدهٔ کد ساخته می‌شوند (`lib/Trace.js`: پس از هر خط statement در `main` یک snapshot؛ هر statement در خط خودش؛ متغیرهای نوع پایه که در `main` اعلان شده‌اند). `—` یعنی هنوز اعلان نشده، `?` یعنی هنوز مقدار نگرفته |
 | `memory` | `ref` Id(code)، `line`، `boxes` | نقشهٔ حافظه در یک خط؛ `boxes` نوشتنی: [{ `name`, `type`, `value`, `addr?`, `points?` }] |
 | `mistakes` | `refs` [Id(mistake)] | جدول اشتباه‌ها، ساخته از رکوردها |
 | `diagnostic` | `ref` Id(code) | درمانگاه خطا: پیام ⚙ gcc و XCC همراه توضیح |
@@ -221,7 +224,7 @@
 | نوع | فیلدها | سنجش |
 |---|---|---|
 | `B.predict` | `code` Id(code)، `accept?` [string] | خروجی تایپ‌شده با ⚙ `stdout` (یا یکی از `accept`)، با نادیده‌گرفتن فاصلهٔ پایان سطر |
-| `B.trace` | `code` Id(code)، `vars` [string]، `blanks` [{ `step`, `var` }] | خانه‌های خالی با ردیف‌های ⚙ |
+| `B.trace` | `code` Id(code)، `vars` [string]، `blanks` [{ `step`, `var` }] | خانه‌های خالی با ردیف‌های ⚙؛ `step` شمارهٔ ردیف از 1 است؛ checker خانه‌ای را که مقدارش `—` یا `?` است نمی‌پذیرد |
 | `B.parsons` | `lines` [string]، `distractors?` [string]، `acceptOrders?` [[n]] | ترتیب ساخته‌شده کامپایل و با تست‌ها اجرا می‌شود؛ پس هر ترتیب درست دیگر هم پذیرفته است |
 | `B.complete` | `template` (با `/*___*/` برای جای خالی)، `solution` | تست‌ها |
 | `B.fix` | `broken` Id(code)، `solution` | تست‌ها؛ کد `broken` باید دست‌کم یک تست را رد کند |

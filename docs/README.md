@@ -7,5 +7,6 @@ editors, not for learners.
 |---|---|
 | [`rules/`](rules/) | The series bible and the conventions every lesson is checked against |
 | [`upstream/`](upstream/) | Contributions ready for the projects Nullpunkt builds on (XCC): a tested patch, PR and issue texts |
+| [`RELEASING.md`](RELEASING.md) | The release checklist, the owner's publishing steps and the format of release notes |
 
-Release notes are in [`../CHANGELOG.md`](../CHANGELOG.md), open work in [`../TODO.md`](../TODO.md).
+How we work is in [`../CLAUDE.md`](../CLAUDE.md). Release notes are in [`../CHANGELOG.md`](../CHANGELOG.md), open work in [`../TODO.md`](../TODO.md).

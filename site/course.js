@@ -55,15 +55,14 @@
                 svg('chevron-down', 'np-tree-caret') + '</summary><ol>';
             lessons.forEach(function (L) {
                 var st = state(L), here = L.id === current;
-                var inner = '<span class="np-tree-state is-' + st + '">' + svg(STATE_ICON[st]) + '</span><span class="np-tree-num">' + L.label + '</span>' +
+                var inner = '<span class="np-tree-state is-' + st + '">' + svg(STATE_ICON[st]) + '</span><span class="np-tree-num">' + (L.review ? svg('rotate-ccw') : L.label) + '</span>' +
                     '<span class="np-tree-lt">' + esc(L.catalog.title[lang]) + '</span>';
                 if (L.unit) html += '<li><a class="np-tree-lesson' + (here ? ' is-current' : '') + '" href="' + esc(lessonHref(L.id, lang)) + '"' + (here ? ' aria-current="page"' : '') + '>' + inner + '</a></li>';
                 else html += '<li><span class="np-tree-lesson is-planned" title="' + esc(c.soon) + '">' + inner + '</span></li>';
             });
             html += '</ol></details></li>';
         });
-        html += '</ol><p class="np-tree-foot"><a href="' + esc(SITE.repoUrl + '/releases/tag/v' + SITE.version) + '" title="' + esc(c.releaseNotes) + '">' +
-            esc(c.version) + ' ' + esc(SITE.version) + '</a></p>';
+        html += '</ol>';         // the version is a badge beside the name (header, drawer), not a line here
         nav.innerHTML = html;
         return nav;
     }
