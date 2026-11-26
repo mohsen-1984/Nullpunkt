@@ -401,6 +401,76 @@
                     en: 'In spreadsheets and forms, a small cell cuts long text. In `printf`, the width is only a minimum: a longer number is printed in full and the column shifts. Choose the width for the longest number.',
                 },
             },
+            {
+                id: 'U-05', dim: 'U', src: 'SRC.developmental',
+                title: {
+                    fa: '`&` پیش از متغیر در `scanf` جا افتاده',
+                    de: 'Das `&` vor der Variablen in `scanf` fehlt',
+                    en: 'Missing `&` before the variable in `scanf`',
+                },
+                wrong: 'C.L09.K05', right: 'C.L09.K06',
+                why: {
+                    fa: '`scanf` باید عدد خوانده‌شده را در جعبهٔ متغیر بنویسد، پس آدرس جعبه را لازم دارد: `&age`. بدون `&`، مقدار فعلی `age` به‌جای آدرس فرستاده می‌شود و `scanf` در جای نامعلومی از حافظه می‌نویسد؛ رفتار تعریف‌نشده است و برنامه معمولاً crash می‌کند. gcc با `-Wall` warning می‌دهد.',
+                    de: '`scanf` muss die gelesene Zahl in den Kasten der Variablen schreiben, braucht also die Adresse des Kastens: `&age`. Ohne `&` wird der aktuelle Wert von `age` statt der Adresse übergeben, und `scanf` schreibt an eine unbekannte Stelle im Speicher; das ist undefiniertes Verhalten, und das Programm stürzt meist ab. gcc warnt mit `-Wall`.',
+                    en: '`scanf` has to write the number it reads into the variable\'s box, so it needs the address of the box: `&age`. Without `&`, the current value of `age` is passed instead of the address, and `scanf` writes to an unknown place in memory; that is undefined behavior, and the program usually crashes. gcc warns with `-Wall`.',
+                },
+            },
+            {
+                id: 'U-06', dim: 'U', src: 'SRC.prior', contrast: 'CT.false',
+                title: {
+                    fa: '`%f` برای یک `double` در `scanf`',
+                    de: '`%f` für ein `double` in `scanf`',
+                    en: '`%f` for a `double` in `scanf`',
+                },
+                wrong: 'C.L09.K07', right: 'C.L09.K08',
+                why: {
+                    fa: 'در `printf`، هم `float` و هم `double` با `%f` چاپ می‌شوند. ولی `scanf` باید بداند در جعبه چند بایت بنویسد: `%f` چهار بایتِ یک `float` را می‌نویسد و `%lf` هشت بایتِ یک `double` را. با `%f` در یک `double`، عددی بی‌معنا در جعبه می‌ماند؛ رفتار تعریف‌نشده است و gcc warning می‌دهد. برای `double` در `scanf` همیشه `%lf`.',
+                    de: 'In `printf` werden `float` und `double` beide mit `%f` ausgegeben. `scanf` muss aber wissen, wie viele Bytes es in den Kasten schreibt: `%f` schreibt die vier Bytes eines `float`, `%lf` die acht Bytes eines `double`. Mit `%f` in ein `double` bleibt eine sinnlose Zahl im Kasten; das ist undefiniertes Verhalten, und gcc warnt. Für `double` in `scanf` immer `%lf`.',
+                    en: 'In `printf`, `float` and `double` are both printed with `%f`. But `scanf` has to know how many bytes to write into the box: `%f` writes the four bytes of a `float`, `%lf` the eight bytes of a `double`. With `%f` into a `double`, a meaningless number is left in the box; that is undefined behavior, and gcc warns. For `double` in `scanf`, always `%lf`.',
+                },
+            },
+            {
+                id: 'M-09', dim: 'M', src: 'SRC.prior', contrast: 'CT.false',
+                title: {
+                    fa: 'فکر کنی `scanf` مثل `input()` در Python متنش را چاپ می‌کند',
+                    de: 'Glauben, dass `scanf` seinen Text ausgibt wie `input()` in Python',
+                    en: 'Thinking `scanf` prints its text like `input()` in Python',
+                },
+                wrong: 'C.L09.K09', right: 'C.L09.K10',
+                why: {
+                    fa: 'در Python، `input("Age: ")` متن را چاپ می‌کند و بعد می‌خواند. `scanf` چیزی چاپ نمی‌کند: هر نویسهٔ format string برایش الگویی است که ورودی باید عیناً همان باشد. `Age:` در ورودی نیست، پس `scanf` همان اول می‌ایستد و متغیر مقدار قبلی‌اش را نگه می‌دارد. پرسش را با `printf` چاپ کن و در `scanf` فقط `%d` بنویس.',
+                    de: 'In Python gibt `input("Age: ")` den Text aus und liest dann. `scanf` gibt nichts aus: Jedes Zeichen im Format-String ist für es ein Muster, das genau so in der Eingabe stehen muss. `Age:` steht nicht in der Eingabe, also hört `scanf` sofort auf, und die Variable behält ihren alten Wert. Gib die Frage mit `printf` aus und schreib in `scanf` nur `%d`.',
+                    en: 'In Python, `input("Age: ")` prints the text and then reads. `scanf` prints nothing: every character of its format string is a pattern the input must match exactly. `Age:` is not in the input, so `scanf` stops at once and the variable keeps its old value. Print the question with `printf` and write only `%d` in `scanf`.',
+                },
+            },
+            {
+                id: 'M-10', dim: 'M', src: 'SRC.developmental',
+                title: {
+                    fa: 'فکر کنی `scanf("%d")` کلید Enter را هم برمی‌دارد',
+                    de: 'Glauben, dass `scanf("%d")` die Enter-Taste mitnimmt',
+                    en: 'Thinking `scanf("%d")` also takes the Enter key',
+                },
+                wrong: 'C.L10.K04', right: 'C.L10.K05',
+                why: {
+                    fa: 'Enter هم یک نویسه است: `\\n`. `%d` رقم‌ها را برمی‌دارد و همان‌جا می‌ایستد؛ `\\n` در buffer می‌ماند. `%c` فاصله‌ها را رد نمی‌کند، پس همان `\\n` را می‌خواند. با یک فاصله پیش از آن، `" %c"`، هر فاصله و Enter پیش از حرف رد می‌شود.',
+                    de: 'Auch Enter ist ein Zeichen: `\\n`. `%d` nimmt die Ziffern und hört dort auf; das `\\n` bleibt im Puffer. `%c` überspringt keine Leerzeichen und liest deshalb genau dieses `\\n`. Mit einem Leerzeichen davor, `" %c"`, werden alle Leerzeichen und Enter vor dem Buchstaben übersprungen.',
+                    en: 'Enter is a character too: `\\n`. `%d` takes the digits and stops there; the `\\n` stays in the buffer. `%c` does not skip spaces, so it reads exactly that `\\n`. With a space in front, `" %c"`, every space and Enter before the letter is skipped.',
+                },
+            },
+            {
+                id: 'S-01', dim: 'S', src: 'SRC.developmental',
+                title: {
+                    fa: 'به ورودی اعتماد کنی و به مقدار بازگشتی `scanf` نگاه نکنی',
+                    de: 'Der Eingabe trauen, ohne auf den Rückgabewert von `scanf` zu schauen',
+                    en: 'Trusting the input without looking at what `scanf` returns',
+                },
+                wrong: 'C.L10.K06', right: 'C.L10.K07',
+                why: {
+                    fa: 'ورودی از بیرون می‌آید و هر چیزی می‌تواند باشد: یک واژه به‌جای عدد، یا هیچ. اگر `scanf` نتواند بخواند، متغیر را دست نمی‌زند و برنامه با مقدار قبلی ادامه می‌دهد، بی‌آنکه کسی بفهمد. `scanf` تعداد مقدارهای خوانده‌شده را برمی‌گرداند؛ آن را نگه دار و نشان بده. از درس 12 با `if` ورودی بد را رد می‌کنی. بیشتر حمله‌ها به نرم‌افزار از همین ورودیِ بررسی‌نشده شروع می‌شوند.',
+                    de: 'Eingaben kommen von außen und können alles sein: ein Wort statt einer Zahl, oder gar nichts. Kann `scanf` nicht lesen, lässt es die Variable unverändert, und das Programm rechnet mit dem alten Wert weiter, ohne dass es jemand merkt. `scanf` gibt zurück, wie viele Werte es gelesen hat; behalte diesen Wert und zeig ihn an. Ab Lektion 12 weist du schlechte Eingaben mit `if` zurück. Die meisten Angriffe auf Software beginnen mit genau solchen ungeprüften Eingaben.',
+                    en: 'Input comes from outside and can be anything: a word instead of a number, or nothing at all. If `scanf` cannot read, it leaves the variable alone, and the program goes on with the old value without anyone noticing. `scanf` returns how many values it read; keep that number and show it. From lesson 12 on you reject bad input with `if`. Most attacks on software start with exactly this kind of unchecked input.',
+                },
+            },
         ],
     };
 })(typeof window !== 'undefined' ? window : globalThis);

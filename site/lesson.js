@@ -134,6 +134,8 @@ NullpunktData.load({ lessons: [new URLSearchParams(location.search).get('lesson'
             // the record's own input (code `stdin`), so the learner sees what the program reads and can change it
             if (opts.stdin) stdinBox.value = opts.stdin;
             stdinBox.rows = Math.max(2, stdinBox.value.split('\n').length);
+            stdinBox.setAttribute('aria-label', U.inputLabel);
+            box.insertBefore(el('div', 'np-stdin-label', esc(U.inputLabel)), out);
             box.insertBefore(stdinBox, out);
         }
 
