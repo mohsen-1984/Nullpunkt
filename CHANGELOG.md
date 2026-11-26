@@ -6,6 +6,30 @@ version may change the data format. Dates are those of the release tags. The sin
 
 ## [Unreleased]
 
+## [0.4.0] — 2026-11-26
+
+Chapter 4 — Decisions: programs that compare, choose between ways with `if`, `else` and `switch`, and now reject
+bad input instead of only showing it.
+
+### Course
+
+- **Chapter 4 — Decisions** (lessons 11–14, in English, German and Persian): comparisons and `bool`; `if`, `else`
+  and `else if`; `&&`, `||`, `!`, short-circuit evaluation and `?:`; `switch` with `case`, `default` and
+  `break`. From lesson 12 on, every `scanf` result is checked with `if`, and bad input is rejected (`S-01`).
+  A review unit at the end of the chapter, with *On your PC*: the warnings gcc gives on your own computer and the
+  browser does not.
+- Thirteen new mistakes: `=<` for `<=` (`E-13`), `0.1 + 0.2 == 0.3` (`M-11`), `=` in a condition (`W-04`),
+  `;` after `if (…)` (`W-05`), indentation instead of braces (`W-06`), the broad condition first in an
+  `else if` chain (`L-02`), `18 <= t <= 25` (`W-07`), `day == 6 || 7` (`L-03`), `&&` for "outside the
+  range" (`L-04`), `and` from Python (`E-14`), a missing `break` (`W-08`), a comparison as a `case` label
+  (`E-15`), and the second security mistake: checking that a number arrived but not its range (`S-02`). Seven new
+  terms: comparison, truth value, condition, block, logical operator, short-circuit evaluation, fall-through.
+
+### Site
+
+- Persian pages: inline code is kept in one box, so a piece of code no longer breaks over two lines with its halves
+  in the wrong order.
+
 ## [0.3.0] — 2026-11-26
 
 Chapter 3 — Input: programs that read numbers and letters from the user, and notice when the input goes wrong. The

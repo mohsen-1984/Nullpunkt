@@ -3,17 +3,15 @@
 Open work and backlog only — what is done lives in the code, the rule documents (`docs/rules/`) and the release notes
 (`CHANGELOG.md`). Rounds are listed in the order planned; the target of 1.0 is the whole C course.
 
-## Next — 0.4: chapter 4
+## Next — 0.5: chapter 5
 
-- [ ] Chapter 4 — Decisions (lessons 11–14): comparisons, `bool`, `if`/`else`, `&&` `||` `!`, `switch`; from lesson
-      12 on, every `scanf` result is checked (`S.STY.06`), and `S-01` gets its real fix: reject bad input with `if`.
-- [ ] Review unit `C04.REV`.
+- [ ] Chapter 5 — Loops (lessons 15–19) and its review unit `C05.REV`; ask the question
+      again until the input is good (promised in lessons 12–14).
+- [ ] Trace tables: highlight the line of the current step in the code beside the table; loops already work, as long
+      as each statement keeps to its own line (`lib/Trace.js`).
 - [ ] A prebuilt search index, so the first search does not load every lesson; CodeMirror only when an editor first
       scrolls into view.
-- [ ] Trace tables: highlight the line of the current step in the code beside the table; loops (chapter 5) already
-      work, as long as each statement keeps to its own line (`lib/Trace.js`).
-- [ ] Persian pages: inline code that wraps at the end of a line can come out in the wrong order (bidi); keep short
-      code on one line.
+- [ ] Persian pages: check the inline-code box (0.4) on a phone, and long code in narrow table cells.
 
 ## Open from earlier rounds
 

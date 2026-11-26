@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/mohsen-1984/Nullpunkt/releases/tag/v0.3.0"><img src="https://img.shields.io/badge/version-0.3.0-3B5BDB" alt="Version 0.3.0"></a>
+  <a href="https://github.com/mohsen-1984/Nullpunkt/releases/tag/v0.4.0"><img src="https://img.shields.io/badge/version-0.4.0-3B5BDB" alt="Version 0.4.0"></a>
   <a href="https://github.com/mohsen-1984/Nullpunkt/actions/workflows/ci.yml"><img src="https://github.com/mohsen-1984/Nullpunkt/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/C-ISO%20C17-555" alt="ISO C17">
   <img src="https://img.shields.io/badge/content-CC%20BY--SA%204.0-237032" alt="Content: CC BY-SA 4.0">
@@ -34,7 +34,7 @@
 - **Exercises checked by tests,** in the page; your progress stays in your browser.
 - **Find anything:** press <kbd>/</kbd> or <kbd>Ctrl</kbd> <kbd>K</kbd> to search every lesson, term and mistake.
 
-**Status:** chapter 0 (orientation: where C lives, from program to processor, standards and tools, C on your own computer, how to learn) and chapters 1 to 3 (lessons 1–10: first programs, values and variables, input; with trace tables and a review unit at the end of each chapter) are written; 14 chapters and 54 lessons are planned for 1.0. C++ comes after.
+**Status:** chapter 0 (orientation: where C lives, from program to processor, standards and tools, C on your own computer, how to learn) and chapters 1 to 4 (lessons 1–14: first programs, values and variables, input, decisions; with trace tables and a review unit at the end of each chapter) are written; 14 chapters and 54 lessons are planned for 1.0. C++ comes after.
 
 ## Deutsch
 
@@ -49,7 +49,7 @@
 - **Übungen, geprüft von Tests** auf der Seite; dein Fortschritt bleibt in deinem Browser.
 - **Alles finden:** <kbd>/</kbd> oder <kbd>Strg</kbd> <kbd>K</kbd> durchsucht jede Lektion, jeden Begriff und jeden Fehler.
 
-**Stand:** Kapitel 0 (Orientierung: wo C steckt, vom Programm zum Prozessor, Standards und Werkzeuge, C auf deinem Rechner, wie man lernt) sowie die Kapitel 1 bis 3 (Lektionen 1–10: erste Programme, Werte und Variablen, Eingabe; mit Trace Tables und einer Wiederholung am Ende jedes Kapitels) sind geschrieben; für 1.0 sind 14 Kapitel und 54 Lektionen geplant. C++ folgt danach.
+**Stand:** Kapitel 0 (Orientierung: wo C steckt, vom Programm zum Prozessor, Standards und Werkzeuge, C auf deinem Rechner, wie man lernt) sowie die Kapitel 1 bis 4 (Lektionen 1–14: erste Programme, Werte und Variablen, Eingabe, Entscheidungen; mit Trace Tables und einer Wiederholung am Ende jedes Kapitels) sind geschrieben; für 1.0 sind 14 Kapitel und 54 Lektionen geplant. C++ folgt danach.
 
 ## فارسی
 
@@ -66,7 +66,7 @@
 - **تمرین‌هایی که تست‌ها بررسی‌شان می‌کنند،** همان‌جا در صفحه؛ پیشرفتت در مرورگر خودت می‌ماند.
 - **پیدا کردن هر چیز:** <kbd>/</kbd> یا <kbd>Ctrl</kbd> <kbd>K</kbd> همهٔ درس‌ها، اصطلاح‌ها و اشتباه‌ها را جست‌وجو می‌کند.
 
-**وضعیت:** فصل 0 (جهت‌یابی: C امروز کجاست، از برنامه تا پردازنده، استانداردها و ابزارها، C روی کامپیوتر خودت، چطور یاد بگیریم) و فصل‌های 1 تا 3 (درس‌های 1 تا 10: نخستین برنامه‌ها، مقدار و متغیر، ورودی؛ با جدول ردیابی و یک واحد مرور در پایان هر فصل) نوشته شده‌اند؛ برای نسخهٔ 1.0، 14 فصل و 54 درس برنامه‌ریزی شده است. C++ پس از آن می‌آید.
+**وضعیت:** فصل 0 (جهت‌یابی: C امروز کجاست، از برنامه تا پردازنده، استانداردها و ابزارها، C روی کامپیوتر خودت، چطور یاد بگیریم) و فصل‌های 1 تا 4 (درس‌های 1 تا 14: نخستین برنامه‌ها، مقدار و متغیر، ورودی، تصمیم؛ با جدول ردیابی و یک واحد مرور در پایان هر فصل) نوشته شده‌اند؛ برای نسخهٔ 1.0، 14 فصل و 54 درس برنامه‌ریزی شده است. C++ پس از آن می‌آید.
 
 </div>
 
@@ -76,7 +76,7 @@
 
 - **Online:** [mohsen-1984.github.io/Nullpunkt](https://mohsen-1984.github.io/Nullpunkt/).
 - **Offline:** download the repository (Code → Download ZIP), unpack it and open `index.html`. Everything except the fonts is in the folder; without a network the page falls back to your system fonts.
-- **Release notes:** [`CHANGELOG.md`](CHANGELOG.md) · [releases](https://github.com/mohsen-1984/Nullpunkt/releases/tag/v0.3.0). Open work: [`TODO.md`](TODO.md).
+- **Release notes:** [`CHANGELOG.md`](CHANGELOG.md) · [releases](https://github.com/mohsen-1984/Nullpunkt/releases/tag/v0.4.0). Open work: [`TODO.md`](TODO.md).
 
 ## Repository
 
