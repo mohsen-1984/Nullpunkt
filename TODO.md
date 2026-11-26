@@ -3,17 +3,17 @@
 Open work and backlog only — what is done lives in the code, the rule documents (`docs/rules/`) and the release notes
 (`CHANGELOG.md`). Rounds are listed in the order planned; the target of 1.0 is the whole C course.
 
-## Next — 0.3: chapters 3 and 4
+## Next — 0.4: chapter 4
 
-- [ ] Decide first (before chapter 4, as the pages grow): one data file per lesson page plus a prebuilt search index,
-      and CodeMirror only when an editor first scrolls into view. Every page now loads three chapter files (about
-      300 KB); by 1.0 it would be 1.5–2 MB.
-- [ ] Chapter 3 — Input (lessons 9–10): `scanf` with `&`, `getchar`, `EOF`; the first security mistakes (`S-`,
-      `C.TOP.01`): `scanf("%s")` without a width. Exercises with `stdin` need edge tests.
-- [ ] Chapter 4 — Decisions (lessons 11–14): comparisons, `bool`, `if`/`else`, `&&` `||` `!`, `switch`.
-- [ ] Review units `C03.REV` and `C04.REV`.
+- [ ] Chapter 4 — Decisions (lessons 11–14): comparisons, `bool`, `if`/`else`, `&&` `||` `!`, `switch`; from lesson
+      12 on, every `scanf` result is checked (`S.STY.06`), and `S-01` gets its real fix: reject bad input with `if`.
+- [ ] Review unit `C04.REV`.
+- [ ] A prebuilt search index, so the first search does not load every lesson; CodeMirror only when an editor first
+      scrolls into view.
 - [ ] Trace tables: highlight the line of the current step in the code beside the table; loops (chapter 5) already
       work, as long as each statement keeps to its own line (`lib/Trace.js`).
+- [ ] Persian pages: inline code that wraps at the end of a line can come out in the wrong order (bidi); keep short
+      code on one line.
 
 ## Open from earlier rounds
 
@@ -40,8 +40,9 @@ Open work and backlog only — what is done lives in the code, the rule document
 
 ## Runner and XCC
 
-- [ ] Send the XCC contributions prepared in `docs/upstream/` (a tested patch for `limits.h` and `%td` / `%jd`;
-      issues for `_Static_assert` and the repeating error recovery), then drop each workaround in `C.XCC.01`.
+- [ ] Send the XCC contributions prepared in `docs/upstream/` (tested patches for `limits.h` and `%td` / `%jd`, and
+      for `scanf`; issues for `_Static_assert` and the repeating error recovery), then drop each workaround in
+      `C.XCC.01` and each patch in `vendor/wcc/patches/`.
 - [ ] Several files per program (chapter 12: `.c` and `.h`, `extern`, `#include "…"`).
 - [ ] Chapter 14 in the browser: show ANSI colors and cursor moves in the output pane; show an image file (PPM)
       a program writes; `stderr` in its own color.

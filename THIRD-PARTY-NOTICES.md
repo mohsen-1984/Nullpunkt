@@ -6,7 +6,7 @@ Nullpunkt's own code is MIT (`LICENSE`) and its content CC BY-SA 4.0 (`LICENSE-C
 
 | Component | Where | License | Source |
 |---|---|---|---|
-| XCC (wcc) — C compiler, libc and headers, compiled to WebAssembly | `vendor/wcc/` | MIT, © tyfkda — `vendor/wcc/LICENSE` | https://github.com/tyfkda/xcc |
+| XCC (wcc) — C compiler, libc and headers, compiled to WebAssembly; one patch to its `scanf` (`vendor/wcc/patches/`) | `vendor/wcc/` | MIT, © tyfkda — `vendor/wcc/LICENSE` | https://github.com/tyfkda/xcc |
 | Lucide 1.80.0 — the icons the course uses, SVG bodies unchanged | `vendor/lucide/` | ISC, © Lucide Icons and Contributors — `vendor/lucide/LICENSE` | https://github.com/lucide-icons/lucide |
 | CodeMirror 6 with the C/C++ language — the code editor and syntax colors | `vendor/codemirror/` | MIT — every bundled package in `vendor/codemirror/LICENSES.md` | https://codemirror.net |
 
