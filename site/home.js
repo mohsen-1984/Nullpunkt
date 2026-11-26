@@ -3,7 +3,8 @@
  * lesson works, the compiler in the browser, and the name. Renders into #main, then mounts the chrome with the
  * page's sections. Classic script; loads from file://.
  */
-(function () {
+// the registers (the whole path) and the lesson of the demo code (DEMO below); lessons are loaded by lib/Data.js
+NullpunktData.load({ lessons: ['C.L03'] }).then(function () {
     'use strict';
     const N = window.Nullpunkt, ix = NullpunktData.index(N), G = ix.generated, reg = ix.reg;
     const lang = document.documentElement.lang, U = NullpunktUI[lang], c = U.site;
@@ -39,12 +40,12 @@
         let h = '<section class="np-home-sec" id="path" aria-labelledby="h-path"><h2 id="h-path" tabindex="-1">' + esc(c.nav.path[0]) + '</h2>' +
             '<p class="np-lead">' + esc(c.pathLead) + '</p><ol class="np-chapters">';
         ix.chapterList.forEach(ch => {
-            const lessons = ix.lessonList.filter(L => L.chapter === ch.id), written = lessons.some(L => L.unit);
+            const lessons = ix.lessonList.filter(L => L.chapter === ch.id), written = lessons.some(L => L.written);
             h += '<li class="np-chapter' + (written ? '' : ' is-planned') + '" id="chapter-' + ch.id + '"><h3><span class="np-chapter-n">' + ch.n + '</span>' + esc(ch.catalog.title[lang]) + '</h3><ol>';
             lessons.forEach(L => {
                 const st = C.state(L), icon = '<span class="np-tree-state is-' + st + '">' + svg(C.STATE_ICON[st]) + '</span>';
                 const title = '<span>' + L.label + '. ' + esc(L.catalog.title[lang]) + '</span>';
-                if (L.unit) {
+                if (L.written) {
                     const p = C.progress(L);
                     const meta = p.done ? c.exercises.replace('{d}', p.done).replace('{n}', p.total) : c.minutesShort.replace('{m}', L.catalog.minutes);
                     h += '<li><a href="' + esc(C.lessonHref(L.id, lang)) + '">' + icon + title + '<span class="np-l-meta">' + esc(meta) + '</span></a></li>';
@@ -79,4 +80,4 @@
     const nav = ['path', 'method', 'browser', 'name'].map(id => ({ id: id, label: c.nav[id][0], short: c.nav[id][1] }));
     NullpunktChrome.mount({ page: 'home', nav: nav, tree: C.tree(ix, lang, null) });
     document.getElementById('npHomeSearch').addEventListener('click', () => NullpunktSearch.open());
-})();
+}).catch(function (e) { setTimeout(function () { throw e; }); });     // a failure shows in the console, as before

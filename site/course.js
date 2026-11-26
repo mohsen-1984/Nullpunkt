@@ -22,15 +22,16 @@
     function lessonHref(id, lang, hash) { return 'lesson.html?lesson=' + encodeURIComponent(id) + '&lang=' + lang + (hash ? '#' + hash : ''); }
     function homeHref(lang, hash) { return 'index.html?lang=' + lang + (hash ? '#' + hash : ''); }
 
-    /** exercise items of a lesson that the page can mark as solved, and how many are solved */
+    /** exercise items of a lesson that the page can mark as solved, and how many are solved; the items come from the
+     *  outline (data/generated/outline.js), so the path shows progress without loading every lesson */
     function progress(L) {
-        var items = [];
-        ((L.unit && L.unit.bands) || []).forEach(function (b) { b.items.forEach(function (it) { items.push(it.id); }); });
+        var outline = (g.Nullpunkt && g.Nullpunkt.outline) || {}, items = outline[L.id] || [];
+        if (!items.length && L.unit) (L.unit.bands || []).forEach(function (b) { b.items.forEach(function (it) { items.push(it.id); }); });
         var done = items.filter(function (id) { return store('item.' + id) === true; }).length;
         return { done: done, total: items.length, visited: store('visited.' + L.id) === true };
     }
     function state(L) {
-        if (!L.unit) return 'planned';
+        if (!L.written) return 'planned';
         var p = progress(L);
         if (p.total && p.done === p.total) return 'done';
         return p.visited || p.done ? 'started' : 'open';
@@ -48,7 +49,7 @@
             '<p class="np-tree-title">' + esc(c.path) + '</p><ol class="np-tree-chapters">';
         ix.chapterList.forEach(function (ch) {
             var lessons = ix.lessonList.filter(function (L) { return L.chapter === ch.id; });
-            var written = lessons.filter(function (L) { return L.unit; }).length;
+            var written = lessons.filter(function (L) { return L.written; }).length;
             var isOpen = open === 'all' || (cur ? cur.chapter === ch.id : ch.n <= 1);
             html += '<li class="np-tree-chapter' + (written ? '' : ' is-planned') + '"><details' + (isOpen ? ' open' : '') + '><summary>' +
                 '<span class="np-tree-n">' + ch.n + '</span><span class="np-tree-ch">' + esc(ch.catalog.title[lang]) + '</span>' +
@@ -57,7 +58,7 @@
                 var st = state(L), here = L.id === current;
                 var inner = '<span class="np-tree-state is-' + st + '">' + svg(STATE_ICON[st]) + '</span><span class="np-tree-num">' + (L.review ? svg('rotate-ccw') : L.label) + '</span>' +
                     '<span class="np-tree-lt">' + esc(L.catalog.title[lang]) + '</span>';
-                if (L.unit) html += '<li><a class="np-tree-lesson' + (here ? ' is-current' : '') + '" href="' + esc(lessonHref(L.id, lang)) + '"' + (here ? ' aria-current="page"' : '') + '>' + inner + '</a></li>';
+                if (L.written) html += '<li><a class="np-tree-lesson' + (here ? ' is-current' : '') + '" href="' + esc(lessonHref(L.id, lang)) + '"' + (here ? ' aria-current="page"' : '') + '>' + inner + '</a></li>';
                 else html += '<li><span class="np-tree-lesson is-planned" title="' + esc(c.soon) + '">' + inner + '</span></li>';
             });
             html += '</ol></details></li>';
@@ -70,8 +71,8 @@
     /** where the reader left off: the last lesson opened, else the first written lesson */
     function resume(ix) {
         var last = store('last');
-        if (last && ix.lesson[last] && ix.lesson[last].unit) return ix.lesson[last];
-        return ix.lessonList.filter(function (L) { return L.unit; })[0] || null;
+        if (last && ix.lesson[last] && ix.lesson[last].written) return ix.lesson[last];
+        return ix.lessonList.filter(function (L) { return L.written; })[0] || null;
     }
 
     g.NullpunktCourse = { tree: tree, progress: progress, state: state, resume: resume, lessonHref: lessonHref, homeHref: homeHref, store: store, esc: esc, svg: svg, STATE_ICON: STATE_ICON };

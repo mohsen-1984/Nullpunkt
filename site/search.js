@@ -12,12 +12,17 @@
     function U() { return g.NullpunktUI[lang].site; }
     function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
     function svg(name) { return g.NullpunktChrome ? g.NullpunktChrome.svg(name) : ''; }
+    /** the engine over the whole course: the page holds only its own lesson, so the first search loads every written
+     *  lesson (lib/Data.js) and builds the index; until then it returns null and run() says it is loading */
+    var pending = null;
     function getEngine() {
-        if (!engine) {
+        if (engine) return engine;
+        if (!pending) pending = g.NullpunktData.loadAll().then(function () {
             var ix = g.NullpunktData.index(g.Nullpunkt);
             engine = { ix: ix, s: g.NullpunktSearchEngine.build(ix, lang) };
-        }
-        return engine;
+            if (dlg && dlg.open) run();
+        });
+        return null;
     }
 
     function build() {
@@ -71,6 +76,7 @@
             input.setAttribute('aria-expanded', 'false');
             return;
         }
+        if (!e) { status.textContent = u.searchLoading; input.setAttribute('aria-expanded', 'false'); return; }
         var res = e.s.query(q, { max: CFG.maxResults, snippet: CFG.snippet });
         status.textContent = res.length ? u.searchCount.replace('{n}', res.length) : u.searchEmpty.replace('{q}', q);
         res.forEach(function (r, i) {
@@ -117,6 +123,7 @@
 
     function open(q) {
         if (!dlg) build();
+        getEngine();
         if (!dlg.open) dlg.showModal();
         document.documentElement.classList.add('np-search-open');
         if (q != null) input.value = q;

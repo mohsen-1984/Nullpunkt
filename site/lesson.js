@@ -3,7 +3,8 @@
  * runnable code, exercises checked by tests, and the generated blocks (can-do, terms, self-check, answer key).
  * Classic script; loads from file://. The compiler (vendor/wcc, 600 KB) is loaded on the first run only.
  */
-(function () {
+// the registers, this lesson's file and the lessons it refers to (lib/Data.js); then the page
+NullpunktData.load({ lessons: [new URLSearchParams(location.search).get('lesson') || 'C.L01'] }).then(function () {
     'use strict';
     const N = window.Nullpunkt, ix = NullpunktData.index(N), reg = ix.reg, G = ix.generated;
     const params = new URLSearchParams(location.search);
@@ -732,13 +733,13 @@
         const i = ix.lessonList.indexOf(L);
         const nav = el('nav', 'np-pager');
         const prev = ix.lessonList[i - 1], next = ix.lessonList[i + 1];
-        if (prev) nav.appendChild(prev.unit ? el('a', '', icon('chevron-left', 'np-flip') + esc(U.prev)) : el('span', 'np-meta', esc(U.prev)));
+        if (prev) nav.appendChild(prev.written ? el('a', '', icon('chevron-left', 'np-flip') + esc(U.prev)) : el('span', 'np-meta', esc(U.prev)));
         if (next) {
-            const n = next.unit ? el('a', '', esc(U.next) + icon('chevron-right', 'np-flip')) : el('span', 'np-meta', esc(U.next) + ': ' + esc(U.planned));
-            if (next.unit) n.href = href(next.id);
+            const n = next.written ? el('a', '', esc(U.next) + icon('chevron-right', 'np-flip')) : el('span', 'np-meta', esc(U.next) + ': ' + esc(U.planned));
+            if (next.written) n.href = href(next.id);
             nav.appendChild(n);
         }
-        if (prev && prev.unit) nav.firstChild.href = href(prev.id);
+        if (prev && prev.written) nav.firstChild.href = href(prev.id);
         root.appendChild(nav);
 
         // the chrome: the lesson's blocks are the page's sections; the learning path is the rail
@@ -751,4 +752,4 @@
     }
 
     render();
-})();
+}).catch(function (e) { setTimeout(function () { throw e; }); });     // a failure shows in the console, as before

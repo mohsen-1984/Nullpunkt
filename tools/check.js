@@ -87,10 +87,15 @@ function walk(o, where, key) {
     });
 }
 Object.keys(N.files).forEach(fid => walk(N.files[fid], fid));
-N.registry.catalog.forEach(s => walk(s, 'registry'));
+ix.catalog.forEach(s => walk(s, 'registry'));
+
+// every authored data file: data/*.js and data/<chapter folder>/*.js (not data/generated/)
+const DATA_FILES = [].concat(...fs.readdirSync(path.join(root, 'data'), { withFileTypes: true }).map(e =>
+    e.isDirectory() ? (e.name === 'generated' ? [] : fs.readdirSync(path.join(root, 'data', e.name)).filter(f => f.endsWith('.js')).map(f => e.name + '/' + f))
+        : (e.name.endsWith('.js') ? [e.name] : [])));
 
 // ---------- data files: size (S.DAT.04) ----------
-fs.readdirSync(path.join(root, 'data')).filter(f => f.endsWith('.js')).forEach(f => {
+DATA_FILES.forEach(f => {
     const size = fs.statSync(path.join(root, 'data', f)).size;
     if (size > 256000) err(rule('S.DAT.04'), f, 'over 250 KB (' + size + ' bytes)');
     else if (size > 0.95 * 256000) warn('S.DAT.04', f, 'over 95 % of the 250 KB cap');
@@ -324,15 +329,35 @@ Object.values(ix.prompt).forEach(p => {
     if (typeof p.waits !== 'boolean') err(rule('S.PRM.03'), p.id, 'waits must be true or false');
 });
 
-// ---------- pages load every data file (S.DAT.06) ----------
+// ---------- pages and data files (S.DAT.06): the shared files in the page, the chapters through lib/Data.js ----------
 ['index.html', 'lesson.html'].forEach(pg => {
     const html = fs.readFileSync(path.join(root, pg), 'utf8');
     const srcs = [...html.matchAll(/<script src="([^"]+)"/g)].map(m => m[1]);
-    fs.readdirSync(path.join(root, 'data')).filter(f => f.endsWith('.js')).forEach(f => {
+    DATA_FILES.filter(f => f.indexOf('/') < 0).forEach(f => {
         if (srcs.indexOf('data/' + f) < 0) err('S.DAT.06', pg, 'does not load data/' + f);
     });
-    if (srcs.indexOf('data/generated/expect.js') < 0) err('S.DAT.06', pg, 'does not load data/generated/expect.js');
-    srcs.forEach(s => { if (!/^https?:/.test(s) && !fs.existsSync(path.join(root, s))) err('S.DAT.06', pg, 'loads a missing file: ' + s); });
+    if (srcs.indexOf('data/generated/outline.js') < 0) err('S.DAT.06', pg, 'does not load data/generated/outline.js');
+    srcs.forEach(s => {
+        if (/^data\/C\d{2}-[^/]+\//.test(s) || /^data\/generated\/C/.test(s)) err('S.DAT.06', pg, 'loads a chapter file itself (' + s + '); lib/Data.js loads them');
+        if (!/^https?:/.test(s) && !fs.existsSync(path.join(root, s))) err('S.DAT.06', pg, 'loads a missing file: ' + s);
+    });
+});
+// every chapter folder is in the registry, holds its register, and only files of lessons its register names
+DATA_FILES.filter(f => f.indexOf('/') > 0).forEach(f => {
+    const [folder, name] = f.split('/'), ch = ix.chapterList.find(c => c.folder === folder);
+    if (!ch) { err('S.DAT.06', f, 'folder is not a chapter in data/registry.js'); return; }
+    if (name === 'chapter.js') return;
+    const L = ix.lessonList.find(x => x.file === f.replace(/\.js$/, ''));
+    if (!L) err('S.DAT.06', f, 'no lesson of chapter ' + ch.id + ' has this file name (L04.js, O01.js, REV.js)');
+    else if (!L.unit) err('S.DAT.06', f, 'does not hold the unit of ' + L.id);
+});
+ix.chapterList.forEach(ch => { if (DATA_FILES.indexOf(ch.folder + '/chapter.js') < 0) err('S.DAT.06', ch.folder, 'chapter folder without chapter.js'); });
+Object.keys(N.files).forEach(fid => {
+    const f = N.files[fid];
+    if (f.kind !== 'lesson') return;
+    const L = ix.lesson[fid];
+    if (L && f.chapter !== L.chapter) err('S.DAT.06', fid, 'lesson file names chapter ' + f.chapter + ', the register ' + L.chapter);
+    (f.code || []).forEach(c => { if (ix.lessonOfCode[c.id] !== fid) err('S.ID.02', c.id, 'code record in the file of ' + fid); });
 });
 
 // ---------- icons (S.AST.01) ----------
@@ -392,12 +417,13 @@ usedIcons.forEach(n => { if (!icons[n]) err(rule('S.AST.01'), n, 'icon not in ve
     }
     Object.keys(N.files).forEach(fid => walk(N.files[fid], fid));
     walk(N.registry, 'registry');
+    walk(ix.catalog, 'registry');
 })();
 
 // ---------- retired Ids (S.ID.01): never live again, never referenced ----------
 (function () {
     const live = new Set(Object.keys(ix.mistake).concat(Object.keys(ix.code), Object.keys(ix.term), Object.keys(ix.item)));
-    const dataText = fs.readdirSync(path.join(root, 'data')).filter(f => f.endsWith('.js'))
+    const dataText = DATA_FILES
         .map(f => fs.readFileSync(path.join(root, 'data', f), 'utf8').replace(/retired: \[[\s\S]*?\n\s*\],/, '')).join('\n');
     Object.values(ix.retired).forEach(r => {
         if (live.has(r.id)) err('S.ID.01', r.id, 'a retired Id is in use again');

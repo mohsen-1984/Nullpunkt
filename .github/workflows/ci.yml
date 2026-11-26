@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  # Generated results (data/generated/expect.js) come from the reference gcc, which an author's own machine may not
+  # Generated results (data/generated/) come from the reference gcc, which an author's own machine may not
   # have. On a pull request from this repository, this job records them again with the reference gcc and, if they
   # changed, commits them to the pull request's branch. The other jobs of this run still see the old results, so the
   # run fails once; the commit starts a new run that checks the recorded results (or push again if it does not).
@@ -33,7 +33,7 @@ jobs:
           node tools/gen-expect.js
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/generated/expect.js
+          git add -A data/generated
           git commit -m "Record compiler results with $(gcc -dumpfullversion | sed 's/^/gcc /')"
           git push
 
