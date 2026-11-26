@@ -471,6 +471,90 @@
                     en: 'Input comes from outside and can be anything: a word instead of a number, or nothing at all. If `scanf` cannot read, it leaves the variable alone, and the program goes on with the old value without anyone noticing. `scanf` returns how many values it read; keep that number and show it. From lesson 12 on you reject bad input with `if`. Most attacks on software start with exactly this kind of unchecked input.',
                 },
             },
+            {
+                id: 'E-13', dim: 'E', src: 'SRC.math', contrast: 'CT.form',
+                title: {
+                    fa: '`=<` یا `=>` به‌جای `<=` و `>=`',
+                    de: '`=<` oder `=>` statt `<=` und `>=`',
+                    en: '`=<` or `=>` instead of `<=` and `>=`',
+                },
+                wrong: 'C.L11.K04', right: 'C.L11.K05',
+                why: {
+                    fa: 'روی کاغذ `≤` یک نشانه است و ترتیب ندارد. در C دو نویسه است و ترتیبش ثابت است: اول `<` یا `>`، بعد `=`، همان‌طور که می‌خوانی: «کوچک‌تر یا مساوی». `=<` برای compiler یک انتساب و بعد یک `<` بی‌جاست.',
+                    de: 'Auf Papier ist `≤` ein einziges Zeichen ohne Reihenfolge. In C sind es zwei Zeichen in fester Reihenfolge: zuerst `<` oder `>`, dann `=`, so wie man es liest: „kleiner oder gleich“. `=<` ist für den Compiler eine Zuweisung und dann ein `<` an falscher Stelle.',
+                    en: 'On paper, `≤` is a single sign with no order. In C it is two characters in a fixed order: first `<` or `>`, then `=`, the way you read it: "less or equal". To the compiler, `=<` is an assignment followed by a `<` in the wrong place.',
+                },
+            },
+            {
+                id: 'M-11', dim: 'M', src: 'SRC.math', contrast: 'CT.false',
+                title: {
+                    fa: 'فکر کنی `0.1 + 0.2 == 0.3` درست است',
+                    de: 'Glauben, dass `0.1 + 0.2 == 0.3` wahr ist',
+                    en: 'Thinking `0.1 + 0.2 == 0.3` is true',
+                },
+                wrong: 'C.L11.K06', right: 'C.L11.K07',
+                why: {
+                    fa: 'در ریاضی این تساوی درست است. ولی `double` عدد را در دودویی نگه می‌دارد و 0.1 و 0.2 در دودویی دقیق جا نمی‌گیرند؛ جمعشان کمی با 0.3 فرق دارد و `==` فرق را می‌بیند. پول را به سنت در `int` نگه دار؛ برای اندازه‌ها با کمی رواداری مقایسه کن ([[lesson:C.L13]]).',
+                    de: 'In der Mathematik stimmt diese Gleichung. Aber `double` speichert Zahlen binär, und 0,1 und 0,2 passen binär nicht genau hinein; ihre Summe weicht ein wenig von 0,3 ab, und `==` sieht den Unterschied. Halte Geld in Cent in einem `int`; Messwerte vergleichst du mit etwas Spielraum ([[lesson:C.L13]]).',
+                    en: 'In maths this equation holds. But `double` stores numbers in binary, and 0.1 and 0.2 do not fit exactly in binary; their sum differs a little from 0.3, and `==` sees the difference. Keep money in cents in an `int`; compare measurements with a little tolerance ([[lesson:C.L13]]).',
+                },
+            },
+            {
+                id: 'W-04', dim: 'W', src: 'SRC.math', contrast: 'CT.false',
+                title: {
+                    fa: '`=` به‌جای `==` در شرط: `if (floor = 13)`',
+                    de: '`=` statt `==` in einer Bedingung: `if (floor = 13)`',
+                    en: '`=` instead of `==` in a condition: `if (floor = 13)`',
+                },
+                wrong: 'C.L12.K04', right: 'C.L12.K05',
+                why: {
+                    fa: 'در ریاضی `=` یعنی «برابر است». در C یک `=` تنها انتساب است: مقدار را در جعبه می‌نویسد، و مقدار کل expression همان مقدار نوشته‌شده است. پس `if (floor = 13)` طبقه را به 13 عوض می‌کند و همیشه درست است. gcc با `suggest parentheses around assignment used as truth value` هشدار می‌دهد. برای پرسیدن: `==`.',
+                    de: 'In der Mathematik heißt `=` „ist gleich“. In C ist ein einzelnes `=` eine Zuweisung: Es schreibt den Wert in den Kasten, und der Wert des ganzen Ausdrucks ist der geschriebene Wert. `if (floor = 13)` setzt den Stock also auf 13 und ist immer wahr. gcc warnt mit `suggest parentheses around assignment used as truth value`. Zum Fragen: `==`.',
+                    en: 'In maths, `=` means "is equal to". In C a single `=` is an assignment: it writes the value into the box, and the value of the whole expression is the value written. So `if (floor = 13)` changes the floor to 13 and is always true. gcc warns with `suggest parentheses around assignment used as truth value`. To ask: `==`.',
+                },
+            },
+            {
+                id: 'W-05', dim: 'W', src: 'SRC.developmental',
+                title: {
+                    fa: '`;` پس از `if (…)`',
+                    de: '`;` nach `if (…)`',
+                    en: '`;` after `if (…)`',
+                },
+                wrong: 'C.L12.K06', right: 'C.L12.K07',
+                why: {
+                    fa: 'پس از هر statement یک `;` می‌آید، پس دست به‌طور خودکار پس از شرط هم آن را می‌نویسد. ولی `;` تنها خودش یک statement خالی است و بدنهٔ `if` می‌شود: `if` «هیچ» را اجرا می‌کند یا نمی‌کند، و بلوک بعدی همیشه اجرا می‌شود. gcc با `-Wextra` می‌گوید `suggest braces around empty body`.',
+                    de: 'Nach jedem Statement kommt ein `;`, also schreibt die Hand es automatisch auch nach der Bedingung. Aber ein einzelnes `;` ist selbst ein leeres Statement und wird zum Rumpf des `if`: `if` führt „nichts“ aus oder nicht, und der Block danach läuft immer. gcc sagt mit `-Wextra` `suggest braces around empty body`.',
+                    en: 'Every statement ends with a `;`, so the hand writes one after the condition too, out of habit. But a lone `;` is itself an empty statement and becomes the body of the `if`: the `if` runs "nothing" or not, and the block after it always runs. With `-Wextra`, gcc says `suggest braces around empty body`.',
+                },
+            },
+            {
+                id: 'W-06', dim: 'W', src: 'SRC.prior', contrast: 'CT.form',
+                title: {
+                    fa: 'تورفتگی به‌جای آکولاد، مثل Python',
+                    de: 'Einrückung statt geschweifter Klammern, wie in Python',
+                    en: 'Indentation instead of braces, as in Python',
+                },
+                wrong: 'C.L12.K08', right: 'C.L12.K09',
+                why: {
+                    fa: 'در Python تورفتگی می‌گوید کدام خط‌ها مال `if` هستند. در C همین کار را `{ }` می‌کند و تورفتگی فقط برای خواندن انسان است. بی آکولاد، `if` فقط statement بعدی را در اختیار دارد و سطر دوم همیشه اجرا می‌شود. gcc با `this \'if\' clause does not guard...` هشدار می‌دهد. برای همین این دوره همیشه آکولاد می‌گذارد، حتی برای یک خط.',
+                    de: 'In Python sagt die Einrückung, welche Zeilen zum `if` gehören. In C tun das `{ }`, und die Einrückung ist nur für menschliche Leser. Ohne geschweifte Klammern gehört zum `if` nur das nächste Statement, und die zweite Zeile läuft immer. gcc warnt mit `this \'if\' clause does not guard...`. Deshalb setzt dieser Kurs immer geschweifte Klammern, auch bei einer Zeile.',
+                    en: 'In Python, indentation says which lines belong to the `if`. In C, `{ }` do that, and indentation is only for human readers. Without braces, the `if` owns only the next statement, and the second line always runs. gcc warns with `this \'if\' clause does not guard...`. That is why this course always uses braces, even for one line.',
+                },
+            },
+            {
+                id: 'L-02', dim: 'L', src: 'SRC.developmental',
+                title: {
+                    fa: 'شرط گسترده پیش از شرط تنگ در زنجیرهٔ `else if`',
+                    de: 'Die weite Bedingung vor der engen in einer `else if`-Kette',
+                    en: 'The broad condition before the narrow one in an `else if` chain',
+                },
+                wrong: 'C.L12.K10', right: 'C.L12.K11',
+                why: {
+                    fa: 'زنجیرهٔ `else if` پس از اولین شرط درست می‌ایستد. هر نمره‌ای که `>= 17` است، `>= 10` هم هست؛ اگر `>= 10` اول بیاید، `Excellent` هرگز چاپ نمی‌شود، و هیچ پیامی هم این را نمی‌گوید. شرط تنگ‌تر را اول بنویس، و مرزها را با ورودی امتحان کن.',
+                    de: 'Eine `else if`-Kette hört nach der ersten wahren Bedingung auf. Jede Note `>= 17` ist auch `>= 10`; steht `>= 10` zuerst, wird `Excellent` nie ausgegeben, und keine Meldung sagt es dir. Schreib die engere Bedingung zuerst und probier die Grenzen mit Eingaben aus.',
+                    en: 'An `else if` chain stops after the first true condition. Every mark `>= 17` is also `>= 10`; if `>= 10` comes first, `Excellent` is never printed, and no message tells you so. Write the narrower condition first, and try the boundaries with input.',
+                },
+            },
         ],
     };
 })(typeof window !== 'undefined' ? window : globalThis);

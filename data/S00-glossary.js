@@ -395,6 +395,69 @@
                     en: 'The sign that the input has ended: `getchar` and `scanf` then give back the value `EOF`, which is -1.',
                 },
             },
+            {
+                id: 'T.comparison', en: 'comparison', use: { fa: 'مقایسه', de: 'Vergleich' },
+                gloss: { fa: 'comparison', de: 'comparison' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: 'expression‌ای با `==`، `!=`، `<`، `<=`، `>` یا `>=` که دو مقدار را می‌سنجد و 1 (درست) یا 0 (نادرست) می‌دهد.',
+                    de: 'Ein Ausdruck mit `==`, `!=`, `<`, `<=`, `>` oder `>=`, der zwei Werte prüft und 1 (wahr) oder 0 (falsch) liefert.',
+                    en: 'An expression with `==`, `!=`, `<`, `<=`, `>` or `>=` that tests two values and gives 1 (true) or 0 (false).',
+                },
+            },
+            {
+                id: 'T.truth-value', en: 'truth value', use: { fa: 'مقدار درستی', de: 'Wahrheitswert' },
+                gloss: { fa: 'truth value', de: 'truth value' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: 'پاسخ یک پرسش بله یا نه: در C، 1 یعنی درست و 0 یعنی نادرست؛ نوع `bool` فقط همین دو را نگه می‌دارد.',
+                    de: 'Die Antwort auf eine Ja-oder-Nein-Frage: In C heißt 1 wahr und 0 falsch; der Typ `bool` hält nur diese beiden.',
+                    en: 'The answer to a yes-or-no question: in C, 1 means true and 0 means false; the type `bool` holds only these two.',
+                },
+            },
+            {
+                id: 'T.condition', en: 'condition', use: { fa: 'شرط', de: 'Bedingung' },
+                gloss: { fa: 'condition', de: 'condition' }, deArticle: 'die', series: ['C'],
+                def: {
+                    fa: 'expression درون پرانتز `if`؛ اگر مقدارش غیرصفر باشد درست است و بلوک اجرا می‌شود.',
+                    de: 'Der Ausdruck in der Klammer von `if`; ist sein Wert nicht null, ist sie wahr, und der Block wird ausgeführt.',
+                    en: 'The expression in the parentheses of `if`; if its value is not zero it is true, and the block runs.',
+                },
+            },
+            {
+                id: 'T.block', en: 'block', use: { fa: 'بلوک', de: 'Block' },
+                gloss: { fa: 'block', de: 'block' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: 'چند statement میان `{` و `}` که با هم یک واحد می‌شوند؛ `if` یا همهٔ آن را اجرا می‌کند یا هیچ را.',
+                    de: 'Mehrere Statements zwischen `{` und `}`, die zusammen eine Einheit bilden; `if` führt entweder alle aus oder keines.',
+                    en: 'Several statements between `{` and `}` that form one unit; `if` runs either all of them or none.',
+                },
+            },
+            {
+                id: 'T.logical-operator', en: 'logical operator', use: { fa: 'operator منطقی', de: 'logischer Operator' },
+                gloss: { fa: 'عملگر منطقی', de: 'logical operator' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: '`&&` (و)، `||` (یا) و `!` (نه): از مقدارهای درستی یک مقدار درستی تازه می‌سازند.',
+                    de: '`&&` (und), `||` (oder) und `!` (nicht): Sie machen aus Wahrheitswerten einen neuen Wahrheitswert.',
+                    en: '`&&` (and), `||` (or) and `!` (not): they make a new truth value out of truth values.',
+                },
+            },
+            {
+                id: 'T.short-circuit', en: 'short-circuit evaluation', use: { fa: 'short-circuit', de: 'Kurzschlussauswertung' },
+                gloss: { fa: 'ارزیابی کوتاه', de: 'short-circuit evaluation' }, deArticle: 'die', series: ['C'],
+                def: {
+                    fa: 'وقتی پاسخ `&&` یا `||` از سمت چپ معلوم است، سمت راست اصلاً حساب نمی‌شود.',
+                    de: 'Steht die Antwort von `&&` oder `||` schon nach der linken Seite fest, wird die rechte gar nicht ausgewertet.',
+                    en: 'When the answer of `&&` or `||` is already known from the left side, the right side is not worked out at all.',
+                },
+            },
+            {
+                id: 'T.fall-through', en: 'fall-through', use: { fa: 'fall-through', de: 'Fall-through' },
+                gloss: { fa: 'رد شدن به case بعدی', de: 'Durchfallen' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: 'وقتی یک `case` با `break` تمام نشود، اجرا در `case` بعدی ادامه پیدا می‌کند.',
+                    de: 'Endet ein `case` nicht mit `break`, läuft die Ausführung im nächsten `case` weiter.',
+                    en: 'When a `case` does not end with `break`, execution carries on into the next `case`.',
+                },
+            },
         ],
     };
 })(typeof window !== 'undefined' ? window : globalThis);
