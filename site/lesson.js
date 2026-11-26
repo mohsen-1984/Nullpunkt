@@ -3,7 +3,8 @@
  * runnable code, exercises checked by tests, and the generated blocks (can-do, terms, self-check, answer key).
  * Classic script; loads from file://. The compiler (vendor/wcc, 600 KB) is loaded on the first run only.
  */
-(function () {
+// the registers, this lesson's file and the lessons it refers to (lib/Data.js); then the page
+NullpunktData.load({ lessons: [new URLSearchParams(location.search).get('lesson') || 'C.L01'] }).then(function () {
     'use strict';
     const N = window.Nullpunkt, ix = NullpunktData.index(N), reg = ix.reg, G = ix.generated;
     const params = new URLSearchParams(location.search);
@@ -109,6 +110,8 @@
         return pre;
     }
     const staticHtml = (code, cls) => staticCode(code, cls).outerHTML;
+    /** the input a code record reads (`stdin`), shown under read-only code */
+    const inputHtml = rec => rec && rec.stdin ? '<div class="np-pair-title">' + esc(U.inputLabel) + '</div><pre dir="ltr" class="np-input">' + esc(rec.stdin) + '</pre>' : '';
 
     // ---------- code box: editor + run + output ----------
     function codeBox(source, opts) {
@@ -128,7 +131,11 @@
             stdinBox = el('textarea', 'np-stdin');
             stdinBox.placeholder = U.inputLabel;
             stdinBox.setAttribute('dir', 'ltr');
-            stdinBox.rows = 2;
+            // the record's own input (code `stdin`), so the learner sees what the program reads and can change it
+            if (opts.stdin) stdinBox.value = opts.stdin;
+            stdinBox.rows = Math.max(2, stdinBox.value.split('\n').length);
+            stdinBox.setAttribute('aria-label', U.inputLabel);
+            box.insertBefore(el('div', 'np-stdin-label', esc(U.inputLabel)), out);
             box.insertBefore(stdinBox, out);
         }
 
@@ -339,7 +346,7 @@
 
     function renderCode(nd) {
         const code = ix.code[nd.ref];
-        const cb = codeBox(code.source, { readOnly: nd.mode !== 'run' });
+        const cb = codeBox(code.source, { readOnly: nd.mode !== 'run', stdin: code.stdin });
         if (nd.mode === 'predict') {
             const wrap = el('div', 'np-predict');
             const label = el('label', 'np-label', esc(U.yourPrediction));
@@ -389,7 +396,7 @@
     function renderDiagnostic(nd) {
         const code = ix.code[nd.ref], e = G && G.code[code.id];
         const wrap = el('div', 'np-diagnostic');
-        const cb = codeBox(code.source, { readOnly: false });
+        const cb = codeBox(code.source, { readOnly: false, stdin: code.stdin });
         runControls(cb, code.source);
         wrap.appendChild(cb.box);
         const msgs = el('div', 'np-msgs');
@@ -428,9 +435,9 @@
             }
             else if (ew) symptom = U.output + ':\n' + (ew.gcc.stdout || U.noOutput);
             const pair = el('div', 'np-pair');
-            pair.innerHTML = '<div class="np-wrong"><div class="np-pair-title">' + icon('circle-x') + esc(U.wrong) + '</div>' + staticHtml(w.source, 'np-code-pre') +
+            pair.innerHTML = '<div class="np-wrong"><div class="np-pair-title">' + icon('circle-x') + esc(U.wrong) + '</div>' + staticHtml(w.source, 'np-code-pre') + inputHtml(w) +
                 '<div class="np-pair-title">' + esc(U.symptom) + '</div><pre dir="ltr" class="np-symptom">' + esc(symptom) + '</pre></div>' +
-                '<div class="np-right"><div class="np-pair-title">' + icon('circle-check') + esc(U.right) + '</div>' + staticHtml(r.source, 'np-code-pre') +
+                '<div class="np-right"><div class="np-pair-title">' + icon('circle-check') + esc(U.right) + '</div>' + staticHtml(r.source, 'np-code-pre') + inputHtml(r) +
                 (er ? '<div class="np-pair-title">' + esc(U.output) + '</div><pre dir="ltr">' + esc(er.gcc.stdout || U.noOutput) + '</pre>' : '') + '</div>';
             card.appendChild(pair);
             card.appendChild(el('p', 'np-why', '<strong>' + esc(U.why) + ':</strong> ' + h(m.why[lang])));
@@ -493,6 +500,7 @@
             if (b.type === 'B.predict') {
                 const code = ix.code[it.code];
                 body.appendChild(staticCode(code.source));
+                if (code.stdin) body.insertAdjacentHTML('beforeend', inputHtml(code));
                 const guess = el('textarea', 'np-guess'); guess.setAttribute('dir', 'ltr'); guess.rows = 3; guess.placeholder = U.yourPrediction;
                 body.appendChild(guess);
                 const chk = button(U.check, 'circle-check', 'primary');
@@ -567,7 +575,9 @@
             } else if (b.type === 'B.fix' || b.type === 'B.write' || b.type === 'B.complete' || b.type === 'B.modify') {
                 const start = b.type === 'B.fix' ? ix.code[it.broken].source : (it.starter || it.template || (it.start && ix.code[it.start].source) || '');
                 const key = 'code.' + it.id;
-                const cb = codeBox(store.get(key) || start, {});
+                // the input box starts with the first test's input (a fix: the broken code's own input)
+                const firstIn = ((it.tests || []).find(t => t.stdin) || (b.type === 'B.fix' ? ix.code[it.broken] : null) || {}).stdin;
+                const cb = codeBox(store.get(key) || start, { stdin: firstIn });
                 cb.editor.onInput(v => store.set(key, v));
                 runControls(cb, start);
                 const chk = button(U.check, 'circle-check', 'primary');
@@ -732,13 +742,13 @@
         const i = ix.lessonList.indexOf(L);
         const nav = el('nav', 'np-pager');
         const prev = ix.lessonList[i - 1], next = ix.lessonList[i + 1];
-        if (prev) nav.appendChild(prev.unit ? el('a', '', icon('chevron-left', 'np-flip') + esc(U.prev)) : el('span', 'np-meta', esc(U.prev)));
+        if (prev) nav.appendChild(prev.written ? el('a', '', icon('chevron-left', 'np-flip') + esc(U.prev)) : el('span', 'np-meta', esc(U.prev)));
         if (next) {
-            const n = next.unit ? el('a', '', esc(U.next) + icon('chevron-right', 'np-flip')) : el('span', 'np-meta', esc(U.next) + ': ' + esc(U.planned));
-            if (next.unit) n.href = href(next.id);
+            const n = next.written ? el('a', '', esc(U.next) + icon('chevron-right', 'np-flip')) : el('span', 'np-meta', esc(U.next) + ': ' + esc(U.planned));
+            if (next.written) n.href = href(next.id);
             nav.appendChild(n);
         }
-        if (prev && prev.unit) nav.firstChild.href = href(prev.id);
+        if (prev && prev.written) nav.firstChild.href = href(prev.id);
         root.appendChild(nav);
 
         // the chrome: the lesson's blocks are the page's sections; the learning path is the rail
@@ -751,4 +761,4 @@
     }
 
     render();
-})();
+}).catch(function (e) { setTimeout(function () { throw e; }); });     // a failure shows in the console, as before

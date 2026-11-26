@@ -6,6 +6,39 @@ version may change the data format. Dates are those of the release tags. The sin
 
 ## [Unreleased]
 
+## [0.3.0] — 2026-11-26
+
+Chapter 3 — Input: programs that read numbers and letters from the user, and notice when the input goes wrong. The
+course data is now one folder per chapter and one file per lesson.
+
+### Course
+
+- **Chapter 3 — Input** (lessons 9–10, in English, German and Persian): `scanf` with `%d` and `%lf`, why `&` (the
+  address of the box), where `scanf` stops in the input; what `scanf` returns, `getchar`, `EOF`, and `" %c"` after a
+  number. A review unit at the end of the chapter, with *On your PC*: typing input, ending it with Ctrl+D (Ctrl+Z on
+  Windows), and reading it from a file with `<`.
+- Five new mistakes: a missing `&` (`U-05`), `%f` for a `double` in `scanf` (`U-06`), the question inside `scanf`
+  as in Python's `input()` (`M-09`), the Enter left after a number (`M-10`), and the first security mistake,
+  trusting input without looking at what `scanf` returns (`S-01`). Five new terms: input, address, buffer, return
+  value, EOF.
+- Code that reads input shows its input under the code, and the input box starts with it.
+
+### Site
+
+- On phones the header shows the name and *C from zero* again; the version moves to the menu's head first, and the
+  controls get tighter before the tagline goes. Search, theme and language stay in the header.
+- The footer shows the version badge after the name, the course's e-mail address, and the credits.
+- The logo's card says what the three dots are: the title bar of an editor window.
+
+### Data and tooling
+
+- One folder per chapter (`data/C03-input/`): the chapter's register (`chapter.js`: titles, lessons, minutes,
+  can-do, review unit) and one file per lesson (`L09.js`, `REV.js`). `lib/Data.js` merges the registers into one
+  catalog and loads only the lessons a page shows; search loads the rest when first opened. Generated results follow
+  the same folders, with an outline for progress on the path.
+- The browser compiler reads `%c`, `%[…]` and `%*d` and returns `EOF` at the end of the input: a patch to XCC's
+  `scanf`, built into `vendor/wcc/` (reproducible in CI) and offered upstream (`docs/upstream/`).
+
 ## [0.2.0] — 2026-11-26
 
 Chapter 2 — Values & Variables: five lessons on variables, numbers, arithmetic, characters and formatted output, with

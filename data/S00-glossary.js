@@ -350,6 +350,51 @@
                     en: 'The number of decimal places `printf` prints, such as 2 in `%.2f`; the stored value does not change.',
                 },
             },
+            {
+                id: 'T.input', en: 'input', use: { fa: 'ورودی', de: 'Eingabe' },
+                gloss: { fa: 'input', de: 'input' }, deArticle: 'die', series: ['C'],
+                def: {
+                    fa: 'آنچه برنامه هنگام اجرا می‌خواند، در این دوره از صفحه‌کلید (stdin).',
+                    de: 'Was ein Programm während des Laufs liest, in diesem Kurs von der Tastatur (stdin).',
+                    en: 'What a program reads while it runs, in this course from the keyboard (stdin).',
+                },
+            },
+            {
+                id: 'T.address', en: 'address', use: { fa: 'آدرس', de: 'Adresse' },
+                gloss: { fa: 'address', de: 'address' }, deArticle: 'die', series: ['C'],
+                def: {
+                    fa: 'شمارهٔ جای یک متغیر در حافظه؛ `&age` آدرس `age` است.',
+                    de: 'Die Nummer des Platzes einer Variablen im Speicher; `&age` ist die Adresse von `age`.',
+                    en: 'The number of the place of a variable in memory; `&age` is the address of `age`.',
+                },
+            },
+            {
+                id: 'T.buffer', en: 'buffer', use: { fa: 'buffer', de: 'Puffer' },
+                gloss: { fa: 'میانگیر', de: 'buffer' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: 'حافظه‌ای که ورودی در آن منتظر می‌ماند تا برنامه آن را بخواند؛ هرچه `scanf` نخوانَد، همان‌جا می‌ماند.',
+                    de: 'Speicher, in dem die Eingabe wartet, bis das Programm sie liest; was `scanf` nicht liest, bleibt dort.',
+                    en: 'Memory where input waits until the program reads it; whatever `scanf` does not read stays there.',
+                },
+            },
+            {
+                id: 'T.return-value', en: 'return value', use: { fa: 'مقدار بازگشتی', de: 'Rückgabewert' },
+                gloss: { fa: 'return value', de: 'return value' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: 'مقداری که یک تابع به کدِ صداکننده‌اش پس می‌دهد؛ `scanf` تعداد مقدارهایی را که خوانده پس می‌دهد.',
+                    de: 'Der Wert, den eine Funktion an den aufrufenden Code zurückgibt; `scanf` gibt zurück, wie viele Werte es gelesen hat.',
+                    en: 'The value a function gives back to the code that called it; `scanf` gives back how many values it read.',
+                },
+            },
+            {
+                id: 'T.eof', en: 'EOF', use: { fa: 'EOF', de: 'EOF' },
+                gloss: { fa: 'پایان ورودی', de: 'Ende der Eingabe' }, deArticle: 'das', series: ['C'],
+                def: {
+                    fa: 'نشانهٔ تمام شدن ورودی: `getchar` و `scanf` در این حالت مقدار `EOF` را پس می‌دهند، که -1 است.',
+                    de: 'Das Zeichen, dass die Eingabe zu Ende ist: `getchar` und `scanf` geben dann den Wert `EOF` zurück, der -1 ist.',
+                    en: 'The sign that the input has ended: `getchar` and `scanf` then give back the value `EOF`, which is -1.',
+                },
+            },
         ],
     };
 })(typeof window !== 'undefined' ? window : globalThis);

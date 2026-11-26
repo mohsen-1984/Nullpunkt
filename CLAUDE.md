@@ -16,7 +16,8 @@ Read only what the task needs, in this order:
    - a lesson: [`C00-conventions.md`](docs/rules/C00-conventions.md) (learning path, lesson skeleton, construct
      ladder, topic homes `C.TOP.01`, XCC gaps) and the parts of [`S00-core.md`](docs/rules/S00-core.md) it points to
      (about 60 KB — search for the rule's id, never read it whole); the data model in
-     [`S00-schema.md`](docs/rules/S00-schema.md); a finished lesson in `data/C01-getting-started.js` as the model;
+     [`S00-schema.md`](docs/rules/S00-schema.md); a finished lesson in `data/C01-getting-started/L01.js` as the
+     model (one file per lesson; the chapter's register is `chapter.js` beside it);
    - the site, logo, colors: [`S00-assets.md`](docs/rules/S00-assets.md); the runner and XCC:
      [`tools/README.md`](tools/README.md), [`docs/upstream/`](docs/upstream/);
    - a release: [`docs/RELEASING.md`](docs/RELEASING.md).

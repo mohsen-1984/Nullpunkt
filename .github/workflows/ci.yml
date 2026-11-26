@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  # Generated results (data/generated/expect.js) come from the reference gcc, which an author's own machine may not
+  # Generated results (data/generated/) come from the reference gcc, which an author's own machine may not
   # have. On a pull request from this repository, this job records them again with the reference gcc and, if they
   # changed, commits them to the pull request's branch. The other jobs of this run still see the old results, so the
   # run fails once; the commit starts a new run that checks the recorded results (or push again if it does not).
@@ -33,7 +33,7 @@ jobs:
           node tools/gen-expect.js
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/generated/expect.js
+          git add -A data/generated
           git commit -m "Record compiler results with $(gcc -dumpfullversion | sed 's/^/gcc /')"
           git push
 
@@ -89,11 +89,12 @@ jobs:
           node-version: 22
       - name: Install llvm-ar
         run: sudo apt-get update && sudo apt-get install -y llvm
-      - name: Build XCC at the vendored commit
+      - name: Build XCC at the vendored commit, with the patches of vendor/wcc/patches/
         run: |
           commit=$(node -e 'const fs=require("fs");const f=fs.readdirSync("vendor/wcc").find(n=>/^wcc_.*\.js$/.test(n));console.log(require("./vendor/wcc/"+f).commit)')
           git clone https://github.com/tyfkda/xcc /tmp/xcc
           git -C /tmp/xcc checkout "$commit"
+          for p in vendor/wcc/patches/*.patch; do [ -e "$p" ] && git -C /tmp/xcc apply "$PWD/$p"; done
           make -C /tmp/xcc wcc
           make -C /tmp/xcc wcc-gen2
       - name: Rebuild the bundle and compare

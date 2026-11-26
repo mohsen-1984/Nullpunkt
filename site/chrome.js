@@ -13,8 +13,8 @@
 (function (g) {
     'use strict';
     var SITE = g.NullpunktSite;
-    var STEPS = ['nav-tight', 'nav-short', 'nav-overflow', 'link-icon', 'brand-dept', 'lang-short',
-        'secondary-to-drawer', 'brand-short', 'brand-ellipsis', 'brand-mark'];
+    var STEPS = ['nav-tight', 'nav-short', 'nav-overflow', 'link-icon', 'brand-version', 'lang-short',
+        'secondary-to-drawer', 'controls-tight', 'brand-dept', 'brand-short', 'brand-ellipsis', 'brand-mark'];
 
     /* ---------------- helpers ---------------- */
     function $(id) { return document.getElementById(id); }
@@ -194,11 +194,11 @@
 
     function footer() {
         var c = S.c, f = $('ncFooter'), names = g.Nullpunkt.registry.languageNames;
-        f.innerHTML = '<div class="footer-inner"><div class="footer-brand"><span class="brand__mark">' + MARK + '</span><div><strong>Nullpunkt</strong>' +
-            '<span class="footer-tag"></span><p class="footer-note"></p></div></div><div class="footer-links">' +
-            '<span class="footer-langs"></span>' +
-            '<a class="footer-repo" rel="noopener"></a><span class="footer-license"></span></div></div>';
-        f.querySelector('.footer-tag').textContent = ' — ' + c.tagline;
+        f.innerHTML = '<div class="footer-inner"><div class="footer-brand"><span class="brand__mark">' + MARK + '</span><div><div class="footer-name"><strong>Nullpunkt</strong>' +
+            '<a class="np-version" id="ncFooterVersion" dir="ltr" rel="noopener"></a><span class="footer-tag"></span></div><p class="footer-note"></p></div></div>' +
+            '<div class="footer-links"><span class="footer-langs"></span>' +
+            '<a class="footer-repo" rel="noopener"></a><a class="footer-mail" dir="ltr"></a><span class="footer-license"></span></div></div>';
+        f.querySelector('.footer-tag').textContent = c.tagline;
         f.querySelector('.footer-note').textContent = c.footer;
         var langs = f.querySelector('.footer-langs');
         SITE.languages.forEach(function (l) {
@@ -208,6 +208,12 @@
         });
         var repo = f.querySelector('.footer-repo');
         repo.href = SITE.repoUrl; repo.innerHTML = svg('code-xml') + '<span>GitHub</span>';
+        var mail = f.querySelector('.footer-mail');      // the course's address (site/config.js: contact)
+        mail.href = 'mailto:' + SITE.contact; mail.innerHTML = svg('mail') + '<span></span>';
+        mail.lastChild.textContent = SITE.contact; mail.setAttribute('aria-label', c.aria.mail + ' ' + SITE.contact);
+        var v = $('ncFooterVersion');
+        v.href = SITE.repoUrl + '/releases/tag/v' + SITE.version; v.textContent = 'v' + SITE.version;
+        v.title = c.releaseNotes; v.setAttribute('aria-label', c.version + ' ' + SITE.version + ' — ' + c.releaseNotes);
         f.querySelector('.footer-license').textContent = c.license;
     }
 
@@ -268,7 +274,7 @@
             var text = 'Nullpunkt', n = S.cfg.brand.minVisibleChars, m = $('ncBrandMeasure');
             m.textContent = Array.from(text).length > n ? Array.from(text).slice(0, n).join('') + '…' : text;
             var w = m.getBoundingClientRect().width, mark = $('ncMark').getBoundingClientRect().width,
-                ver = $('ncVersion').getBoundingClientRect().width;
+                ver = $('ncHeader').getAttribute('data-steps').split(' ').indexOf('brand-version') >= 0 ? -10 : $('ncVersion').getBoundingClientRect().width;
             $('ncHeader').style.setProperty('--brand-min', Math.ceil(mark + 10 + w + 10 + ver + 1) + 'px');
         },
         evaluate: function () {
@@ -290,7 +296,7 @@
             var dr = $('ncDrawer');
             dr.setAttribute('data-actions', chosen.steps.indexOf('secondary-to-drawer') >= 0 ? 'on' : 'off');
             dr.setAttribute('data-nav', chosen.nav === 'folded' ? 'on' : 'off');
-            dr.setAttribute('data-head', (cfg.drawer.layer === 'over-header' || chosen.steps.indexOf('brand-mark') >= 0) ? 'on' : 'off');
+            dr.setAttribute('data-head', (cfg.drawer.layer === 'over-header' || chosen.steps.indexOf('brand-version') >= 0) ? 'on' : 'off');   // the version moves to the drawer's head
             if (!chosen.menu && drawer.isOpen()) drawer.close(true);     // §6.4
             navrow.update();
             dotnav.place();

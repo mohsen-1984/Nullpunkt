@@ -124,6 +124,13 @@
   "expect": "sum=4999950000\ndepth=5000\n"
  },
  {
+  "id": "18-scanf",
+  "source": "#include <stdio.h>\n\n// scanf as the lessons of chapter 3 use it: numbers, a character after a number, the count it returns,\n// a scan set, assignment suppression, and EOF when the input has ended\nint main(void) {\n    int seat = 0;\n    char row = '?';\n    double price = 0.0;\n    int n = scanf(\"%d %lf\", &seat, &price);\n    printf(\"n=%d seat=%d price=%.2f\\n\", n, seat, price);\n    int c = getchar();\n    printf(\"after the number: %d\\n\", c);\n    n = scanf(\" %c\", &row);\n    printf(\"n=%d row=%c\\n\", n, row);\n    char words[32] = \"\";\n    n = scanf(\" %31[^\\n]\", words);\n    printf(\"n=%d [%s]\\n\", n, words);\n    int skipped = 0;\n    n = scanf(\"%*d %d\", &skipped);\n    printf(\"n=%d skipped=%d\\n\", n, skipped);\n    n = scanf(\"%d\", &seat);\n    printf(\"at the end: n=%d EOF=%d\\n\", n, EOF);\n    return 0;\n}\n",
+  "stdin": "12 4.5\n B\nrow by the window\n1 2\n",
+  "kind": "run",
+  "expect": "n=2 seat=12 price=4.50\nafter the number: 10\nn=1 row=B\nn=1 [row by the window]\nn=1 skipped=2\nat the end: n=-1 EOF=-1\n"
+ },
+ {
   "id": "20-err-undeclared",
   "source": "#include <stdio.h>\n\nint main(void) {\n    int total = 0;\n    for (int i = 0; i < 3; i++)\n        totl += i;\n    printf(\"%d\\n\", total);\n    return 0;\n}\n",
   "stdin": "",

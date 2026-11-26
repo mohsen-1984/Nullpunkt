@@ -9,7 +9,7 @@
 (function (g) {
     'use strict';
     g.NullpunktSite = {
-        version: '0.2.0',
+        version: '0.3.0',
         siteUrl: 'https://mohsen-1984.github.io/Nullpunkt/',
         repoUrl: 'https://github.com/mohsen-1984/Nullpunkt',
         contact: 'mhn.com@gmail.com',
@@ -25,8 +25,8 @@
             drawer: { side: 'auto', layer: 'below-header' },
             navOverflow: 'scroll-row',            // 'scroll-row' | 'fold'
             rowLabels: 'short',                   // labels in the scrolling second row: 'short' | 'full'
-            ladder: ['nav-tight', 'nav-short', 'nav-overflow', 'link-icon', 'brand-dept',
-                'lang-short', 'secondary-to-drawer', 'brand-short', 'brand-ellipsis', 'brand-mark'],
+            ladder: ['nav-tight', 'nav-short', 'nav-overflow', 'link-icon', 'brand-version',
+                'lang-short', 'secondary-to-drawer', 'controls-tight', 'brand-dept', 'brand-short', 'brand-ellipsis', 'brand-mark'],
             brand: { minVisibleChars: 8 },
             mobileFloor: null,                    // px | null (measure only)
             dotnav: 'auto',                       // 'auto' | 'always' | 'never'

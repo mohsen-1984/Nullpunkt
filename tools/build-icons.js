@@ -9,8 +9,7 @@
  *   node tools/build-icons.js /tmp/lucide 1.80.0
  *
  * The icon list is every icon named in data/S00-registry.js (blocks, exercise types, note kinds, unit types, UI), the
- * icons of section blocks in the chapter files (data/C??-*.js), and
- * data/S00-prompts.js. A name missing from the release stops the build.
+ * icons of section blocks in the lesson files (data/Cnn-name/*.js), and data/S00-prompts.js. A name missing from the release stops the build.
  */
 'use strict';
 const fs = require('fs'), path = require('path');
@@ -18,18 +17,15 @@ const [src, version] = process.argv.slice(2);
 if (!src || !version) { console.error('usage: node tools/build-icons.js <lucide checkout> <version>'); process.exit(2); }
 
 const root = path.join(__dirname, '..');
-require(path.join(root, 'data/S00-registry.js'));
-require(path.join(root, 'data/S00-prompts.js'));
-const N = globalThis.Nullpunkt;
+const N = require(path.join(root, 'lib/Data.js')).loadNode(root, { withGenerated: false });
 const reg = N.files.S00R;
 const names = new Set(reg.uiIcons);
 for (const group of [reg.blocks, reg.bandTypes, reg.noteKinds, reg.unitTypes]) {
     for (const k of Object.keys(group)) names.add(group[k].icon);
 }
 N.files.S00P.prompts.forEach(p => names.add(p.icon));
-// the icons of section blocks (orientation lessons) come from the chapter data
-fs.readdirSync(path.join(root, 'data')).filter(f => /^C\d\d-.*\.js$/.test(f)).forEach(f => require(path.join(root, 'data', f)));
-Object.values(N.files).forEach(f => (f.units || []).forEach(u => (u.blocks || []).forEach(b => { if (b.icon) names.add(b.icon); })));
+// the icons of section blocks (orientation lessons) come from the lesson files
+Object.values(N.files).forEach(f => ((f.unit && f.unit.blocks) || []).forEach(b => { if (b.icon) names.add(b.icon); }));
 
 const icons = {};
 const missing = [];

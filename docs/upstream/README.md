@@ -2,7 +2,8 @@
 
 Nullpunkt works around a few gaps of [XCC](https://github.com/tyfkda/xcc) (list: `C.XCC.01` in
 [`../rules/C00-conventions.md`](../rules/C00-conventions.md)). Fixing them upstream lets the lessons drop each workaround.
-This folder holds what is ready to send: a tested patch, and the text of a pull request and of two issues.
+This folder holds what is ready to send: two tested patches with the text of their pull requests, and the text of two
+issues.
 
 The session that prepared them could not fork or open anything on github.com/tyfkda/xcc (the proxy allows writes only
 to this repository), so they wait here to be sent by hand — see *Sending* at the end.
@@ -69,6 +70,42 @@ and after:
 
 Nullpunkt's runner already cuts the repeats (`lib/CRunner.js`, `condense`), so this one is a nicety upstream.
 
+## 4. Pull request — `scanf`: `%c`, scan sets, `%*`, and `EOF`
+
+**Patch:** [`../../vendor/wcc/patches/0001-scanf-c-scanset-suppression-eof.patch`](../../vendor/wcc/patches/0001-scanf-c-scanset-suppression-eof.patch),
+against commit `659a1773f20499864a8c3fdc7cd25cb506092bc1`. Unlike patch 1, the course already ships it: the vendored
+compiler is built with it (`vendor/wcc/README.md`). XCC's own `libsrc/tests/scanf_test.c` still passes, and the lab
+program `tests/programs/18-scanf.c` prints the same as glibc. Before and after, against glibc:
+
+| Input · format | before | after | glibc |
+|---|---|---|---|
+| `12\nB` · `"%d"`, then `" %c"` | `0`, row unchanged | `1`, `B` | `1`, `B` |
+| `\nB` · `"%c"` | `0` | `1`, `'\n'` | `1`, `'\n'` |
+| (empty) · `"%d"` | `0` | `-1` (`EOF`) | `-1` |
+| `row by the window` · `" %31[^\n]"` | `0` | `1`, `row by the window` | same |
+| `1 2` · `"%*d %d"` | `0` | `1`, `2` | `1`, `2` |
+| `300 -5` · `"%hd %hhd"` | `0` | `2` | `2` |
+
+**Title:** `scanf: support %c, %[...], %* and h/hh/j/z/t; return EOF when the input ends first`
+
+**Body:**
+
+> `vfscanf` returned at the first `%c`, `%[` or `%*`, did not know the `h`, `hh`, `j`, `z` and `t` length modifiers,
+> and returned 0 instead of `EOF` when the input ended before the first conversion (C17 7.21.6.2p16). `%s` also
+> compared `fgetc`'s result with `'\0'` instead of `EOF`, so a word at the very end of the input was never terminated.
+>
+> This patch:
+> - adds `%c` (with a width, no skipping of white space), `%[...]` (with `^` and ranges) and assignment suppression
+>   (`%*d`);
+> - parses `h`/`hh` (`short *`, `signed char *`), `j`, `z` and `t`; accepts `%e %g %a` (and upper case) like `%f`;
+> - skips white space only before conversions other than `%c`, `%[` and `%n`, and returns `EOF` when the input ends
+>   before the first conversion has completed; a literal `%%` skips white space first, as glibc does;
+> - stops `%s` at `EOF`.
+>
+> `libsrc/tests/scanf_test.c` passes unchanged. Context: the free C course https://github.com/mohsen-1984/Nullpunkt
+> runs its programs with XCC in the browser; its chapter on input teaches `scanf(" %c", …)` and the return value of
+> `scanf`. Thank you for XCC!
+
 ## Sending
 
 1. On https://github.com/tyfkda/xcc press **Fork**.
@@ -76,5 +113,7 @@ Nullpunkt's runner already cuts the repeats (`lib/CRunner.js`, `condense`), so t
    branch … and start a pull request*; then the same for `libsrc/stdio/vfprintf.c` on that branch. Paste the title and
    body above.
 3. Open the two issues from the *Issues* tab with the texts above.
+4. For the `scanf` pull request: in the fork, edit `libsrc/stdio/vfscanf.c` the same way (or apply the patch with
+   `git am`), and paste its title and body.
 
 Or give a later session write access to the fork, and it sends them with git.

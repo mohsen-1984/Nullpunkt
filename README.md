@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/mohsen-1984/Nullpunkt/releases/tag/v0.2.0"><img src="https://img.shields.io/badge/version-0.2.0-3B5BDB" alt="Version 0.2.0"></a>
+  <a href="https://github.com/mohsen-1984/Nullpunkt/releases/tag/v0.3.0"><img src="https://img.shields.io/badge/version-0.3.0-3B5BDB" alt="Version 0.3.0"></a>
   <a href="https://github.com/mohsen-1984/Nullpunkt/actions/workflows/ci.yml"><img src="https://github.com/mohsen-1984/Nullpunkt/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/C-ISO%20C17-555" alt="ISO C17">
   <img src="https://img.shields.io/badge/content-CC%20BY--SA%204.0-237032" alt="Content: CC BY-SA 4.0">
@@ -25,7 +25,7 @@
 
 **Nullpunkt** is a free, self-study C course for first-year computer science students who start from zero. It is written in English, German and Persian; code, technical terms and compiler messages are always in English, the language you will meet everywhere else. Every example runs in your browser: a real C compiler, compiled to WebAssembly, on your own machine — offline, straight from `file://`, with nothing sent to a server.
 
-**Why “Nullpunkt”?** *Nullpunkt* [ˈnʊlˌpʊŋkt] is German for *zero point*, the origin of a coordinate system. The word holds three meanings that belong to this course: **from zero** (no background assumed, not even the word *identifier*), **`NULL`** (the null pointer, the address zero where a C program must never write) and **counting from zero** (the first element of a C array has index 0). It is German because the course is made for students in Europe, it reads well in English and Persian too, and it is not tied to C, so C++ will fit under the same name later. The logo is a code editor in 8-bit pixels: a C and the cursor after it, the point where every program starts.
+**Why “Nullpunkt”?** *Nullpunkt* [ˈnʊlˌpʊŋkt] is German for *zero point*, the origin of a coordinate system. The word holds three meanings that belong to this course: **from zero** (no background assumed, not even the word *identifier*), **`NULL`** (the null pointer, the address zero where a C program must never write) and **counting from zero** (the first element of a C array has index 0). It is German because the course is made for students in Europe, it reads well in English and Persian too, and it is not tied to C, so C++ will fit under the same name later. The logo is a code editor in 8-bit pixels: the three dots of its title bar, a C, and the cursor after it, the point where every program starts.
 
 ![A lesson in English: the worked example has just run in the page](assets/screenshots/lesson-en.png)
 
@@ -34,13 +34,13 @@
 - **Exercises checked by tests,** in the page; your progress stays in your browser.
 - **Find anything:** press <kbd>/</kbd> or <kbd>Ctrl</kbd> <kbd>K</kbd> to search every lesson, term and mistake.
 
-**Status:** chapter 0 (orientation: where C lives, from program to processor, standards and tools, C on your own computer, how to learn) and chapters 1 and 2 (lessons 1–8, with trace tables and a review unit at the end of each chapter) are written; 14 chapters and 54 lessons are planned for 1.0. C++ comes after.
+**Status:** chapter 0 (orientation: where C lives, from program to processor, standards and tools, C on your own computer, how to learn) and chapters 1 to 3 (lessons 1–10: first programs, values and variables, input; with trace tables and a review unit at the end of each chapter) are written; 14 chapters and 54 lessons are planned for 1.0. C++ comes after.
 
 ## Deutsch
 
 **Nullpunkt** ist ein freier C-Kurs zum Selbstlernen für Informatik-Erstsemester, die bei null anfangen. Er ist auf Deutsch, Englisch und Persisch geschrieben; Code, Fachbegriffe und Compiler-Meldungen bleiben immer englisch — so, wie du ihnen überall sonst begegnest. Jedes Beispiel läuft in deinem Browser: ein echter C-Compiler als WebAssembly, auf deinem eigenen Rechner — offline, direkt von `file://`, ohne dass etwas an einen Server geht.
 
-**Warum „Nullpunkt“?** Der Nullpunkt ist der Ursprung eines Koordinatensystems. Das Wort trägt drei Bedeutungen, die zu diesem Kurs gehören: **von null an** (nichts wird vorausgesetzt, nicht einmal das Wort *Identifier*), **`NULL`** (der Null-Pointer, die Adresse null, an die ein C-Programm nie schreiben darf) und **ab null zählen** (das erste Element eines C-Arrays hat den Index 0). Ein deutsches Wort, weil der Kurs für Studierende in Europa gemacht ist; es liest sich aber auch auf Englisch und Persisch gut, und es ist nicht an C gebunden — C++ hat später unter demselben Namen Platz. Das Logo ist ein Code-Editor in 8-Bit-Pixeln: ein C und dahinter der Cursor, der Punkt, an dem jedes Programm beginnt.
+**Warum „Nullpunkt“?** Der Nullpunkt ist der Ursprung eines Koordinatensystems. Das Wort trägt drei Bedeutungen, die zu diesem Kurs gehören: **von null an** (nichts wird vorausgesetzt, nicht einmal das Wort *Identifier*), **`NULL`** (der Null-Pointer, die Adresse null, an die ein C-Programm nie schreiben darf) und **ab null zählen** (das erste Element eines C-Arrays hat den Index 0). Ein deutsches Wort, weil der Kurs für Studierende in Europa gemacht ist; es liest sich aber auch auf Englisch und Persisch gut, und es ist nicht an C gebunden — C++ hat später unter demselben Namen Platz. Das Logo ist ein Code-Editor in 8-Bit-Pixeln: die drei Punkte seiner Titelleiste, ein C und dahinter der Cursor, der Punkt, an dem jedes Programm beginnt.
 
 ![Eine Lektion auf Deutsch: das Beispiel wurde gerade auf der Seite ausgeführt](assets/screenshots/lesson-de.png)
 
@@ -49,7 +49,7 @@
 - **Übungen, geprüft von Tests** auf der Seite; dein Fortschritt bleibt in deinem Browser.
 - **Alles finden:** <kbd>/</kbd> oder <kbd>Strg</kbd> <kbd>K</kbd> durchsucht jede Lektion, jeden Begriff und jeden Fehler.
 
-**Stand:** Kapitel 0 (Orientierung: wo C steckt, vom Programm zum Prozessor, Standards und Werkzeuge, C auf deinem Rechner, wie man lernt) sowie die Kapitel 1 und 2 (Lektionen 1–8, mit Trace Tables und einer Wiederholung am Ende jedes Kapitels) sind geschrieben; für 1.0 sind 14 Kapitel und 54 Lektionen geplant. C++ folgt danach.
+**Stand:** Kapitel 0 (Orientierung: wo C steckt, vom Programm zum Prozessor, Standards und Werkzeuge, C auf deinem Rechner, wie man lernt) sowie die Kapitel 1 bis 3 (Lektionen 1–10: erste Programme, Werte und Variablen, Eingabe; mit Trace Tables und einer Wiederholung am Ende jedes Kapitels) sind geschrieben; für 1.0 sind 14 Kapitel und 54 Lektionen geplant. C++ folgt danach.
 
 ## فارسی
 
@@ -57,7 +57,7 @@
 
 **Nullpunkt** (نول‌پونکت) دورهٔ رایگان و خودآموز زبان C برای دانشجوی سال اول علوم کامپیوتر است که از صفر شروع می‌کند. دوره به فارسی، آلمانی و انگلیسی نوشته شده؛ کد، اصطلاح‌های فنی و پیام‌های compiler همیشه انگلیسی می‌مانند، همان‌طور که همه‌جای دیگر با آن‌ها روبه‌رو می‌شوی. هر مثال در مرورگر خودت اجرا می‌شود: یک compiler واقعی C که به WebAssembly ترجمه شده، روی کامپیوتر خودت — آفلاین، مستقیم از `file://`، بی‌آنکه چیزی به سروری فرستاده شود.
 
-**چرا «Nullpunkt»؟** Nullpunkt در آلمانی یعنی «نقطهٔ صفر»، مبدأ یک دستگاه مختصات. این واژه سه معنا دارد که هر سه به این دوره مربوط‌اند: **از صفر** (هیچ پیش‌زمینه‌ای فرض نمی‌شود، حتی واژهٔ identifier)، **`NULL`** (null pointer، آدرس صفر، جایی که برنامهٔ C هرگز نباید در آن بنویسد) و **شمارش از صفر** (اولین عنصر یک array در C اندیس 0 دارد). واژه آلمانی است چون دوره برای دانشجوی اروپا ساخته شده، ولی در انگلیسی و فارسی هم خوب خوانده می‌شود؛ و به C گره نخورده، پس C++ هم بعداً زیر همین نام جا می‌گیرد. نشان دوره یک code editor با pixel‌های 8 بیتی است: یک C و cursor پشت آن، نقطه‌ای که هر برنامه از آن شروع می‌شود.
+**چرا «Nullpunkt»؟** Nullpunkt در آلمانی یعنی «نقطهٔ صفر»، مبدأ یک دستگاه مختصات. این واژه سه معنا دارد که هر سه به این دوره مربوط‌اند: **از صفر** (هیچ پیش‌زمینه‌ای فرض نمی‌شود، حتی واژهٔ identifier)، **`NULL`** (null pointer، آدرس صفر، جایی که برنامهٔ C هرگز نباید در آن بنویسد) و **شمارش از صفر** (اولین عنصر یک array در C اندیس 0 دارد). واژه آلمانی است چون دوره برای دانشجوی اروپا ساخته شده، ولی در انگلیسی و فارسی هم خوب خوانده می‌شود؛ و به C گره نخورده، پس C++ هم بعداً زیر همین نام جا می‌گیرد. نشان دوره یک code editor با pixel‌های 8 بیتی است: سه نقطهٔ نوار عنوان (title bar) آن، یک C و cursor پشت آن، نقطه‌ای که هر برنامه از آن شروع می‌شود.
 
 ![یک درس به فارسی: مثال کامل همین حالا در صفحه اجرا شده است](assets/screenshots/lesson-fa.png)
 
@@ -66,7 +66,7 @@
 - **تمرین‌هایی که تست‌ها بررسی‌شان می‌کنند،** همان‌جا در صفحه؛ پیشرفتت در مرورگر خودت می‌ماند.
 - **پیدا کردن هر چیز:** <kbd>/</kbd> یا <kbd>Ctrl</kbd> <kbd>K</kbd> همهٔ درس‌ها، اصطلاح‌ها و اشتباه‌ها را جست‌وجو می‌کند.
 
-**وضعیت:** فصل 0 (جهت‌یابی: C امروز کجاست، از برنامه تا پردازنده، استانداردها و ابزارها، C روی کامپیوتر خودت، چطور یاد بگیریم) و فصل‌های 1 و 2 (درس‌های 1 تا 8، با جدول ردیابی و یک واحد مرور در پایان هر فصل) نوشته شده‌اند؛ برای نسخهٔ 1.0، 14 فصل و 54 درس برنامه‌ریزی شده است. C++ پس از آن می‌آید.
+**وضعیت:** فصل 0 (جهت‌یابی: C امروز کجاست، از برنامه تا پردازنده، استانداردها و ابزارها، C روی کامپیوتر خودت، چطور یاد بگیریم) و فصل‌های 1 تا 3 (درس‌های 1 تا 10: نخستین برنامه‌ها، مقدار و متغیر، ورودی؛ با جدول ردیابی و یک واحد مرور در پایان هر فصل) نوشته شده‌اند؛ برای نسخهٔ 1.0، 14 فصل و 54 درس برنامه‌ریزی شده است. C++ پس از آن می‌آید.
 
 </div>
 
@@ -76,7 +76,7 @@
 
 - **Online:** [mohsen-1984.github.io/Nullpunkt](https://mohsen-1984.github.io/Nullpunkt/).
 - **Offline:** download the repository (Code → Download ZIP), unpack it and open `index.html`. Everything except the fonts is in the folder; without a network the page falls back to your system fonts.
-- **Release notes:** [`CHANGELOG.md`](CHANGELOG.md) · [releases](https://github.com/mohsen-1984/Nullpunkt/releases/tag/v0.2.0). Open work: [`TODO.md`](TODO.md).
+- **Release notes:** [`CHANGELOG.md`](CHANGELOG.md) · [releases](https://github.com/mohsen-1984/Nullpunkt/releases/tag/v0.3.0). Open work: [`TODO.md`](TODO.md).
 
 ## Repository
 

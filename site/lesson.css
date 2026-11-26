@@ -48,6 +48,7 @@ html[dir="rtl"] .np-note-box { border-radius: 6px 0 0 6px; }
 .np-stderr { color: var(--np-error); }
 .np-note.ok { color: var(--np-ok); } .np-note.warn { color: var(--np-warn); } .np-note.error { color: var(--np-error); }
 .np-note { font-family: var(--np-sans); font-size: .85rem; unicode-bidi: plaintext; }
+.np-stdin-label { font-size: .8rem; font-weight: 600; color: var(--np-muted); margin: .5rem 0 -.2rem; }
 .np-stdin, .np-guess, .np-answer { display: block; width: 100%; border: 1px solid var(--np-line); border-radius: 6px; padding: .4rem .6rem; background: var(--np-bg); color: var(--np-ink); font-size: .9rem; margin: .4rem 0; }
 .np-answer { font-family: inherit; }
 .np-label { display: block; font-size: .9rem; color: var(--np-muted); margin-top: .5rem; }
