@@ -90,7 +90,7 @@
         },
 
         // icons used by the page itself (buttons, status); the rest come from the registries above
-        uiIcons: ['play', 'square', 'undo-2', 'copy', 'keyboard', 'timer', 'circle-check', 'circle-x', 'languages',
+        uiIcons: ['play', 'step-forward', 'square', 'undo-2', 'copy', 'keyboard', 'timer', 'circle-check', 'circle-x', 'languages',
             'sun-moon', 'chevron-left', 'chevron-right', 'chevron-up', 'chevron-down', 'lightbulb', 'key-round', 'x', 'menu',
             'octagon-x', 'triangle-exclamation-point',
             // the site shell (site/chrome.js, course.js, search.js, home.js)

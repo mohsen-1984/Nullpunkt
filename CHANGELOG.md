@@ -6,6 +6,41 @@ version may change the data format. Dates are those of the release tags. The sin
 
 ## [Unreleased]
 
+## [0.2.0] — 2026-11-26
+
+Chapter 2 — Values & Variables: five lessons on variables, numbers, arithmetic, characters and formatted output, with
+trace tables you step through, and a review unit at the end of chapters 1 and 2.
+
+### Course
+
+- **Chapter 2 — Values & Variables** (lessons 4–8, in English, German and Persian): variables, identifiers and
+  declarations; whole and decimal numbers (`int`, `double`, `long long`); expressions and arithmetic (`/`, `%`,
+  precedence, casts, `+=`, `++`); characters and ASCII; formatted output (width, precision, `%%`).
+- **Trace tables**: a table of every variable after each line, made by really running the code; step through it row
+  by row. A new exercise type, *Trace* (`B.trace`), asks you to fill in its empty cells.
+- **Memory maps**: variables drawn as boxes with their name, type and value (lessons 4 and 7).
+- **Review units** at the end of chapters 1 and 2: mixed exercises from the whole chapter (and the one before),
+  *On your PC* (the same program with gcc in a terminal, and what differs from the browser), exam questions, and a
+  spaced-review prompt.
+- 15 new mistakes with their codes, from `M-04` (`=` does not link variables) to `M-08` (a field width does not cut
+  a number): among them the decimal comma (`E-10`), integer division (`M-05`), `^` is not a power (`M-06`), `'7'`
+  is not 7 (`M-07`), a lone `%` (`U-04`). 17 new glossary terms. Three new AI prompts: *Rubber duck* (`AI-4`),
+  *Spaced quiz* (`AI-5`), *Exam drill* (`AI-6`).
+- Exam-style questions in lessons 6 and 8.
+
+### Site
+
+- The version is a badge beside the name, in the header and in the menu's head, as in Kelk; the line at the
+  bottom of the course menu is gone.
+- Code shown as `static` is read only, with line numbers and no Run button.
+
+### Tooling
+
+- `lib/Trace.js` makes trace tables: a snapshot after every statement line of `main`, run with gcc by
+  `tools/gen-expect.js`. The checker checks every trace and every blank (`S.CH.05`).
+- The checker knows review units (Review Unit Skeleton, `C.ONP.01`, `C.EXA.01`) and their ids (`C02.REV.X01.01`).
+- `CLAUDE.md` (how we work) and `docs/RELEASING.md` (the release checklist and the format of release notes).
+
 ## [0.1.1] — 2026-11-25
 
 Chapter 0 (orientation) and the first review round: a new logo, gcc 15 as the reference compiler, and the

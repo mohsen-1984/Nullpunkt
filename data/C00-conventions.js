@@ -21,6 +21,12 @@
             { block: 'key', fixed: true, generated: true },
         ],
 
+        // the review unit at the end of each chapter (Review Unit Skeleton, C.ONP.01, C.EXA.01): all fixed, in this order
+        reviewSkeleton: [
+            { block: 'why' }, { block: 'practice' }, { block: 'onpc' }, { block: 'exam' }, { block: 'ai' },
+            { block: 'selfcheck', generated: true }, { block: 'key', generated: true },
+        ],
+
         // C.ORI.01 — orientation lessons (chapter 0): no construct is taught, so the code skeleton does not apply.
         // Fixed: why first, cando, then any of the `allowed` blocks (section may repeat), practice, terms, selfcheck, key.
         orientation: {

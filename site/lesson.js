@@ -181,6 +181,76 @@
         return runB;
     }
 
+    // ---------- trace tables and memory maps (rows ⚙ from lib/Trace.js via tools/gen-expect.js) ----------
+    function traceOf(ref, vars) {
+        const t = G && G.trace && G.trace[ref + '|' + vars.join(',')];
+        return t && t.rows ? t : null;
+    }
+    function traceTable(t, vars, opts) {
+        const tbl = el('table', 'np-trace-table');
+        tbl.setAttribute('dir', 'ltr');
+        tbl.innerHTML = '<thead><tr><th>' + esc(U.traceLine) + '</th>' + vars.map(v => '<th><code>' + esc(v) + '</code></th>').join('') +
+            '<th>' + esc(U.traceOut) + '</th></tr></thead>';
+        const body = el('tbody');
+        t.rows.forEach((r, i) => {
+            const prev = i ? t.rows[i - 1].values : null;
+            const tr = el('tr');
+            tr.innerHTML = '<td class="np-trace-ln">' + r.line + '</td>' + r.values.map((v, j) => {
+                const blank = opts && opts.blanks && opts.blanks.some(b => b.step === i + 1 && b.var === vars[j]);
+                if (blank) return '<td><input class="np-trace-in" data-step="' + (i + 1) + '" data-var="' + esc(vars[j]) + '" aria-label="' +
+                    esc(U.traceLine + ' ' + r.line + ', ' + vars[j]) + '" autocomplete="off" spellcheck="false"></td>';
+                const changed = prev && prev[j] !== v;
+                return '<td' + (changed ? ' class="np-trace-changed"' : '') + '>' + esc(v) + '</td>';
+            }).join('') + '<td class="np-trace-out">' + (r.out ? '<code>' + esc(r.out.replace(/\n$/, '').replace(/\n/g, '⏎')) + '</code>' : '') + '</td>';
+            body.appendChild(tr);
+        });
+        tbl.appendChild(body);
+        return tbl;
+    }
+    function renderTrace(nd) {
+        const t = traceOf(nd.ref, nd.vars), fig = el('figure', 'np-trace');
+        if (!t) { fig.textContent = '(trace ' + nd.ref + ' not generated)'; return fig; }
+        fig.innerHTML = '<figcaption>' + icon('table-2') + '<span>' + esc(U.traceTitle) + '</span></figcaption>';
+        const wrap = el('div', 'np-trace-scroll');
+        const tbl = traceTable(t, nd.vars);
+        wrap.appendChild(tbl);
+        // step through: the rows appear one by one; "all steps" shows the whole table
+        const rows = Array.from(tbl.tBodies[0].rows);
+        let shown = 1;
+        const bar = el('div', 'np-trace-bar');
+        const step = el('button', 'np-btn', icon('step-forward') + esc(U.traceStep)); step.type = 'button';
+        const all = el('button', 'np-btn np-btn-ghost', esc(U.traceAll)); all.type = 'button';
+        const again = el('button', 'np-btn np-btn-ghost', esc(U.traceAgain)); again.type = 'button';
+        const live = el('span', 'sr-only'); live.setAttribute('aria-live', 'polite');
+        function show() {
+            rows.forEach((r, i) => { r.hidden = i >= shown; r.classList.toggle('np-trace-now', i === shown - 1 && shown < rows.length); });
+            step.disabled = shown >= rows.length; all.disabled = shown >= rows.length;
+            const r = t.rows[shown - 1];
+            live.textContent = U.traceLine + ' ' + r.line + ': ' + nd.vars.map((v, j) => v + ' = ' + r.values[j]).join(', ');
+        }
+        step.addEventListener('click', () => { shown++; show(); });
+        all.addEventListener('click', () => { shown = rows.length; show(); });
+        again.addEventListener('click', () => { shown = 1; show(); });
+        bar.append(step, all, again, live);
+        show();
+        fig.append(wrap, bar, el('p', 'np-trace-hint', esc(U.traceHint)));
+        return fig;
+    }
+    function renderMemory(nd) {
+        // boxes are written by the author (S00-schema): name, type, value, and from chapter 8 an address and arrows
+        const fig = el('figure', 'np-memory');
+        fig.innerHTML = '<figcaption>' + icon('memory-stick') + '<span>' + esc(U.memoryTitle.replace('{line}', nd.line)) + '</span></figcaption>';
+        const row = el('div', 'np-mem-row'); row.setAttribute('dir', 'ltr');
+        nd.boxes.forEach(b => {
+            const box = el('div', 'np-mem-box' + (b.value === '?' ? ' np-mem-unset' : ''));
+            box.innerHTML = '<span class="np-mem-type"><code>' + esc(b.type) + '</code></span><span class="np-mem-val">' + esc(b.value) + '</span>' +
+                '<span class="np-mem-name"><code>' + esc(b.name) + '</code></span>' + (b.addr ? '<span class="np-mem-addr">' + esc(b.addr) + '</span>' : '');
+            row.appendChild(box);
+        });
+        fig.appendChild(row);
+        return fig;
+    }
+
     // ---------- content nodes ----------
     function renderNode(nd, blockId) {
         if (nd.type === 'p') return el('p', '', h(nd.text[lang]));
@@ -255,6 +325,8 @@
             wrap.append(bar, ...panels.map(p => p.pnl));
             return wrap;
         }
+        if (nd.type === 'trace') return renderTrace(nd);
+        if (nd.type === 'memory') return renderMemory(nd);
         if (nd.type === 'asm') {
             const code = ix.code[nd.ref], e = G && G.code[code.id];
             const wrap = el('div', 'np-asm');
@@ -300,6 +372,8 @@
             wrap.appendChild(verdict);
             return wrap;
         }
+        // static: read only, with line numbers (a trace table points at them), and nothing to run (S00-schema: code)
+        if (nd.mode === 'static') { cb.box.classList.add('np-code-static'); return cb.box; }
         runControls(cb, code.source);
         return cb.box;
     }
@@ -433,6 +507,33 @@
                     markItem(itemEl, it.id, ok);
                 };
                 body.append(el('div', 'np-bar').appendChild(chk).parentNode, panel);
+            } else if (b.type === 'B.trace') {
+                // fill the empty cells of a trace table whose other rows are given (rows ⚙ from the real run)
+                const code = ix.code[it.code], t = traceOf(it.code, it.vars);
+                body.appendChild(staticCode(code.source));
+                if (t) {
+                    body.appendChild(el('p', 'np-trace-hint', esc(U.traceFill)));
+                    const wrap = el('div', 'np-trace-scroll');
+                    const tbl = traceTable(t, it.vars, { blanks: it.blanks });
+                    wrap.appendChild(tbl);
+                    body.appendChild(wrap);
+                    const chk = button(U.check, 'circle-check', 'primary');
+                    const norm = v => String(v).trim().replace(/\s+/g, '').replace(/^"(.)"$/, "'$1'").replace(/\.0+$/, '');
+                    chk.onclick = () => {
+                        let all = true;
+                        tbl.querySelectorAll('.np-trace-in').forEach(inp => {
+                            const step = +inp.dataset.step, j = it.vars.indexOf(inp.dataset.var);
+                            const want = t.rows[step - 1].values[j];
+                            const ok = norm(inp.value) === norm(want) || norm(inp.value) === norm(want).replace(/^'(.)'$/, '$1');
+                            inp.classList.toggle('ok', ok); inp.classList.toggle('bad', !ok);
+                            if (!ok) all = false;
+                        });
+                        panel.innerHTML = '';
+                        panel.appendChild(el('p', 'np-verdict ' + (all ? 'ok' : 'warn'), icon(all ? 'circle-check' : 'circle-x') + esc(all ? U.allPassed : U.someFailed)));
+                        markItem(itemEl, it.id, all);
+                    };
+                    body.append(el('div', 'np-bar').appendChild(chk).parentNode, panel);
+                }
             } else if (b.type === 'B.parsons') {
                 body.appendChild(staticCode(it.before.join('\n')));
                 const list = el('ol', 'np-parsons');
@@ -517,7 +618,8 @@
 
     function renderPrompt(p) {
         const wrap = el('div', 'np-prompt-box');
-        const text = p.text.replace('{lang}', { fa: 'Persian', de: 'German', en: 'English' }[lang]).replace('{lesson}', L.label);
+        const text = p.text.replace('{lang}', { fa: 'Persian', de: 'German', en: 'English' }[lang])
+            .replace('{lesson}', L.review ? 'the review of chapter ' + ix.chapter[L.chapter].n : L.label);
         wrap.innerHTML = '<div class="np-prompt-title">' + icon(p.icon) + '<strong>' + esc(p.name.en) + '</strong>' + (lang !== 'en' ? ' — ' + esc(p.name[lang]) : '') + ' <code>' + esc(p.id) + '</code></div>';
         const pre = el('pre', 'np-prompt-text'); pre.setAttribute('dir', 'ltr'); pre.textContent = text;
         const copy = button(U.copy, 'copy');
@@ -571,6 +673,7 @@
                 else if (b.type === 'B.parsons') answer = staticHtml(it.solution.map(k => it.lines[k]).join('\n'), 'np-code-pre');
                 else if (b.type === 'B.explain') answer = h(it.model[lang]);
                 else if (b.type === 'B.choice') answer = h(it.options.find(o => o.correct).text[lang]);
+                else if (b.type === 'B.trace') { const t = traceOf(it.code, it.vars); answer = t ? '<div class="np-trace-scroll">' + traceTable(t, it.vars).outerHTML + '</div>' : ''; }
                 else answer = '<details><summary>' + esc(U.solution) + '</summary>' + staticHtml(it.solution, 'np-code-pre') + '</details>';
                 rows += '<tr><td>' + (i === 0 ? esc(bandLetter[b.id]) : '') + '</td><td>' + (i + 1) + '</td><td>' + answer + '</td><td>' + h(it.why[lang]) + '</td></tr>';
             }));
@@ -592,17 +695,19 @@
         }
         const cat = L.catalog, ch = ix.chapter[L.chapter];
         const title = cat.title[lang];
-        document.title = U.lesson + ' ' + L.label + ': ' + cat.title[lang] + ' — Nullpunkt';
+        // a review unit (Cnn.REV) has no number: its title says what it is
+        const heading = L.review ? cat.title[lang] : U.lesson + ' ' + L.label + ': ' + title;
+        document.title = heading + ' — Nullpunkt';
         const status = ch.catalog.langStatus[lang];
         // the leading path: home › chapter › lesson
         const crumbs = el('ol', 'np-crumbs');
         crumbs.setAttribute('aria-label', S.aria.crumbs);
         crumbs.innerHTML = '<li><a href="' + esc(C.homeHref(lang)) + '">' + esc(S.home) + '</a></li>' +
             '<li><a href="' + esc(C.homeHref(lang, 'chapter-' + ch.id)) + '">' + esc(U.chapter) + ' ' + ch.n + ': ' + esc(ch.catalog.title[lang]) + '</a></li>' +
-            '<li aria-current="page">' + esc(U.lesson) + ' ' + L.label + '</li>';
+            '<li aria-current="page">' + (L.review ? esc(reg.unitTypes.review.label[lang]) : esc(U.lesson) + ' ' + L.label) + '</li>';
         root.appendChild(crumbs);
         // the English title on its own line, in its own direction, so a Persian title never breaks around it
-        root.appendChild(el('h1', '', esc(U.lesson) + ' ' + L.label + ': ' + esc(title) +
+        root.appendChild(el('h1', '', esc(heading) +
             (lang !== 'en' ? '<span class="np-title-en" lang="en" dir="ltr">' + esc(cat.title.en) + '</span>' : '')));
         root.appendChild(el('p', 'np-lesson-meta', icon('clock') + '<span>' + cat.minutes + ' ' + esc(U.minutes) + '</span>' +
             (status !== 'reviewed' ? '<span class="np-badge">' + esc(U.inDevelopment) + '</span>' : '')));

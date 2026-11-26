@@ -18,6 +18,7 @@ const N = data.loadNode(root, { withGenerated: false });
 N.index = N.index || data.index(N);
 const WasiShimFactory = require(path.join(root, 'lib/WasiShim.js'));
 const CRunner = require(path.join(root, 'lib/CRunner.js'));
+const Trace = require(path.join(root, 'lib/Trace.js'));
 const bundleFile = fs.readdirSync(path.join(root, 'vendor/wcc')).find(f => /^wcc_.*\.js$/.test(f));
 const bundle = require(path.join(root, 'vendor/wcc', bundleFile));
 const engine = CRunner.engineFactory(WasiShimFactory, bundle);
@@ -91,7 +92,7 @@ async function runXcc(input) {
 const program = (source, rec) => ({ source, stdin: rec.stdin || '', args: rec.args || [], files: rec.files || {} });
 
 (async function main() {
-    const out = { compilers: { gcc: gccVersion, flags: GCC_FLAGS.join(' '), xcc: bundle.commit }, code: {}, tests: {} };
+    const out = { compilers: { gcc: gccVersion, flags: GCC_FLAGS.join(' '), xcc: bundle.commit }, code: {}, tests: {}, trace: {} };
     const tag = { gcc: gccVersion, xcc: bundle.commit };
 
     for (const code of N.index.codeList) {
@@ -125,6 +126,29 @@ const program = (source, rec) => ({ source, stdin: rec.stdin || '', args: rec.ar
             }
             out.tests[t.id] = entry;
         }
+    }
+
+    // trace tables (node `trace`, band `B.trace`): run the code with a snapshot after each statement line (lib/Trace.js)
+    for (const t of data.traces(N)) {
+        const key = Trace.key(t.ref, t.vars), code = N.index.code[t.ref];
+        if (out.trace[key] || !code) continue;
+        const ins = Trace.instrument(code.source, t.vars);
+        const entry = { hash: hash([code.source, t.vars, code.stdin || '', tag]) };
+        if (ins.error) entry.error = ins.error;
+        else {
+            const dir = path.join(tmpRoot, String(n++));
+            fs.mkdirSync(dir);
+            fs.writeFileSync(path.join(dir, 'main.c'), ins.source);
+            const env = Object.assign({}, process.env, { LC_ALL: 'C', LANG: 'C' });
+            const c = cp.spawnSync('gcc', ['-std=c17', '-w', '-o', 'main', 'main.c', '-lm'], { cwd: dir, encoding: 'utf8', env });
+            if (c.status !== 0) entry.error = 'does not compile with the snapshots: ' + (c.stderr || '').trim().split('\n')[0];
+            else {
+                const r = cp.spawnSync(path.join(dir, 'main'), [], { cwd: dir, input: code.stdin || '', encoding: 'utf8', timeout: 5000 });
+                entry.vars = t.vars;
+                entry.rows = Trace.parse(r.stdout || '', t.vars);
+            }
+        }
+        out.trace[key] = entry;
     }
 
     const file = path.join(root, 'data/generated/expect.js');

@@ -163,6 +163,244 @@
                     en: 'Every `%d` needs one value, in the same order. If a value is missing, `printf` takes whatever is in memory, which is not yours: undefined behavior. You may see a different number every time, or 0 on this page. gcc warns about it.',
                 },
             },
+            {
+                id: 'M-04', dim: 'M', src: 'SRC.math', contrast: 'CT.false',
+                title: {
+                    fa: 'فکر کنی `=` دو متغیر را برای همیشه به هم وصل می‌کند',
+                    de: 'Glauben, dass `=` zwei Variablen für immer verbindet',
+                    en: 'Thinking `=` links two variables for good',
+                },
+                wrong: 'C.L04.K03', right: 'C.L04.K04',
+                why: {
+                    fa: 'در ریاضی `total = price × count` یک رابطهٔ همیشگی است. در C، `=` فقط یک‌بار حساب می‌کند و حاصل را می‌گذارد؛ اگر بعداً `price` عوض شود، `total` تا وقتی دوباره حسابش نکنی همان می‌ماند.',
+                    de: 'In der Mathematik ist `total = price × count` eine dauerhafte Beziehung. In C rechnet `=` einmal und legt das Ergebnis ab; ändert sich später `price`, bleibt `total`, wie es ist, bis du es neu berechnest.',
+                    en: 'In math, `total = price × count` is a lasting relation. In C, `=` works it out once and stores the result; if `price` changes later, `total` stays the same until you work it out again.',
+                },
+            },
+            {
+                id: 'U-02', dim: 'U', src: 'SRC.developmental',
+                title: {
+                    fa: 'خواندن متغیری که هنوز مقدار نگرفته',
+                    de: 'Eine Variable lesen, die noch keinen Wert hat',
+                    en: 'Reading a variable that has no value yet',
+                },
+                wrong: 'C.L04.K05', right: 'C.L04.K06',
+                why: {
+                    fa: 'اعلان فقط جعبه را می‌سازد؛ درونش هر چه از پیش در حافظه بود، مانده. خواندنش رفتار تعریف‌نشده است و gcc با `-Wall` برایش warning می‌دهد. هر متغیر را در اعلانش مقدار بده.',
+                    de: 'Eine Deklaration baut nur den Kasten; darin liegt, was vorher im Speicher war. Ihn zu lesen ist undefiniertes Verhalten, und gcc warnt mit `-Wall` davor. Gib jeder Variablen in ihrer Deklaration einen Wert.',
+                    en: 'A declaration only builds the box; whatever was in that memory before is still in it. Reading it is undefined behavior, and gcc warns about it with `-Wall`. Give every variable a value in its declaration.',
+                },
+            },
+            {
+                id: 'E-08', dim: 'E', src: 'SRC.developmental',
+                title: {
+                    fa: 'نام متغیر غلط نوشته شده یا اعلان نشده',
+                    de: 'Variablenname falsch geschrieben oder nicht deklariert',
+                    en: 'Variable name misspelled or not declared',
+                },
+                wrong: 'C.L04.K07', right: 'C.L04.K08',
+                why: {
+                    fa: 'compiler هر نام را با اعلان‌های پیش از آن مقایسه می‌کند؛ `totl` با `total` یکی نیست. پیام `undeclared` همراه `did you mean` اغلب نام درست را می‌گوید.',
+                    de: 'Der Compiler vergleicht jeden Namen mit den Deklarationen davor; `totl` ist nicht `total`. Die Meldung `undeclared` mit `did you mean` nennt oft den richtigen Namen.',
+                    en: 'The compiler compares every name with the declarations before it; `totl` is not `total`. The message `undeclared` with `did you mean` often names the right one.',
+                },
+            },
+            {
+                id: 'E-09', dim: 'E', src: 'SRC.developmental',
+                title: {
+                    fa: 'اعلان دوباره به‌جای انتساب',
+                    de: 'Erneute Deklaration statt Zuweisung',
+                    en: 'Declaring again instead of assigning',
+                },
+                wrong: 'C.L04.K09', right: 'C.L04.K10',
+                why: {
+                    fa: '`int score = 20;` یک جعبهٔ تازه به همان نام می‌خواهد، و دو جعبه با یک نام در یک جا ممکن نیست. برای مقدار تازه فقط `score = 20;` بنویس.',
+                    de: '`int score = 20;` verlangt einen neuen Kasten mit demselben Namen, und zwei Kästen mit einem Namen an einer Stelle gibt es nicht. Für einen neuen Wert schreib nur `score = 20;`.',
+                    en: '`int score = 20;` asks for a new box with the same name, and there cannot be two boxes with one name in one place. For a new value, write only `score = 20;`.',
+                },
+            },
+            {
+                id: 'W-02', dim: 'W', src: 'SRC.developmental',
+                title: {
+                    fa: 'سرریز `int` در حساب با عددهای بزرگ',
+                    de: 'Überlauf von `int` beim Rechnen mit großen Zahlen',
+                    en: '`int` overflow when calculating with large numbers',
+                },
+                wrong: 'C.L05.K03', right: 'C.L05.K04',
+                why: {
+                    fa: '`int` تا حدود 2.1 میلیارد جا دارد. حسابی که بزرگ‌تر شود سرریز می‌کند، حتی اگر حاصل در یک `long long` نوشته شود، چون سمت راست اول با `int` حساب می‌شود. `long long`، پسوند `LL` روی اولین عدد و `%lld`.',
+                    de: '`int` reicht bis etwa 2,1 Milliarden. Eine Rechnung, die größer wird, läuft über, auch wenn das Ergebnis in ein `long long` geschrieben wird, weil die rechte Seite zuerst in `int` gerechnet wird. `long long`, das Suffix `LL` an der ersten Zahl und `%lld`.',
+                    en: 'An `int` holds up to about 2.1 billion. A calculation that grows larger overflows, even if the result is stored in a `long long`, because the right-hand side is worked out in `int` first. Use `long long`, the suffix `LL` on the first number, and `%lld`.',
+                },
+            },
+            {
+                id: 'E-10', dim: 'E', src: 'SRC.language', contrast: 'CT.form',
+                title: {
+                    fa: 'ویرگول به‌جای نقطهٔ اعشار',
+                    de: 'Komma statt Dezimalpunkt',
+                    en: 'Comma instead of a decimal point',
+                },
+                wrong: 'C.L05.K05', right: 'C.L05.K06',
+                why: {
+                    fa: 'در آلمانی و فارسی ممیز اعشار ویرگول است (2,5). در C، مثل انگلیسی، نقطه است: `2.5`. ویرگول در C چیزها را جدا می‌کند، پس پیام خطا دربارهٔ چیز دیگری است.',
+                    de: 'Im Deutschen und Persischen ist das Dezimaltrennzeichen ein Komma (2,5). In C ist es wie im Englischen ein Punkt: `2.5`. Ein Komma trennt in C Dinge voneinander, deshalb spricht die Fehlermeldung von etwas anderem.',
+                    en: 'In German and Persian the decimal separator is a comma (2,5). In C, as in English, it is a point: `2.5`. A comma in C separates things, so the error message talks about something else.',
+                },
+            },
+            {
+                id: 'U-03', dim: 'U', src: 'SRC.developmental',
+                title: {
+                    fa: 'format specifier با نوع مقدار نمی‌خواند (`%d` برای `double`)',
+                    de: 'Format-Specifier passt nicht zum Typ (`%d` für `double`)',
+                    en: 'Format specifier does not match the type (`%d` for a `double`)',
+                },
+                wrong: 'C.L05.K07', right: 'C.L05.K08',
+                why: {
+                    fa: '`printf` نوع argument را نمی‌بیند و به format اعتماد می‌کند. `%d` برای یک `double` بیت‌های اشتباهی را می‌خواند؛ رفتار تعریف‌نشده است و gcc warning `-Wformat` می‌دهد. `%f` برای `double`، `%d` برای `int`.',
+                    de: '`printf` sieht den Typ des Arguments nicht und verlässt sich auf das Format. `%d` für ein `double` liest die falschen Bits; das ist undefiniertes Verhalten, und gcc warnt mit `-Wformat`. `%f` für `double`, `%d` für `int`.',
+                    en: '`printf` cannot see the argument\'s type and trusts the format. `%d` for a `double` reads the wrong bits; it is undefined behavior, and gcc warns with `-Wformat`. `%f` for `double`, `%d` for `int`.',
+                },
+            },
+            {
+                id: 'M-05', dim: 'M', src: 'SRC.math', contrast: 'CT.false',
+                title: {
+                    fa: 'فکر کنی `7 / 2` برابر 3.5 است',
+                    de: 'Glauben, dass `7 / 2` 3,5 ergibt',
+                    en: 'Thinking `7 / 2` is 3.5',
+                },
+                wrong: 'C.L06.K04', right: 'C.L06.K05',
+                why: {
+                    fa: 'در ریاضی و ماشین حساب تقسیم همیشه کسر می‌دهد. در C، تقسیم دو `int` عدد صحیح است و کسر دور ریخته می‌شود، حتی اگر حاصل در یک `double` نوشته شود. یک طرف را `double` کن: `2.0` یا `(double) x`.',
+                    de: 'In der Mathematik und auf dem Taschenrechner ergibt eine Division immer einen Bruch. In C ist die Division zweier `int` ganzzahlig, und der Bruchteil fällt weg, auch wenn das Ergebnis in ein `double` geschrieben wird. Mach eine Seite zum `double`: `2.0` oder `(double) x`.',
+                    en: 'In math and on a calculator, division always gives a fraction. In C, dividing two `int` gives a whole number and the fraction is thrown away, even if the result is stored in a `double`. Make one side a `double`: `2.0` or `(double) x`.',
+                },
+            },
+            {
+                id: 'M-06', dim: 'M', src: 'SRC.math', contrast: 'CT.false',
+                title: {
+                    fa: 'فکر کنی `^` توان است',
+                    de: 'Glauben, dass `^` eine Potenz ist',
+                    en: 'Thinking `^` is a power',
+                },
+                wrong: 'C.L06.K06', right: 'C.L06.K07',
+                why: {
+                    fa: 'در ماشین حساب، Excel و نوشتن ریاضی با کیبورد، `5^2` یعنی 25. در C، `^` عملگری روی بیت‌هاست (XOR) و `5 ^ 2` برابر 7 است، بی‌هیچ پیامی. توان کوچک را با ضرب بنویس؛ `pow` را در درس 21 می‌بینی.',
+                    de: 'Auf dem Taschenrechner, in Excel und beim Tippen von Mathematik heißt `5^2` 25. In C ist `^` ein Bit-Operator (XOR), und `5 ^ 2` ist 7, ohne jede Meldung. Schreib kleine Potenzen als Multiplikation; `pow` kommt in Lektion 21.',
+                    en: 'On a calculator, in Excel and when typing math, `5^2` means 25. In C, `^` is a bit operator (XOR), and `5 ^ 2` is 7, without any message. Write small powers as multiplication; `pow` comes in lesson 21.',
+                },
+            },
+            {
+                id: 'L-01', dim: 'L', src: 'SRC.math', contrast: 'CT.form',
+                title: {
+                    fa: 'پرانتز جاافتاده در میانگین: `a + b / 2`',
+                    de: 'Fehlende Klammern beim Durchschnitt: `a + b / 2`',
+                    en: 'Missing parentheses in an average: `a + b / 2`',
+                },
+                wrong: 'C.L06.K08', right: 'C.L06.K09',
+                why: {
+                    fa: 'روی کاغذ خط کسر کل صورت را با هم تقسیم می‌کند. در یک خط کد، `/` فقط عدد کنارش را تقسیم می‌کند و پیش از `+` حساب می‌شود. جمع را در پرانتز بگذار: `(a + b) / 2`.',
+                    de: 'Auf Papier teilt der Bruchstrich den ganzen Zähler. In einer Codezeile teilt `/` nur die Zahl daneben und kommt vor `+`. Setz die Summe in Klammern: `(a + b) / 2`.',
+                    en: 'On paper, the fraction bar divides the whole top. In a line of code, `/` divides only the number next to it and comes before `+`. Put the sum in parentheses: `(a + b) / 2`.',
+                },
+            },
+            {
+                id: 'R-01', dim: 'R', src: 'SRC.developmental',
+                title: {
+                    fa: 'تقسیم عدد صحیح بر صفر',
+                    de: 'Ganzzahldivision durch null',
+                    en: 'Integer division by zero',
+                },
+                wrong: 'C.L06.K10', right: 'C.L06.K11',
+                why: {
+                    fa: 'تقسیم یک `int` بر صفر رفتار تعریف‌نشده است و برنامه معمولاً هنگام اجرا می‌ایستد. compiler اغلب چیزی نمی‌بیند، چون مقدار متغیر را فقط هنگام اجرا معلوم است. پیش از تقسیم مطمئن شو مقسوم‌علیه صفر نیست.',
+                    de: 'Ein `int` durch null zu teilen ist undefiniertes Verhalten, und das Programm bricht meist beim Ausführen ab. Der Compiler merkt oft nichts, weil der Wert der Variablen erst beim Ausführen feststeht. Prüf vor der Division, dass der Teiler nicht null ist.',
+                    en: 'Dividing an `int` by zero is undefined behavior, and the program usually stops while running. The compiler often notices nothing, because the variable\'s value is known only at run time. Make sure the divisor is not zero before dividing.',
+                },
+            },
+            {
+                id: 'E-11', dim: 'E', src: 'SRC.developmental',
+                title: {
+                    fa: '`%` با عدد اعشاری',
+                    de: '`%` mit einer Kommazahl',
+                    en: '`%` with a decimal number',
+                },
+                wrong: 'C.L06.K12', right: 'C.L06.K13',
+                why: {
+                    fa: 'باقی‌مانده با `%` فقط برای عدد صحیح تعریف شده است؛ با `double` پیام `invalid operands to binary %` می‌آید.',
+                    de: 'Der Rest mit `%` ist nur für ganze Zahlen definiert; mit `double` kommt die Meldung `invalid operands to binary %`.',
+                    en: 'The remainder with `%` is defined only for whole numbers; with `double` you get the message `invalid operands to binary %`.',
+                },
+            },
+            {
+                id: 'M-07', dim: 'M', src: 'SRC.language', contrast: 'CT.false',
+                title: {
+                    fa: 'فکر کنی نویسهٔ `\'7\'` همان عدد 7 است',
+                    de: 'Glauben, dass das Zeichen `\'7\'` die Zahl 7 ist',
+                    en: 'Thinking the character `\'7\'` is the number 7',
+                },
+                wrong: 'C.L07.K03', right: 'C.L07.K04',
+                why: {
+                    fa: 'روی کاغذ «7» هم رقم است هم عدد. در C، `\'7\'` یک نویسه با کد 55 است و `\'7\' + 1` برابر 56. رقم را با `c - \'0\'` به عدد تبدیل کن.',
+                    de: 'Auf Papier ist „7“ Ziffer und Zahl zugleich. In C ist `\'7\'` ein Zeichen mit dem Code 55, und `\'7\' + 1` ist 56. Wandle eine Ziffer mit `c - \'0\'` in eine Zahl um.',
+                    en: 'On paper, "7" is both a digit and a number. In C, `\'7\'` is a character with code 55, and `\'7\' + 1` is 56. Turn a digit into a number with `c - \'0\'`.',
+                },
+            },
+            {
+                id: 'E-12', dim: 'E', src: 'SRC.prior', contrast: 'CT.false',
+                title: {
+                    fa: 'دوکوتیشن برای یک نویسه: `"A"` به‌جای `\'A\'`',
+                    de: 'Doppelte Anführungszeichen für ein Zeichen: `"A"` statt `\'A\'`',
+                    en: 'Double quotes for a character: `"A"` instead of `\'A\'`',
+                },
+                wrong: 'C.L07.K05', right: 'C.L07.K06',
+                why: {
+                    fa: 'در Python، `\'A\'` و `"A"` یکی‌اند. در C، `\'A\'` یک نویسه است و `"A"` یک متن؛ متن در جعبهٔ `char` جا نمی‌شود و gcc از نسخهٔ 14 آن را خطا می‌داند.',
+                    de: 'In Python sind `\'A\'` und `"A"` dasselbe. In C ist `\'A\'` ein Zeichen und `"A"` ein Text; ein Text passt nicht in einen `char`-Kasten, und gcc behandelt das seit Version 14 als Fehler.',
+                    en: 'In Python, `\'A\'` and `"A"` are the same. In C, `\'A\'` is a character and `"A"` is a text; a text does not fit in a `char` box, and gcc treats it as an error since version 14.',
+                },
+            },
+            {
+                id: 'W-03', dim: 'W', src: 'SRC.prior', contrast: 'CT.false',
+                title: {
+                    fa: 'چند نویسه بین تک‌کوتیشن: `\'yes\'`',
+                    de: 'Mehrere Zeichen in einfachen Anführungszeichen: `\'yes\'`',
+                    en: 'Several characters in single quotes: `\'yes\'`',
+                },
+                wrong: 'C.L07.K07', right: 'C.L07.K08',
+                why: {
+                    fa: 'در Python متن را با تک‌کوتیشن هم می‌نویسند. در C بین دو `\'` دقیقاً یک نویسه می‌آید؛ `\'yes\'` چیز عجیبی می‌سازد و gcc با `multi-character character constant` هشدار می‌دهد.',
+                    de: 'In Python schreibt man Text auch in einfachen Anführungszeichen. In C steht zwischen zwei `\'` genau ein Zeichen; `\'yes\'` ergibt etwas Seltsames, und gcc warnt mit `multi-character character constant`.',
+                    en: 'In Python, text is also written in single quotes. In C exactly one character goes between two `\'`; `\'yes\'` makes something odd, and gcc warns with `multi-character character constant`.',
+                },
+            },
+            {
+                id: 'U-04', dim: 'U', src: 'SRC.developmental',
+                title: {
+                    fa: 'یک `%` تنها در format string',
+                    de: 'Ein einzelnes `%` im Format-String',
+                    en: 'A lone `%` in the format string',
+                },
+                wrong: 'C.L08.K03', right: 'C.L08.K04',
+                why: {
+                    fa: '`printf` هر `%` را آغاز یک format specifier می‌داند و argumentی برایش می‌خواند که وجود ندارد؛ رفتار تعریف‌نشده است. برای خود علامت درصد بنویس `%%`.',
+                    de: '`printf` hält jedes `%` für den Anfang eines Format-Specifiers und liest dafür ein Argument, das es nicht gibt; das ist undefiniertes Verhalten. Für das Prozentzeichen selbst schreib `%%`.',
+                    en: '`printf` takes every `%` as the start of a format specifier and reads an argument for it that does not exist; that is undefined behavior. For the percent sign itself, write `%%`.',
+                },
+            },
+            {
+                id: 'M-08', dim: 'M', src: 'SRC.prior', contrast: 'CT.false',
+                title: {
+                    fa: 'فکر کنی عرض میدان عدد بلندتر را می‌بُرد',
+                    de: 'Glauben, dass die Feldbreite eine längere Zahl abschneidet',
+                    en: 'Thinking the field width cuts a longer number',
+                },
+                wrong: 'C.L08.K05', right: 'C.L08.K06',
+                why: {
+                    fa: 'در جدول‌ها و فرم‌ها، خانهٔ کوچک متن بلند را می‌بُرد. در `printf`، عرض فقط حداقل است: عدد بلندتر کامل چاپ می‌شود و ستون کج می‌شود. عرض را به اندازهٔ بلندترین عدد بگیر.',
+                    de: 'In Tabellen und Formularen schneidet ein kleines Feld langen Text ab. In `printf` ist die Breite nur ein Minimum: Eine längere Zahl wird ganz ausgegeben, und die Spalte verrutscht. Wähle die Breite nach der längsten Zahl.',
+                    en: 'In spreadsheets and forms, a small cell cuts long text. In `printf`, the width is only a minimum: a longer number is printed in full and the column shifts. Choose the width for the longest number.',
+                },
+            },
         ],
     };
 })(typeof window !== 'undefined' ? window : globalThis);

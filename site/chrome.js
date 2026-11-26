@@ -74,8 +74,9 @@
 
         var scrim = el('div', { class: 'scrim', id: 'ncScrim' });
         var dlg = el('dialog', { class: 'drawer', id: 'ncDrawer' });
-        dlg.innerHTML = '<div class="drawer__head"><a class="drawer__brand" id="ncDrawerBrand"><span class="brand__mark">' + MARK + '</span><span class="brand__text">' +
+        dlg.innerHTML = '<div class="drawer__head"><div class="brand-group"><a class="drawer__brand" id="ncDrawerBrand"><span class="brand__mark">' + MARK + '</span><span class="brand__text">' +
             '<span class="brand__org">Nullpunkt</span><span class="brand__dept"></span></span></a>' +
+            '<a class="np-version" id="ncDrawerVersion" dir="ltr" rel="noopener"></a></div>' +
             '<button class="icon-btn drawer__close" id="ncDrawerClose" type="button">' + svg('x') + '</button></div>' +
             '<nav class="drawer__nav" id="ncDrawerNav"></nav><div class="drawer__course" id="ncDrawerCourse"></div>' +
             '<div class="drawer__actions" id="ncDrawerActions"></div>';
@@ -95,9 +96,12 @@
             $('ncBrand').setAttribute('aria-label', c.aria.home);
             $('ncMark').setAttribute('aria-label', c.aria.logo);
             $('ncMarkTip').textContent = c.logoTip;
-            var v = $('ncVersion');
-            v.href = SITE.repoUrl + '/releases/tag/v' + SITE.version; v.textContent = 'v' + SITE.version;
-            v.title = c.releaseNotes; v.setAttribute('aria-label', c.version + ' ' + SITE.version + ' — ' + c.releaseNotes);
+            // the version: a badge beside the name, as in Kelk — in the header and in the drawer's head
+            ['ncVersion', 'ncDrawerVersion'].forEach(function (id) {
+                var v = $(id);
+                v.href = SITE.repoUrl + '/releases/tag/v' + SITE.version; v.textContent = 'v' + SITE.version;
+                v.title = c.releaseNotes; v.setAttribute('aria-label', c.version + ' ' + SITE.version + ' — ' + c.releaseNotes);
+            });
             document.querySelectorAll('.brand__dept').forEach(function (n) { n.textContent = c.tagline; });
             $('ncNav').setAttribute('aria-label', c.aria.primaryNav);
             $('ncDrawerNav').setAttribute('aria-label', c.aria.drawerNav);
@@ -263,8 +267,9 @@
         measureBrandMin: function () {
             var text = 'Nullpunkt', n = S.cfg.brand.minVisibleChars, m = $('ncBrandMeasure');
             m.textContent = Array.from(text).length > n ? Array.from(text).slice(0, n).join('') + '…' : text;
-            var w = m.getBoundingClientRect().width, mark = $('ncMark').getBoundingClientRect().width;
-            $('ncHeader').style.setProperty('--brand-min', Math.ceil(mark + 10 + w + 1) + 'px');
+            var w = m.getBoundingClientRect().width, mark = $('ncMark').getBoundingClientRect().width,
+                ver = $('ncVersion').getBoundingClientRect().width;
+            $('ncHeader').style.setProperty('--brand-min', Math.ceil(mark + 10 + w + 10 + ver + 1) + 'px');
         },
         evaluate: function () {
             rail.place();

@@ -21,6 +21,9 @@
                 'divide-by-zero': 'Runtime error: تقسیم بر صفر.', 'memory-out-of-bounds': 'Runtime error: دسترسی بیرون از حافظه (مانند segmentation fault).',
                 'stack-overflow': 'Runtime error: پر شدن stack — احتمالاً recursion بدون پایان.', 'null-write': 'Runtime error: نوشتن از طریق NULL pointer (روی PC یک segmentation fault).',
                 'output-limit': 'متوقف شد: خروجی بیش از 1 MB بود.', 'runtime-error': 'Runtime error.' },
+            traceLine: 'خط', traceOut: 'چاپ شد', traceStep: 'گام بعد', traceAll: 'همهٔ گام‌ها', traceAgain: 'از اول', traceTitle: 'جدول ردیابی (trace table)',
+            traceHint: '— یعنی متغیر هنوز تعریف نشده؛ ? یعنی هنوز مقداری نگرفته. خانهٔ پررنگ همان است که این خط عوض کرد.',
+            memoryTitle: 'نقشهٔ حافظه (memory map) پس از خط {line}', traceFill: 'خانه‌های خالی را پر کن، بعد بررسی کن.',
             asmTitle: 'assembly برای x86-64 (gcc -O1)', prev: 'درس قبل', next: 'درس بعد', inDevelopment: 'در دست ساخت', planned: 'هنوز نوشته نشده',
         },
         de: {
@@ -42,6 +45,9 @@
                 'divide-by-zero': 'Runtime error: Division durch null.', 'memory-out-of-bounds': 'Runtime error: Zugriff außerhalb des Speichers (wie ein segmentation fault).',
                 'stack-overflow': 'Runtime error: Stack voll — vermutlich eine Rekursion ohne Ende.', 'null-write': 'Runtime error: Schreiben über einen NULL Pointer (auf einem PC ein segmentation fault).',
                 'output-limit': 'Gestoppt: mehr als 1 MB Ausgabe.', 'runtime-error': 'Runtime error.' },
+            traceLine: 'Zeile', traceOut: 'Ausgabe', traceStep: 'Nächster Schritt', traceAll: 'Alle Schritte', traceAgain: 'Von vorn', traceTitle: 'Trace Table',
+            traceHint: '— heißt: Die Variable gibt es noch nicht; ? heißt: Sie hat noch keinen Wert. Fett ist, was diese Zeile geändert hat.',
+            memoryTitle: 'Memory Map nach Zeile {line}', traceFill: 'Füll die leeren Felder aus, dann prüfe.',
             asmTitle: 'Assembly für x86-64 (gcc -O1)', prev: 'Vorherige Lektion', next: 'Nächste Lektion', inDevelopment: 'In Arbeit', planned: 'Noch nicht geschrieben',
         },
         en: {
@@ -63,6 +69,9 @@
                 'divide-by-zero': 'Runtime error: division by zero.', 'memory-out-of-bounds': 'Runtime error: memory access out of bounds (like a segmentation fault).',
                 'stack-overflow': 'Runtime error: stack overflow — probably a recursion that never ends.', 'null-write': 'Runtime error: writing through a NULL pointer (a segmentation fault on a PC).',
                 'output-limit': 'Stopped: more than 1 MB of output.', 'runtime-error': 'Runtime error.' },
+            traceLine: 'Line', traceOut: 'Printed', traceStep: 'Next step', traceAll: 'All steps', traceAgain: 'Start over', traceTitle: 'Trace table',
+            traceHint: '— means the variable does not exist yet; ? means it has no value yet. Bold is what this line changed.',
+            memoryTitle: 'Memory map after line {line}', traceFill: 'Fill in the empty cells, then check.',
             asmTitle: 'Assembly for x86-64 (gcc -O1)', prev: 'Previous lesson', next: 'Next lesson', inDevelopment: 'In development', planned: 'Not written yet',
         },
     };

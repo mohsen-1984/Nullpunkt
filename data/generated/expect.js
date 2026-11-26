@@ -872,6 +872,52 @@
     "log": "Unresolved: env.__main_argc_argv"
    }
   },
+  "C01.REV.K01": {
+   "hash": "60cd7b40470a19ac",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Ready, steady\n10\tgo!\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Ready, steady\n10\tgo!\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C01.REV.K02": {
+   "hash": "8a81fc6b13e9b8f3",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 25,
+      "severity": "error",
+      "message": "expected ';' before 'printf'"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:25: error: expected ';' before 'printf'"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 5,
+      "col": null,
+      "message": "`;' expected"
+     }
+    ],
+    "log": "main.c(5): `;' expected\n    printf(\"Line two\\n\");\n    ^~~~~~"
+   }
+  },
   "C.L03.K01": {
    "hash": "4196e683ae2cb48a",
    "gcc": {
@@ -1406,6 +1452,1631 @@
     "diagnostics": [],
     "log": ""
    }
+  },
+  "C.L04.K01": {
+   "hash": "5c536e6a290d4aa8",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "3\n5\n7\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "3\n5\n7\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L04.K02": {
+   "hash": "d66b436419096d79",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Adults:   2 x 12\nChildren: 3 x 7\nTotal:    45\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Adults:   2 x 12\nChildren: 3 x 7\nTotal:    45\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L04.K03": {
+   "hash": "6534f4cb0700e16c",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Total: 12\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Total: 12\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L04.K04": {
+   "hash": "790d11538c7dfaa5",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Total: 15\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Total: 15\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L04.K05": {
+   "hash": "882b91b573b4c7a6",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [
+     {
+      "line": 5,
+      "col": 5,
+      "severity": "warning",
+      "message": "'total' is used uninitialized [-Wuninitialized]"
+     },
+     {
+      "line": 4,
+      "col": 9,
+      "severity": "note",
+      "message": "'total' was declared here"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:5:5: warning: 'total' is used uninitialized [-Wuninitialized]\nmain.c:4:9: note: 'total' was declared here"
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": ""
+   }
+  },
+  "C.L04.K06": {
+   "hash": "40eb05bbe6a05c28",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Total: 0\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Total: 0\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L04.K07": {
+   "hash": "2ca0f486c72552e2",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 5,
+      "col": 20,
+      "severity": "error",
+      "message": "'totl' undeclared (first use in this function); did you mean 'total'?"
+     },
+     {
+      "line": 5,
+      "col": 20,
+      "severity": "note",
+      "message": "each undeclared identifier is reported only once for each function it appears in"
+     },
+     {
+      "line": 4,
+      "col": 9,
+      "severity": "warning",
+      "message": "unused variable 'total' [-Wunused-variable]"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:5:20: error: 'totl' undeclared (first use in this function); did you mean 'total'?\nmain.c:5:20: note: each undeclared identifier is reported only once for each function it appears in\nmain.c:4:9: warning: unused variable 'total' [-Wunused-variable]"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 5,
+      "col": null,
+      "message": "`totl' undeclared"
+     }
+    ],
+    "log": "main.c(5): `totl' undeclared\n    printf(\"%d\\n\", totl);\n                   ^~~~"
+   }
+  },
+  "C.L04.K08": {
+   "hash": "9edf79aa9bfea456",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "3\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "3\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L04.K09": {
+   "hash": "230b840676ac955c",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 5,
+      "col": 9,
+      "severity": "error",
+      "message": "redefinition of 'score'"
+     },
+     {
+      "line": 4,
+      "col": 9,
+      "severity": "note",
+      "message": "previous definition of 'score' with type 'int'"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:5:9: error: redefinition of 'score'\nmain.c:4:9: note: previous definition of 'score' with type 'int'"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 5,
+      "col": null,
+      "message": "`score' already defined"
+     }
+    ],
+    "log": "main.c(5): `score' already defined\n    int score = 20;\n        ^~~~~"
+   }
+  },
+  "C.L04.K10": {
+   "hash": "6024553fa75b42e1",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "20\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "20\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L04.K11": {
+   "hash": "2b3b1a23d6989617",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "10 4\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "10 4\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L04.K12": {
+   "hash": "be5e480af4bc74d8",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "7\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "7\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L04.K13": {
+   "hash": "1dbdcb390f66aaf5",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "9\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "9\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L04.K14": {
+   "hash": "d0b535edd2ee9a4b",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 6,
+      "col": 34,
+      "severity": "error",
+      "message": "'heigth' undeclared (first use in this function); did you mean 'height'?"
+     },
+     {
+      "line": 6,
+      "col": 34,
+      "severity": "note",
+      "message": "each undeclared identifier is reported only once for each function it appears in"
+     },
+     {
+      "line": 5,
+      "col": 9,
+      "severity": "warning",
+      "message": "unused variable 'height' [-Wunused-variable]"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:6:34: error: 'heigth' undeclared (first use in this function); did you mean 'height'?\nmain.c:6:34: note: each undeclared identifier is reported only once for each function it appears in\nmain.c:5:9: warning: unused variable 'height' [-Wunused-variable]"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 6,
+      "col": null,
+      "message": "`heigth' undeclared"
+     }
+    ],
+    "log": "main.c(6): `heigth' undeclared\n    printf(\"Area: %d\\n\", width * heigth);\n                                 ^~~~~~"
+   }
+  },
+  "C.L04.K15": {
+   "hash": "24f6fbfaed59ae7f",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 6,
+      "col": 9,
+      "severity": "error",
+      "message": "redefinition of 'lives'"
+     },
+     {
+      "line": 4,
+      "col": 9,
+      "severity": "note",
+      "message": "previous definition of 'lives' with type 'int'"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:6:9: error: redefinition of 'lives'\nmain.c:4:9: note: previous definition of 'lives' with type 'int'"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 6,
+      "col": null,
+      "message": "`lives' already defined"
+     }
+    ],
+    "log": "main.c(6): `lives' already defined\n    int lives = 2;\n        ^~~~~"
+   }
+  },
+  "C.L04.K16": {
+   "hash": "eecae1a6bf79a89a",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [
+     {
+      "line": 5,
+      "col": 12,
+      "severity": "warning",
+      "message": "'points' is used uninitialized [-Wuninitialized]"
+     },
+     {
+      "line": 4,
+      "col": 9,
+      "severity": "note",
+      "message": "'points' was declared here"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:5:12: warning: 'points' is used uninitialized [-Wuninitialized]\nmain.c:4:9: note: 'points' was declared here"
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": ""
+   }
+  },
+  "C.L05.K01": {
+   "hash": "c1de6286aeb3b019",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "7\n3.500000\n7.000000\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "7\n3.500000\n7.000000\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L05.K02": {
+   "hash": "469b8a1134f8c473",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Students: 28\nRoom: 64.500000 square metres\nMilliseconds in a year: 31536000000\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Students: 28\nRoom: 64.500000 square metres\nMilliseconds in a year: 31536000000\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L05.K03": {
+   "hash": "ecef1ac78660dd40",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 42,
+      "severity": "warning",
+      "message": "integer overflow in expression of type 'int' results in '1471228928' [-Woverflow]"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:42: warning: integer overflow in expression of type 'int' results in '1471228928' [-Woverflow]"
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": ""
+   }
+  },
+  "C.L05.K04": {
+   "hash": "0c5bb24058b490f0",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "31536000000\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "31536000000\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L05.K05": {
+   "hash": "50125bd9f5cd7f08",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 22,
+      "severity": "error",
+      "message": "expected identifier or '(' before numeric constant"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:22: error: expected identifier or '(' before numeric constant"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": 22,
+      "message": "ident expected"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": 22,
+      "message": "`;' expected"
+     }
+    ],
+    "log": "main.c(4): ident expected\n    double price = 2,5;\n                     ^\nmain.c(4): `;' expected\n    double price = 2,5;\n                     ^"
+   }
+  },
+  "C.L05.K06": {
+   "hash": "c5c51f0936e49f7f",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "2.500000\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "2.500000\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L05.K07": {
+   "hash": "a089d9258fd77f92",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [
+     {
+      "line": 5,
+      "col": 14,
+      "severity": "warning",
+      "message": "format '%d' expects argument of type 'int', but argument 2 has type 'double' [-Wformat=]"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:5:14: warning: format '%d' expects argument of type 'int', but argument 2 has type 'double' [-Wformat=]"
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": ""
+   }
+  },
+  "C.L05.K08": {
+   "hash": "c5c51f0936e49f7f",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "2.500000\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "2.500000\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L05.K09": {
+   "hash": "52fa6d61219a872e",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "10.000000\n7.000000\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "10.000000\n7.000000\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L05.K10": {
+   "hash": "bc91a394be81ca53",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 23,
+      "severity": "error",
+      "message": "expected identifier or '(' before numeric constant"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:23: error: expected identifier or '(' before numeric constant"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": null,
+      "message": "ident expected"
+     },
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": null,
+      "message": "`;' expected"
+     }
+    ],
+    "log": "main.c(4): ident expected\n    double height = 1,75;\n                      ^~\nmain.c(4): `;' expected\n    double height = 1,75;\n                      ^~"
+   }
+  },
+  "C.L05.K11": {
+   "hash": "f18a2f8e2d8b6c49",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [
+     {
+      "line": 5,
+      "col": 27,
+      "severity": "warning",
+      "message": "format '%d' expects argument of type 'int', but argument 2 has type 'double' [-Wformat=]"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:5:27: warning: format '%d' expects argument of type 'int', but argument 2 has type 'double' [-Wformat=]"
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": ""
+   }
+  },
+  "C.L05.K12": {
+   "hash": "a6fc129b9b3ee314",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 33,
+      "severity": "warning",
+      "message": "integer overflow in expression of type 'int' results in '0' [-Woverflow]"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:33: warning: integer overflow in expression of type 'int' results in '0' [-Woverflow]"
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": ""
+   }
+  },
+  "C.L06.K01": {
+   "hash": "49318dcb70a56de2",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "3\n1\n3.500000\n9\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "3\n1\n3.500000\n9\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L06.K02": {
+   "hash": "f67f858b0468a12c",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "7384 s = 2 h 3 min 4 s\nAverage: 7.500000\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "7384 s = 2 h 3 min 4 s\nAverage: 7.500000\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L06.K03": {
+   "hash": "1f562a5048e23caa",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "0\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "0\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L06.K04": {
+   "hash": "e702bbfd70212ace",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "7.000000\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "7.000000\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L06.K05": {
+   "hash": "32aa68fa10ae96dc",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "7.500000\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "7.500000\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L06.K06": {
+   "hash": "e3cec9854421ea64",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "7\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "7\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L06.K07": {
+   "hash": "f68891600e894e65",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "25\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "25\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L06.K08": {
+   "hash": "8d1b0883d5b02a32",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "11\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "11\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L06.K09": {
+   "hash": "9c921ec1b922e917",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "8\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "8\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L06.K10": {
+   "hash": "a0831550daf44ace",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "",
+    "stderr": "",
+    "exitCode": null,
+    "trap": "SIGFPE"
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "",
+    "stderr": "",
+    "exitCode": null,
+    "trap": "divide-by-zero"
+   }
+  },
+  "C.L06.K11": {
+   "hash": "b959c34c05ee561d",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "25\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "25\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L06.K12": {
+   "hash": "b441c654174e4647",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 23,
+      "severity": "error",
+      "message": "invalid operands to binary % (have 'double' and 'int')"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:23: error: invalid operands to binary % (have 'double' and 'int')"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": null,
+      "message": "int type expected"
+     }
+    ],
+    "log": "main.c(4): int type expected\n    double rest = 7.5 % 2;\n                  ^~~"
+   }
+  },
+  "C.L06.K13": {
+   "hash": "4e4d17e25f362e24",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "1\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "1\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L06.K14": {
+   "hash": "c860cc8c5ef02e9a",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "3 2\n17\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "3 2\n17\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L06.K15": {
+   "hash": "70627e5d66a7805e",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "1\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "1\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L06.K16": {
+   "hash": "43cb4e26dcb7b140",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "0.000000\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "0.000000\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L06.K17": {
+   "hash": "84978be3e1c7c7a9",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Average: 18\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Average: 18\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L06.K18": {
+   "hash": "3290d298270ae1e6",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "",
+    "stderr": "",
+    "exitCode": null,
+    "trap": "SIGFPE"
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "",
+    "stderr": "",
+    "exitCode": null,
+    "trap": "divide-by-zero"
+   }
+  },
+  "C.L06.K19": {
+   "hash": "8cc56be0bc9b55b5",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 22,
+      "severity": "error",
+      "message": "invalid operands to binary % (have 'int' and 'double')"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:22: error: invalid operands to binary % (have 'int' and 'double')"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": null,
+      "message": "int type expected"
+     }
+    ],
+    "log": "main.c(4): int type expected\n    double rest = 17 % 5.0;\n                       ^~~"
+   }
+  },
+  "C.L07.K01": {
+   "hash": "55487240d80f7072",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "A\n65\nB\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "A\n65\nB\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L07.K02": {
+   "hash": "a37abbc8ae779c34",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "FDW\nC = 67, F = 70\n'7' - '0' = 7\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "FDW\nC = 67, F = 70\n'7' - '0' = 7\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L07.K03": {
+   "hash": "8b6db80bd593ac97",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "56\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "56\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L07.K04": {
+   "hash": "0de4bde86f581a27",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "8\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "8\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L07.K05": {
+   "hash": "a08a16249a28754d",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 18,
+      "severity": "error",
+      "message": "initialization of 'char' from 'char *' makes integer from pointer without a cast [-Wint-conversion]"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:18: error: initialization of 'char' from 'char *' makes integer from pointer without a cast [-Wint-conversion]"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": null,
+      "message": "convert value from type `char[2]' to `char'"
+     }
+    ],
+    "log": "main.c(4): convert value from type `char[2]' to `char'\n    char grade = \"A\";\n                 ^~~"
+   }
+  },
+  "C.L07.K06": {
+   "hash": "98b9bd85fb305846",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Grade: A\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Grade: A\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L07.K07": {
+   "hash": "f6cca51c02ca61d5",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 18,
+      "severity": "warning",
+      "message": "multi-character character constant [-Wmultichar]"
+     },
+     {
+      "line": 4,
+      "col": 18,
+      "severity": "warning",
+      "message": "overflow in conversion from 'int' to 'char' changes value from '7955827' to '115' [-Woverflow]"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:18: warning: multi-character character constant [-Wmultichar]\nmain.c:4:18: warning: overflow in conversion from 'int' to 'char' changes value from '7955827' to '115' [-Woverflow]"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": 20,
+      "message": "Character not closed"
+     }
+    ],
+    "log": "main.c(4): Character not closed\n    char reply = 'yes';\n                   ^"
+   }
+  },
+  "C.L07.K08": {
+   "hash": "66ee06658f93722e",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "y\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "y\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L07.K09": {
+   "hash": "2f183ac8d61af961",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Ab\n0\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Ab\n0\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L07.K10": {
+   "hash": "e134e339dc0c4222",
+   "gcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 20,
+      "severity": "error",
+      "message": "initialization of 'char' from 'char *' makes integer from pointer without a cast [-Wint-conversion]"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:20: error: initialization of 'char' from 'char *' makes integer from pointer without a cast [-Wint-conversion]"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": null,
+      "message": "convert value from type `char[2]' to `char'"
+     }
+    ],
+    "log": "main.c(4): convert value from type `char[2]' to `char'\n    char initial = \"M\";\n                   ^~~"
+   }
+  },
+  "C.L07.K11": {
+   "hash": "49c86dcbb210653c",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Next number: 53\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Next number: 53\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L07.K12": {
+   "hash": "53aab3abc69f0789",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 19,
+      "severity": "warning",
+      "message": "multi-character character constant [-Wmultichar]"
+     },
+     {
+      "line": 4,
+      "col": 19,
+      "severity": "warning",
+      "message": "overflow in conversion from 'int' to 'char' changes value from '28271' to '111' [-Woverflow]"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:19: warning: multi-character character constant [-Wmultichar]\nmain.c:4:19: warning: overflow in conversion from 'int' to 'char' changes value from '28271' to '111' [-Woverflow]"
+   },
+   "xcc": {
+    "compiled": false,
+    "diagnostics": [
+     {
+      "file": "main.c",
+      "line": 4,
+      "col": 21,
+      "message": "Character not closed"
+     }
+    ],
+    "log": "main.c(4): Character not closed\n    char answer = 'no';\n                    ^"
+   }
+  },
+  "C.L07.K13": {
+   "hash": "b9be223c657226c0",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "'C'\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "'C'\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L08.K01": {
+   "hash": "9818f73b965c061e",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "[   42]\n[42   ]\n[3.14]\n[   3.142]\n[75%]\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "[   42]\n[42   ]\n[3.14]\n[   3.142]\n[75%]\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L08.K02": {
+   "hash": "6b6943f1490cae48",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Item         Qty    Price\nCoffee         2     4.80\nCroissant      1     1.95\nTotal                6.75\nTip 10%              0.68\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Item         Qty    Price\nCoffee         2     4.80\nCroissant      1     1.95\nTotal                6.75\nTip 10%              0.68\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L08.K03": {
+   "hash": "1e4bbf50f819715d",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 27,
+      "severity": "warning",
+      "message": "' ' flag used with '%o' gnu_printf format [-Wformat=]"
+     },
+     {
+      "line": 4,
+      "col": 27,
+      "severity": "warning",
+      "message": "format '%o' expects a matching 'unsigned int' argument [-Wformat=]"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:27: warning: ' ' flag used with '%o' gnu_printf format [-Wformat=]\nmain.c:4:27: warning: format '%o' expects a matching 'unsigned int' argument [-Wformat=]"
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": ""
+   }
+  },
+  "C.L08.K04": {
+   "hash": "0cecf5de5c19c5e6",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Discount: 50% off\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Discount: 50% off\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L08.K05": {
+   "hash": "093b1cb84378e361",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "  7|\n12345|\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "  7|\n12345|\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L08.K06": {
+   "hash": "cc3fabfac7e04c13",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "    7|\n12345|\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "    7|\n12345|\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L08.K07": {
+   "hash": "71df123f5d7cfe9f",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "[   2.8]\n75%\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "[   2.8]\n75%\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L08.K08": {
+   "hash": "56356f429b00b096",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [
+     {
+      "line": 4,
+      "col": 22,
+      "severity": "warning",
+      "message": "format '%o' expects a matching 'unsigned int' argument [-Wformat=]"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:4:22: warning: format '%o' expects a matching 'unsigned int' argument [-Wformat=]"
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": ""
+   }
+  },
+  "C.L08.K09": {
+   "hash": "baf05aab2f58ff43",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": " 5 kg|\n1500 kg|\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": " 5 kg|\n1500 kg|\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C.L08.K10": {
+   "hash": "a8c8375d66518d79",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "0.30000000000000004\n0.30\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "0.30000000000000004\n0.30\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C02.REV.K01": {
+   "hash": "7f4d9616c55ee86d",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "3 1\n3.500000\nc\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "3 1\n3.500000\nc\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C02.REV.K02": {
+   "hash": "7ecb9650c00292a8",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "2 12\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "2 12\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C02.REV.K03": {
+   "hash": "93eeae6546c3ed34",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [
+     {
+      "line": 5,
+      "col": 9,
+      "severity": "warning",
+      "message": "'sum' is used uninitialized [-Wuninitialized]"
+     },
+     {
+      "line": 4,
+      "col": 9,
+      "severity": "note",
+      "message": "'sum' was declared here"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:5:9: warning: 'sum' is used uninitialized [-Wuninitialized]\nmain.c:4:9: note: 'sum' was declared here"
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": ""
+   }
+  },
+  "C02.REV.K04": {
+   "hash": "6d32e98347962c9d",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Half the area: 10.000000\n",
+    "stderr": "",
+    "exitCode": 0
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": "",
+    "stdout": "Half the area: 10.000000\n",
+    "stderr": "",
+    "exitCode": 0
+   }
+  },
+  "C02.REV.K05": {
+   "hash": "be76a2ac24417544",
+   "gcc": {
+    "compiled": true,
+    "diagnostics": [
+     {
+      "line": 5,
+      "col": 5,
+      "severity": "warning",
+      "message": "'total' is used uninitialized [-Wuninitialized]"
+     },
+     {
+      "line": 4,
+      "col": 9,
+      "severity": "note",
+      "message": "'total' was declared here"
+     }
+    ],
+    "log": "main.c: In function 'main':\nmain.c:5:5: warning: 'total' is used uninitialized [-Wuninitialized]\nmain.c:4:9: note: 'total' was declared here"
+   },
+   "xcc": {
+    "compiled": true,
+    "diagnostics": [],
+    "log": ""
+   }
   }
  },
  "tests": {
@@ -1679,6 +3350,782 @@
    },
    "rejects": true,
    "gccRejects": true
+  },
+  "C01.REV.X02.01.T01": {
+   "hash": "314fc9ead3924f0e",
+   "expect": {
+    "stdout": "Line one\nLine two\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C01.REV.X02.01.T02": {
+   "hash": "3c7b418fb51a492b",
+   "expect": {
+    "stdout": "Line one\nLine two\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C01.REV.X02.02.T01": {
+   "hash": "6d1ee9089627f947",
+   "expect": {
+    "stdout": "Keep calm\nand read the message\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C01.REV.X02.02.T02": {
+   "hash": "adb3db1a505edef8",
+   "expect": {
+    "stdout": "Keep calm\nand read the message\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C01.REV.X03.01.T01": {
+   "hash": "bd093c2c96ad3a1e",
+   "expect": {
+    "stdout": "Week: 7 days\nHours: 168\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C01.REV.X03.01.T02": {
+   "hash": "d96403bc938c5ff5",
+   "expect": {
+    "stdout": "Week: 7 days\nHours: 168\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L04.X03.01.T01": {
+   "hash": "4132638adbec347f",
+   "expect": {
+    "stdout": "Area: 21\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L04.X03.01.T02": {
+   "hash": "6e4977db208832ad",
+   "expect": {
+    "stdout": "Area: 21\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L04.X03.02.T01": {
+   "hash": "316431acbd49f524",
+   "expect": {
+    "stdout": "Lives: 3\nLives: 2\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L04.X03.02.T02": {
+   "hash": "18cf737f3d98e448",
+   "expect": {
+    "stdout": "Lives: 3\nLives: 2\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L04.X03.03.T01": {
+   "hash": "1e0a81ccb888463e",
+   "expect": {
+    "stdout": "Points: 15\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L04.X03.03.T02": {
+   "hash": "95394f83a749815e",
+   "expect": {
+    "stdout": "Points: 15\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L04.X04.01.T01": {
+   "hash": "ac8be88191e856e3",
+   "expect": {
+    "stdout": "The film is 135 minutes long.\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L04.X06.01.T01": {
+   "hash": "7497d32771f32fc4",
+   "expect": {
+    "stdout": "4 weeks: 60 euros\n4 weeks: 80 euros\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L04.X06.01.T02": {
+   "hash": "38a9eab3ab97c0a5",
+   "expect": {
+    "stdout": "4 weeks: 60 euros\n4 weeks: 80 euros\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L05.X02.01.T01": {
+   "hash": "fa771aff0ce3406c",
+   "expect": {
+    "stdout": "Height: 1.750000 m\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L05.X02.01.T02": {
+   "hash": "409bc0d08efdd001",
+   "expect": {
+    "stdout": "Height: 1.750000 m\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L05.X02.02.T01": {
+   "hash": "5f461d254f29b453",
+   "expect": {
+    "stdout": "Temperature: 21.500000\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L05.X02.02.T02": {
+   "hash": "7dea42bdf9095bc1",
+   "expect": {
+    "stdout": "Temperature: 21.500000\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L05.X02.03.T01": {
+   "hash": "4069831e1da4e6e2",
+   "expect": {
+    "stdout": "4 GiB = 4294967296 bytes\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L05.X02.03.T02": {
+   "hash": "da4048a8268189a4",
+   "expect": {
+    "stdout": "4 GiB = 4294967296 bytes\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L05.X03.01.T01": {
+   "hash": "01924721fdfe8ac7",
+   "expect": {
+    "stdout": "3 coffees cost 7.200000 euros\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L05.X03.01.T02": {
+   "hash": "8eb54fc4fa957324",
+   "expect": {
+    "stdout": "3 coffees cost 7.200000 euros\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L05.X05.01.T01": {
+   "hash": "6d98b85a26611b81",
+   "expect": {
+    "stdout": "70 years = 2207520000 seconds\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L05.X05.01.T02": {
+   "hash": "b4d9ba6df2cf142a",
+   "expect": {
+    "stdout": "70 years = 2207520000 seconds\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L06.X03.01.T01": {
+   "hash": "344b518dcadced29",
+   "expect": {
+    "stdout": "0.750000\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L06.X03.01.T02": {
+   "hash": "fc1ab81c873ddc9c",
+   "expect": {
+    "stdout": "0.750000\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L06.X03.02.T01": {
+   "hash": "06e247b0c5da9c5c",
+   "expect": {
+    "stdout": "Average: 8\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L06.X03.02.T02": {
+   "hash": "34846ef17baf6074",
+   "expect": {
+    "stdout": "Average: 8\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L06.X03.03.T01": {
+   "hash": "95a99a6257221660",
+   "expect": {
+    "stdout": "Eggs per box: 8\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L06.X03.03.T02": {
+   "hash": "5c863b5797431661",
+   "expect": {
+    "stdout": "Eggs per box: 8\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L06.X03.04.T01": {
+   "hash": "dac39a3bdc2452f1",
+   "expect": {
+    "stdout": "Rest: 2\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L06.X03.04.T02": {
+   "hash": "236f0472ec3bb5be",
+   "expect": {
+    "stdout": "Rest: 2\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L06.X04.01.T01": {
+   "hash": "54515b35f7ad4aab",
+   "expect": {
+    "stdout": "135 min = 2 h 15 min\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L06.X06.01.T01": {
+   "hash": "e6c70792d03f0ed3",
+   "expect": {
+    "stdout": "37 C = 98.600000 F\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L06.X06.01.T02": {
+   "hash": "b614f7ea763f2343",
+   "expect": {
+    "stdout": "37 C = 98.600000 F\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L07.X02.01.T01": {
+   "hash": "ada9f3d9d3af2ade",
+   "expect": {
+    "stdout": "Initial: M\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L07.X02.01.T02": {
+   "hash": "71a5cdb565fc4abf",
+   "expect": {
+    "stdout": "Initial: M\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L07.X02.02.T01": {
+   "hash": "24c7ac47bb517142",
+   "expect": {
+    "stdout": "Next number: 5\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L07.X02.02.T02": {
+   "hash": "aecf253108e5c059",
+   "expect": {
+    "stdout": "Next number: 5\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L07.X02.03.T01": {
+   "hash": "b262ae140abb08f9",
+   "expect": {
+    "stdout": "Answer: n\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L07.X02.03.T02": {
+   "hash": "dc0333f13eee6f30",
+   "expect": {
+    "stdout": "Answer: n\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L07.X03.01.T01": {
+   "hash": "d1d04cfbb5caaa78",
+   "expect": {
+    "stdout": "a = 97, z = 122, 0 = 48\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L07.X05.01.T01": {
+   "hash": "3ecf7d224e444510",
+   "expect": {
+    "stdout": "cat -> CAT\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L07.X05.01.T02": {
+   "hash": "e4c1b17d3f471fcf",
+   "expect": {
+    "stdout": "cat -> CAT\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L08.X02.01.T01": {
+   "hash": "657789f7a92a956f",
+   "expect": {
+    "stdout": "Your 50%-off coupon\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L08.X02.01.T02": {
+   "hash": "4271886fca6434d6",
+   "expect": {
+    "stdout": "Your 50%-off coupon\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L08.X02.02.T01": {
+   "hash": "b7f159b16d0af944",
+   "expect": {
+    "stdout": "   5 kg|\n1500 kg|\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L08.X02.02.T02": {
+   "hash": "5a84cdf2b7c65686",
+   "expect": {
+    "stdout": "   5 kg|\n1500 kg|\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L08.X03.01.T01": {
+   "hash": "f65c3ddee4c33340",
+   "expect": {
+    "stdout": "pi = 3.14, discount = 15%\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L08.X03.01.T02": {
+   "hash": "615be251e39aa847",
+   "expect": {
+    "stdout": "pi = 3.14, discount = 15%\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C.L08.X05.01.T01": {
+   "hash": "5ce4ef32f08cb928",
+   "expect": {
+    "stdout": "Math     17.50\nPhysics  19.00\nArt      14.25\nAverage  16.92\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C.L08.X05.01.T02": {
+   "hash": "3bd3544c0595d439",
+   "expect": {
+    "stdout": "Math     17.50\nPhysics  19.00\nArt      14.25\nAverage  16.92\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C02.REV.X03.01.T01": {
+   "hash": "1ed71c49a3d2e4c2",
+   "expect": {
+    "stdout": "Sum: 13\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C02.REV.X03.01.T02": {
+   "hash": "76e71aa4b01f8a62",
+   "expect": {
+    "stdout": "Sum: 13\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C02.REV.X03.02.T01": {
+   "hash": "fa771aff0ce3406c",
+   "expect": {
+    "stdout": "Height: 1.750000 m\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C02.REV.X03.02.T02": {
+   "hash": "409bc0d08efdd001",
+   "expect": {
+    "stdout": "Height: 1.750000 m\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  },
+  "C02.REV.X04.01.T01": {
+   "hash": "4d11d5e3648b1757",
+   "expect": {
+    "stdout": "Each pays 16.67 euros\nWhole euros left over: 2\n",
+    "exitCode": 0
+   },
+   "xccSame": true
+  },
+  "C02.REV.X04.01.T02": {
+   "hash": "a173ddd2c4eac855",
+   "expect": {
+    "stdout": "Each pays 16.67 euros\nWhole euros left over: 2\n",
+    "exitCode": 0
+   },
+   "rejects": true,
+   "gccRejects": true
+  }
+ },
+ "trace": {
+  "C.L04.K03|price,count,total": {
+   "hash": "8e7a251184905e1e",
+   "vars": [
+    "price",
+    "count",
+    "total"
+   ],
+   "rows": [
+    {
+     "line": 4,
+     "values": [
+      "4",
+      "—",
+      "—"
+     ],
+     "out": ""
+    },
+    {
+     "line": 5,
+     "values": [
+      "4",
+      "3",
+      "—"
+     ],
+     "out": ""
+    },
+    {
+     "line": 6,
+     "values": [
+      "4",
+      "3",
+      "12"
+     ],
+     "out": ""
+    },
+    {
+     "line": 7,
+     "values": [
+      "5",
+      "3",
+      "12"
+     ],
+     "out": ""
+    },
+    {
+     "line": 8,
+     "values": [
+      "5",
+      "3",
+      "12"
+     ],
+     "out": "Total: 12\n",
+     "after": ""
+    }
+   ]
+  },
+  "C.L06.K03|lives": {
+   "hash": "c5198b11b907d22b",
+   "vars": [
+    "lives"
+   ],
+   "rows": [
+    {
+     "line": 4,
+     "values": [
+      "3"
+     ],
+     "out": ""
+    },
+    {
+     "line": 5,
+     "values": [
+      "2"
+     ],
+     "out": ""
+    },
+    {
+     "line": 6,
+     "values": [
+      "7"
+     ],
+     "out": ""
+    },
+    {
+     "line": 7,
+     "values": [
+      "14"
+     ],
+     "out": ""
+    },
+    {
+     "line": 8,
+     "values": [
+      "0"
+     ],
+     "out": ""
+    },
+    {
+     "line": 9,
+     "values": [
+      "0"
+     ],
+     "out": "0\n",
+     "after": ""
+    }
+   ]
+  },
+  "C.L04.K13|coins,spent": {
+   "hash": "3eab8672dd1bc802",
+   "vars": [
+    "coins",
+    "spent"
+   ],
+   "rows": [
+    {
+     "line": 4,
+     "values": [
+      "5",
+      "—"
+     ],
+     "out": ""
+    },
+    {
+     "line": 5,
+     "values": [
+      "5",
+      "2"
+     ],
+     "out": ""
+    },
+    {
+     "line": 6,
+     "values": [
+      "3",
+      "2"
+     ],
+     "out": ""
+    },
+    {
+     "line": 7,
+     "values": [
+      "3",
+      "6"
+     ],
+     "out": ""
+    },
+    {
+     "line": 8,
+     "values": [
+      "9",
+      "6"
+     ],
+     "out": ""
+    },
+    {
+     "line": 9,
+     "values": [
+      "9",
+      "6"
+     ],
+     "out": "9\n",
+     "after": ""
+    }
+   ]
+  },
+  "C.L06.K15|score": {
+   "hash": "f6db281464148cf6",
+   "vars": [
+    "score"
+   ],
+   "rows": [
+    {
+     "line": 4,
+     "values": [
+      "10"
+     ],
+     "out": ""
+    },
+    {
+     "line": 5,
+     "values": [
+      "15"
+     ],
+     "out": ""
+    },
+    {
+     "line": 6,
+     "values": [
+      "16"
+     ],
+     "out": ""
+    },
+    {
+     "line": 7,
+     "values": [
+      "4"
+     ],
+     "out": ""
+    },
+    {
+     "line": 8,
+     "values": [
+      "1"
+     ],
+     "out": ""
+    },
+    {
+     "line": 9,
+     "values": [
+      "1"
+     ],
+     "out": "1\n",
+     "after": ""
+    }
+   ]
+  },
+  "C02.REV.K02|stock,sold": {
+   "hash": "91da5312954d154c",
+   "vars": [
+    "stock",
+    "sold"
+   ],
+   "rows": [
+    {
+     "line": 4,
+     "values": [
+      "20",
+      "—"
+     ],
+     "out": ""
+    },
+    {
+     "line": 5,
+     "values": [
+      "20",
+      "6"
+     ],
+     "out": ""
+    },
+    {
+     "line": 6,
+     "values": [
+      "14",
+      "6"
+     ],
+     "out": ""
+    },
+    {
+     "line": 7,
+     "values": [
+      "14",
+      "12"
+     ],
+     "out": ""
+    },
+    {
+     "line": 8,
+     "values": [
+      "2",
+      "12"
+     ],
+     "out": ""
+    },
+    {
+     "line": 9,
+     "values": [
+      "2",
+      "12"
+     ],
+     "out": "2 12\n",
+     "after": ""
+    }
+   ]
   }
  }
 };

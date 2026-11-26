@@ -62,6 +62,48 @@
                     output: { fa: 'یک statement در هر نوبت و بازخورد کوتاه پس از جوابت.', de: 'Ein Statement pro Runde und eine kurze Rückmeldung nach deiner Antwort.', en: 'One statement per turn and short feedback after your answer.' },
                 },
             },
+            {
+                id: 'AI-4', icon: 'message-circle-question-mark', waits: true,
+                name: { en: 'Rubber duck', fa: 'اردک پلاستیکی', de: 'Quietscheente' },
+                text: 'I am on lesson {lesson} of my C course. Be my rubber duck.\n' +
+                    'I will send you a short program of mine and explain it line by line.\n' +
+                    'Do not explain anything yourself and do not fix my code. After each of my lines,\n' +
+                    'ask me one short question about what that line does to the values in memory.\n' +
+                    'Wait for my answer. When I am wrong, ask a question that makes me look again.',
+                guide: {
+                    does: { fa: 'تو برنامه‌ات را توضیح می‌دهی و مدل فقط می‌پرسد؛ جاهایی که فهمت لنگ می‌زند، خودشان را نشان می‌دهند.', de: 'Du erklärst dein Programm, und das Modell fragt nur; wo dein Verständnis hakt, zeigt es sich von selbst.', en: 'You explain your program and the model only asks; the places where your understanding is shaky show themselves.' },
+                    give: { fa: 'بعد از این پرامپت، برنامهٔ کوتاه خودت را بفرست و توضیح خط اول را بنویس.', de: 'Schick nach diesem Prompt dein kurzes Programm und schreib die Erklärung der ersten Zeile.', en: 'After this prompt, send your short program and write your explanation of the first line.' },
+                    output: { fa: 'پس از هر خط یک پرسش کوتاه؛ هیچ توضیح یا کد درست‌شده‌ای نه.', de: 'Nach jeder Zeile eine kurze Frage; keine Erklärung und kein reparierter Code.', en: 'One short question after each line; no explanation and no fixed code.' },
+                },
+            },
+            {
+                id: 'AI-5', icon: 'rotate-ccw', waits: true,
+                name: { en: 'Spaced quiz', fa: 'آزمون فاصله‌دار', de: 'Wiederholungsquiz' },
+                text: 'I have finished {lesson} of my C course. Quiz me on it and on earlier lessons.\n' +
+                    'Ask eight short questions, one at a time: about half on the latest chapter,\n' +
+                    'the rest on earlier ones. Mix kinds: predict the output of three to six lines,\n' +
+                    'find the mistake, choose the type, explain in one sentence.\n' +
+                    'Wait for my answer each time, then say if I am right and why. At the end, list what I should review.',
+                guide: {
+                    does: { fa: 'پرسش‌های کوتاه از فصل تازه و فصل‌های قبل، یکی‌یکی؛ در پایان می‌گوید چه چیزی را دوباره بخوانی.', de: 'Kurze Fragen zum neuen Kapitel und zu früheren, eine nach der anderen; am Ende sagt es, was du wiederholen solltest.', en: 'Short questions on the new chapter and earlier ones, one at a time; at the end it tells you what to review.' },
+                    give: { fa: 'فقط همین پرامپت؛ بی‌اجرا و بی‌نگاه به درس‌ها جواب بده.', de: 'Nur diesen Prompt; antworte ohne Ausführen und ohne in die Lektionen zu schauen.', en: 'Just this prompt; answer without running anything and without looking at the lessons.' },
+                    output: { fa: 'هشت پرسش، هر بار یکی، با بازخورد؛ بعد فهرست کوتاهی برای مرور.', de: 'Acht Fragen, jeweils eine, mit Rückmeldung; danach eine kurze Liste zum Wiederholen.', en: 'Eight questions, one at a time, with feedback; then a short list to review.' },
+                },
+            },
+            {
+                id: 'AI-6', icon: 'graduation-cap', waits: true,
+                name: { en: 'Exam drill', fa: 'تمرین امتحان', de: 'Prüfungstraining' },
+                text: 'I am on lesson {lesson} of my C course and preparing for a written university exam.\n' +
+                    'Give me one exam-style question at a time on this lesson, to solve on paper:\n' +
+                    'trace a short program by hand, give the exact output with spaces, or explain a result.\n' +
+                    'Use only what the lesson has covered. Wait for my full answer before you show the solution,\n' +
+                    'then mark it like an examiner: what earns points, what loses them.',
+                guide: {
+                    does: { fa: 'پرسش به سبک امتحان کتبی دانشگاه می‌دهد و پاسخت را مثل یک مصحح نمره می‌دهد.', de: 'Stellt Fragen wie in einer schriftlichen Uniprüfung und bewertet deine Antwort wie ein Prüfer.', en: 'Asks questions like a written university exam and marks your answer like an examiner.' },
+                    give: { fa: 'فقط همین پرامپت؛ روی کاغذ حل کن و پاسخ کامل را بفرست.', de: 'Nur diesen Prompt; löse auf Papier und schick deine ganze Antwort.', en: 'Just this prompt; solve on paper and send your full answer.' },
+                    output: { fa: 'یک پرسش در هر نوبت؛ پس از پاسخت، حل کامل و نمره‌دهی.', de: 'Eine Frage pro Runde; nach deiner Antwort die volle Lösung und die Bewertung.', en: 'One question per turn; after your answer, the full solution and the marking.' },
+                },
+            },
         ],
     };
 })(typeof window !== 'undefined' ? window : globalThis);

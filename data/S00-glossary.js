@@ -197,6 +197,159 @@
                     en: 'A program that puts an editor, the compiler and a debugger together, such as VS Code or CLion.',
                 },
             },
+            {
+                id: 'T.variable', en: 'variable', use: { fa: 'متغیر', de: 'Variable' },
+                gloss: { fa: 'variable', de: 'variable' }, deArticle: 'die', series: ['C'],
+                def: {
+                    fa: 'جایی در حافظه با یک نام و یک نوع، که یک مقدار نگه می‌دارد؛ مقدارش می‌تواند عوض شود.',
+                    de: 'Ein Platz im Speicher mit einem Namen und einem Typ, der einen Wert hält; der Wert kann sich ändern.',
+                    en: 'A place in memory with a name and a type that holds one value; the value can change.',
+                },
+            },
+            {
+                id: 'T.identifier', en: 'identifier', use: { fa: 'identifier', de: 'Identifier' },
+                gloss: { fa: 'شناسه', de: 'Bezeichner' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: 'نامی که برنامه‌نویس به یک متغیر یا تابع می‌دهد؛ از حرف، رقم و `_`، و با رقم شروع نمی‌شود.',
+                    de: 'Ein Name, den du einer Variablen oder Funktion gibst; aus Buchstaben, Ziffern und `_`, nicht mit einer Ziffer am Anfang.',
+                    en: 'A name the programmer gives to a variable or function; made of letters, digits and `_`, not starting with a digit.',
+                },
+            },
+            {
+                id: 'T.declaration', en: 'declaration', use: { fa: 'declaration', de: 'Deklaration' },
+                gloss: { fa: 'اعلان', de: 'Vereinbarung' }, deArticle: 'die', series: ['C'],
+                def: {
+                    fa: 'خطی که به compiler می‌گوید یک نام از چه نوعی است، مثل `int count;`.',
+                    de: 'Eine Zeile, die dem Compiler sagt, welchen Typ ein Name hat, etwa `int count;`.',
+                    en: 'A line that tells the compiler which type a name has, such as `int count;`.',
+                },
+            },
+            {
+                id: 'T.assignment', en: 'assignment', use: { fa: 'assignment', de: 'Zuweisung' },
+                gloss: { fa: 'انتساب', de: 'assignment' }, deArticle: 'die', series: ['C'],
+                def: {
+                    fa: 'گذاشتن مقدار تازه در یک متغیر با `=`: اول سمت راست حساب می‌شود، بعد در سمت چپ می‌نشیند.',
+                    de: 'Einen neuen Wert mit `=` in eine Variable legen: Zuerst wird die rechte Seite ausgerechnet, dann links abgelegt.',
+                    en: 'Putting a new value into a variable with `=`: the right-hand side is worked out first, then stored on the left.',
+                },
+            },
+            {
+                id: 'T.initialization', en: 'initialization', use: { fa: 'initialization', de: 'Initialisierung' },
+                gloss: { fa: 'مقداردهی اولیه', de: 'initialization' }, deArticle: 'die', series: ['C'],
+                def: {
+                    fa: 'دادن اولین مقدار به یک متغیر در همان اعلان، مثل `int count = 0;`.',
+                    de: 'Einer Variablen gleich in der Deklaration ihren ersten Wert geben, etwa `int count = 0;`.',
+                    en: 'Giving a variable its first value in the declaration itself, such as `int count = 0;`.',
+                },
+            },
+            {
+                id: 'T.type', en: 'type', use: { fa: 'نوع', de: 'Typ' },
+                gloss: { fa: 'type', de: 'Datentyp' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: 'اینکه یک مقدار چه جور چیزی است و چقدر جا می‌گیرد: `int`، `double`، `char` و مانند آن.',
+                    de: 'Welche Art von Wert etwas ist und wie viel Platz es braucht: `int`, `double`, `char` und so weiter.',
+                    en: 'What kind of value something is and how much room it takes: `int`, `double`, `char` and so on.',
+                },
+            },
+            {
+                id: 'T.floating-point', en: 'floating-point number', use: { fa: 'floating-point', de: 'Gleitkommazahl' },
+                gloss: { fa: 'ممیز شناور', de: 'floating-point number' }, deArticle: 'die', series: ['C'],
+                def: {
+                    fa: 'عددی با کسر که مثل نماد علمی ذخیره می‌شود، با رقم‌های معنادار و یک توان؛ در C معمولاً `double`.',
+                    de: 'Eine Zahl mit Bruchteil, gespeichert wie in wissenschaftlicher Schreibweise, mit gültigen Stellen und einem Exponenten; in C meist `double`.',
+                    en: 'A number with a fraction, stored like scientific notation, with significant digits and an exponent; in C usually `double`.',
+                },
+            },
+            {
+                id: 'T.overflow', en: 'overflow', use: { fa: 'overflow', de: 'Überlauf' },
+                gloss: { fa: 'سرریز', de: 'overflow' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: 'وقتی حاصل یک حساب در جعبهٔ نوعش جا نمی‌شود؛ برای `int` رفتار تعریف‌نشده است.',
+                    de: 'Wenn das Ergebnis einer Rechnung nicht in den Kasten seines Typs passt; bei `int` undefiniertes Verhalten.',
+                    en: 'When the result of a calculation does not fit in the box of its type; for `int` it is undefined behavior.',
+                },
+            },
+            {
+                id: 'T.expression', en: 'expression', use: { fa: 'expression', de: 'Ausdruck' },
+                gloss: { fa: 'عبارت', de: 'expression' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: 'هر چیزی که یک مقدار دارد: یک عدد، یک متغیر، یا ترکیبی با عملگر مثل `price * count`.',
+                    de: 'Alles, was einen Wert hat: eine Zahl, eine Variable oder eine Verbindung mit Operatoren wie `price * count`.',
+                    en: 'Anything that has a value: a number, a variable, or a combination with operators such as `price * count`.',
+                },
+            },
+            {
+                id: 'T.operator', en: 'operator', use: { fa: 'operator', de: 'Operator' },
+                gloss: { fa: 'عملگر', de: 'operator' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: 'نمادی که روی مقدارها کاری انجام می‌دهد، مثل `+`، `/`، `%` یا `=`.',
+                    de: 'Ein Zeichen, das mit Werten etwas tut, etwa `+`, `/`, `%` oder `=`.',
+                    en: 'A symbol that does something with values, such as `+`, `/`, `%` or `=`.',
+                },
+            },
+            {
+                id: 'T.precedence', en: 'precedence', use: { fa: 'precedence', de: 'Rangfolge' },
+                gloss: { fa: 'اولویت عملگرها', de: 'precedence' }, deArticle: 'die', series: ['C'],
+                def: {
+                    fa: 'ترتیبی که عملگرها حساب می‌شوند: پرانتز، بعد `*` `/` `%`، بعد `+` `-`.',
+                    de: 'Die Reihenfolge, in der Operatoren ausgewertet werden: Klammern, dann `*` `/` `%`, dann `+` `-`.',
+                    en: 'The order in which operators are worked out: parentheses, then `*` `/` `%`, then `+` `-`.',
+                },
+            },
+            {
+                id: 'T.integer-division', en: 'integer division', use: { fa: 'integer division', de: 'Ganzzahldivision' },
+                gloss: { fa: 'تقسیم صحیح', de: 'integer division' }, deArticle: 'die', series: ['C'],
+                def: {
+                    fa: 'تقسیم دو عدد صحیح که کسر را به سمت صفر دور می‌ریزد: `7 / 2` برابر 3.',
+                    de: 'Die Division zweier ganzer Zahlen, die den Bruchteil in Richtung null wegwirft: `7 / 2` ist 3.',
+                    en: 'Dividing two whole numbers, which throws the fraction away towards zero: `7 / 2` is 3.',
+                },
+            },
+            {
+                id: 'T.cast', en: 'cast', use: { fa: 'cast', de: 'Cast' },
+                gloss: { fa: 'تبدیل صریح نوع', de: 'Typumwandlung' }, deArticle: 'der', series: ['C'],
+                def: {
+                    fa: 'تبدیل صریح یک مقدار به نوع دیگر، مثل `(double) total`.',
+                    de: 'Die ausdrückliche Umwandlung eines Werts in einen anderen Typ, etwa `(double) total`.',
+                    en: 'Explicitly turning a value into another type, such as `(double) total`.',
+                },
+            },
+            {
+                id: 'T.character', en: 'character', use: { fa: 'نویسه', de: 'Zeichen' },
+                gloss: { fa: 'character', de: 'character' }, deArticle: 'das', series: ['C'],
+                def: {
+                    fa: 'یک حرف، رقم، فاصله یا علامت؛ در C یک `char` که پشت پرده یک عدد کوچک است.',
+                    de: 'Ein Buchstabe, eine Ziffer, ein Leerzeichen oder Satzzeichen; in C ein `char`, hinter dem eine kleine Zahl steckt.',
+                    en: 'A letter, digit, space or mark; in C a `char`, which is a small number underneath.',
+                },
+            },
+            {
+                id: 'T.ascii', en: 'ASCII', use: { fa: 'ASCII', de: 'ASCII' },
+                gloss: { fa: 'جدول کد ASCII', de: 'ASCII-Code' }, deArticle: 'das', series: ['C'],
+                def: {
+                    fa: 'جدولی که به هر نویسهٔ انگلیسی یک عدد از 0 تا 127 می‌دهد، مثل 65 برای `A`.',
+                    de: 'Eine Tabelle, die jedem englischen Zeichen eine Zahl von 0 bis 127 gibt, etwa 65 für `A`.',
+                    en: 'A table that gives each English character a number from 0 to 127, such as 65 for `A`.',
+                },
+            },
+            {
+                id: 'T.field-width', en: 'field width', use: { fa: 'field width', de: 'Feldbreite' },
+                gloss: { fa: 'عرض میدان', de: 'field width' }, deArticle: 'die', series: ['C'],
+                def: {
+                    fa: 'کمترین تعداد خانه‌ای که `printf` به یک مقدار می‌دهد، مثل 5 در `%5d`؛ عدد بلندتر بریده نمی‌شود.',
+                    de: 'Die kleinste Zahl an Stellen, die `printf` einem Wert gibt, etwa 5 in `%5d`; eine längere Zahl wird nicht abgeschnitten.',
+                    en: 'The smallest number of places `printf` gives a value, such as 5 in `%5d`; a longer number is not cut.',
+                },
+            },
+            {
+                id: 'T.precision', en: 'precision', use: { fa: 'precision', de: 'Genauigkeit' },
+                gloss: { fa: 'دقت', de: 'precision' }, deArticle: 'die', series: ['C'],
+                def: {
+                    fa: 'تعداد رقم‌های اعشاری که `printf` چاپ می‌کند، مثل 2 در `%.2f`؛ مقدار ذخیره‌شده عوض نمی‌شود.',
+                    de: 'Die Zahl der Nachkommastellen, die `printf` ausgibt, etwa 2 in `%.2f`; der gespeicherte Wert ändert sich nicht.',
+                    en: 'The number of decimal places `printf` prints, such as 2 in `%.2f`; the stored value does not change.',
+                },
+            },
         ],
     };
 })(typeof window !== 'undefined' ? window : globalThis);
